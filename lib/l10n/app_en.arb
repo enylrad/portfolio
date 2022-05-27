@@ -1,3 +1,6 @@
 {
-  "appName": "Portfolio"
+  "appName": "Portfolio",
+  "portfolio": "Portfolio",
+  "aboutMe": "About Me",
+  "curriculumVitae": "Curriculum"
 }
