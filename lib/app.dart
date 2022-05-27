@@ -25,13 +25,13 @@ class App extends StatelessWidget {
       themeMode: themeMode,
       onGenerateTitle: (BuildContext context) =>
           context.loc.appName,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en', ''),
         Locale('es', ''),
       ],

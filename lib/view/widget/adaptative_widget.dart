@@ -76,7 +76,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               selectedIndex: widget.currentIndex,
               onDestinationSelected: widget.onNavigationIndexChange ?? (_) {},
             ),
-            VerticalDivider(
+            const VerticalDivider(
               width: 1,
               thickness: 1,
             ),
