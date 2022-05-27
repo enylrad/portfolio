@@ -66,7 +66,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               extended: _isLargeScreen(context),
               destinations: [
                 ...widget.destinations.map(
-                  (d) => NavigationRailDestination(
+                      (d) => NavigationRailDestination(
                     icon: d.icon,
                     selectedIcon: d.selectedIcon,
                     label: Text(d.title),
@@ -91,27 +91,20 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     // Show a bottom app bar
     return Scaffold(
       body: widget.body,
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
+      bottomNavigationBar: NavigationBar(
+        destinations: [
           ...widget.destinations.map(
-            (d) => BottomNavigationBarItem(
+                (d) => NavigationDestination(
               icon: d.icon,
-              activeIcon: d.selectedIcon,
+              selectedIcon: d.selectedIcon,
               label: d.title,
             ),
           ),
         ],
-        currentIndex: widget.currentIndex,
-        onTap: widget.onNavigationIndexChange,
+        selectedIndex: widget.currentIndex,
+        onDestinationSelected: widget.onNavigationIndexChange,
       ),
       floatingActionButton: widget.floatingActionButton,
     );
-  }
-
-  void _destinationTapped(AdaptiveScaffoldDestination destination) {
-    var idx = widget.destinations.indexOf(destination);
-    if (idx != widget.currentIndex) {
-      widget.onNavigationIndexChange!(idx);
-    }
   }
 }
