@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:my_portfolio/view/page/aboutme_page.dart';
+import 'package:my_portfolio/view/page/about_me_page.dart';
 import 'package:my_portfolio/view/page/curriculum_page.dart';
 import 'package:my_portfolio/view/page/portfolio_page.dart';
 import 'package:my_portfolio/view/widget/adaptative_widget.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/ext/app_localizations_context.dart';
-import 'package:my_portfolio/view/widget/social/social_media_page.dart';
-import 'package:my_portfolio/view/widget/social/types/social_media_types.dart';
 
 class AvatarProfile extends StatelessWidget {
   const AvatarProfile({Key? key}) : super(key: key);
@@ -15,7 +13,7 @@ class AvatarProfile extends StatelessWidget {
           height: 120.0,
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage('images/avatar.jpeg'),
+              image: AssetImage('assets/images/avatar.jpeg'),
               fit: BoxFit.cover,
             ),
             borderRadius: const BorderRadius.all( Radius.circular(120.0)),
@@ -29,30 +27,6 @@ class AvatarProfile extends StatelessWidget {
         Text(
           context.loc.myName,
           style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 10.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SocialButton(
-              socialNetwork: buildSocialNetwork(
-                Social.github,
-                'enylrad',
-              ),
-            ),
-            SocialButton(
-              socialNetwork: buildSocialNetwork(
-                Social.linkedin,
-                'davidperezsalort',
-              ),
-            ),
-            SocialButton(
-              socialNetwork: buildSocialNetwork(
-                Social.twitter,
-                'david_eny',
-              ),
-            ),
-          ],
         ),
       ],
     );
