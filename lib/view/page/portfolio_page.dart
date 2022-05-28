@@ -12,7 +12,7 @@ class PortfolioPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(context.loc.portfolio),
+        Text(context.loc.portfolioTitle),
         const ErrorLottie(),
       ],
     );

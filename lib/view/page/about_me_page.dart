@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/view/widget/avatar_profile_widget.dart';
-import 'package:my_portfolio/view/widget/error_widget.dart';
 import 'package:my_portfolio/view/widget/social_network_widget.dart';
 
 class AboutMePage extends StatelessWidget {
@@ -24,7 +23,14 @@ class AboutMePage extends StatelessWidget {
             endIndent: 60,
             color: context.theme.colorScheme.onBackground,
           ),
-          const ErrorLottie()
+          Container(
+            padding: const EdgeInsets.only(left: 70, right: 70, top: 20),
+            child: Text(
+              context.loc.aboutMe,
+              textAlign: TextAlign.center,
+              style: context.theme.textTheme.bodyMedium,
+            ),
+          ),
         ],
       ),
     );

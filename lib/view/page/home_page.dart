@@ -32,17 +32,17 @@ class _HomePageState extends State<HomePage> {
           body: _children[_selectedIndex],
           destinations: [
             AdaptiveScaffoldDestination(
-              title: AppLocalizations.of(context).aboutMe,
+              title: AppLocalizations.of(context).aboutMeTitle,
               icon: const Icon(Icons.account_circle_outlined),
               selectedIcon: const Icon(Icons.account_circle_rounded),
             ),
             AdaptiveScaffoldDestination(
-              title: AppLocalizations.of(context).portfolio,
+              title: AppLocalizations.of(context).portfolioTitle,
               icon: const Icon(Icons.view_list_outlined),
               selectedIcon: const Icon(Icons.view_list_rounded),
             ),
             AdaptiveScaffoldDestination(
-              title: AppLocalizations.of(context).curriculumVitae,
+              title: AppLocalizations.of(context).curriculumTitle,
               icon: const Icon(Icons.my_library_books_outlined),
               selectedIcon: const Icon(Icons.my_library_books_rounded),
             ),

@@ -1,7 +1,9 @@
 {
-  "appName": "Portfolio",
-  "portfolio": "Portfolio",
-  "aboutMe": "About Me",
-  "curriculumVitae": "Curriculum",
-  "myName": "David Pérez Salort"
+  "appName": "David Pérez Salort",
+  "portfolioTitle": "Portfolio",
+  "aboutMeTitle": "About Me",
+  "curriculumTitle": "Curriculum",
+  "myName": "David Pérez Salort",
+  "profession": "Frontend Developer",
+  "aboutMe": "Desde pequeño, siempre he mostrado interés por la informática. Montando mis propios ordenadores, probando diferentes sistemas operativos e iniciándome en programas de diseño 3D hasta que descubrí la programación, de la que me apasioné.\n\nHe estado en constante aprendizaje desde entonces, empezando por desarrollos en Java y Android durante mi formación y especializándome en Kotlin y Android durante mi periodo profesional.\n\nActualmente me encuentro descubriendo el desarrollo de aplicaciones híbridas donde estoy adentrándome en React Native profesionalmente y en Flutter durante mi tiempo libre."
 }

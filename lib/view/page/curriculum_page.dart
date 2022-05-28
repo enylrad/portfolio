@@ -12,7 +12,7 @@ class CurriculumPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(context.loc.curriculumVitae),
+        Text(context.loc.curriculumTitle),
         const ErrorLottie(),
       ],
     );

@@ -29,6 +29,11 @@ class AvatarProfile extends StatelessWidget {
           context.loc.myName,
           style: context.theme.textTheme.titleLarge,
         ),
+        const SizedBox(height: 5.0),
+        Text(
+          context.loc.profession,
+          style: context.theme.textTheme.bodyMedium,
+        ),
       ],
     );
   }
