@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/view/widget/social/social_media_page.dart';
+import 'package:my_portfolio/view/widget/social/social_media_widget.dart';
 import 'package:my_portfolio/view/widget/social/types/social_media_types.dart';
 
 class SocialNetworks extends StatelessWidget {

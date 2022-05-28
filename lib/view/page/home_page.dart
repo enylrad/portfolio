@@ -25,30 +25,32 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AdaptiveScaffold(
-        title: Text(AppLocalizations.of(context).appName),
-        body: _children[_selectedIndex],
-        destinations: [
-          AdaptiveScaffoldDestination(
-            title: AppLocalizations.of(context).aboutMe,
-            icon: const Icon(Icons.account_circle_outlined),
-            selectedIcon: const Icon(Icons.account_circle_rounded),
-          ),
-          AdaptiveScaffoldDestination(
-            title: AppLocalizations.of(context).portfolio,
-            icon: const Icon(Icons.my_library_books_outlined),
-            selectedIcon: const Icon(Icons.my_library_books_rounded),
-          ),
-          AdaptiveScaffoldDestination(
-            title: AppLocalizations.of(context).curriculumVitae,
-            icon: const Icon(Icons.bookmark_border),
-            selectedIcon: const Icon(Icons.bookmark_rounded),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onNavigationIndexChange: (int index) =>
-            setState(() => _selectedIndex = index),
+    return SafeArea(
+      child: Scaffold(
+        body: AdaptiveScaffold(
+          title: Text(AppLocalizations.of(context).appName),
+          body: _children[_selectedIndex],
+          destinations: [
+            AdaptiveScaffoldDestination(
+              title: AppLocalizations.of(context).aboutMe,
+              icon: const Icon(Icons.account_circle_outlined),
+              selectedIcon: const Icon(Icons.account_circle_rounded),
+            ),
+            AdaptiveScaffoldDestination(
+              title: AppLocalizations.of(context).portfolio,
+              icon: const Icon(Icons.view_list_outlined),
+              selectedIcon: const Icon(Icons.view_list_rounded),
+            ),
+            AdaptiveScaffoldDestination(
+              title: AppLocalizations.of(context).curriculumVitae,
+              icon: const Icon(Icons.my_library_books_outlined),
+              selectedIcon: const Icon(Icons.my_library_books_rounded),
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onNavigationIndexChange: (int index) =>
+              setState(() => _selectedIndex = index),
+        ),
       ),
     );
   }

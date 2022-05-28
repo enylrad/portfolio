@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/ext/app_localizations_context.dart';
+import 'package:my_portfolio/core/constants/assets_images_const.dart';
+import 'package:my_portfolio/core/ext/context_ext.dart';
 
 class AvatarProfile extends StatelessWidget {
   const AvatarProfile({Key? key}) : super(key: key);
@@ -13,12 +14,12 @@ class AvatarProfile extends StatelessWidget {
           height: 120.0,
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage('assets/images/avatar.jpeg'),
+              image: AssetImage(AssetsImage.avatar),
               fit: BoxFit.cover,
             ),
-            borderRadius: const BorderRadius.all( Radius.circular(120.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(120.0)),
             border: Border.all(
-              color: Theme.of(context).colorScheme.onBackground,
+              color: context.theme.colorScheme.onBackground,
               width: 2.0,
             ),
           ),
@@ -26,7 +27,7 @@ class AvatarProfile extends StatelessWidget {
         const SizedBox(height: 20.0),
         Text(
           context.loc.myName,
-          style: Theme.of(context).textTheme.titleLarge,
+          style: context.theme.textTheme.titleLarge,
         ),
       ],
     );

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/view/widget/avatar_profile_widget.dart';
+import 'package:my_portfolio/view/widget/error_widget.dart';
 import 'package:my_portfolio/view/widget/social_network_widget.dart';
 
 class AboutMePage extends StatelessWidget {
   static const String route = '/aboutme';
+
   const AboutMePage({Key? key}) : super(key: key);
 
   @override
@@ -12,10 +15,16 @@ class AboutMePage extends StatelessWidget {
       alignment: Alignment.center,
       padding: const EdgeInsets.all(20),
       child: Column(
-        children: const [
-          AvatarProfile(),
-          SizedBox(height: 10.0),
-          SocialNetworks(),
+        children: [
+          const AvatarProfile(),
+          const SizedBox(height: 10.0),
+          const SocialNetworks(),
+          Divider(
+            indent: 60,
+            endIndent: 60,
+            color: context.theme.colorScheme.onBackground,
+          ),
+          const ErrorLottie()
         ],
       ),
     );

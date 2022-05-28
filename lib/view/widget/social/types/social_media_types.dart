@@ -1,3 +1,5 @@
+import 'package:my_portfolio/core/constants/assets_images_const.dart';
+
 enum Social {
   github,
   twitter,
@@ -22,19 +24,19 @@ SocialNetwork buildSocialNetwork(Social social, String idUser) {
       return SocialNetwork(
         social: social,
         url: 'https://github.com/$idUser',
-        asset: 'assets/images/github.svg',
+        asset: AssetsImage.github,
       );
     case Social.twitter:
       return SocialNetwork(
         social: social,
         url: 'https://twitter.com/$idUser',
-        asset: 'assets/images/twitter.svg',
+        asset: AssetsImage.twitter,
       );
     case Social.linkedin:
       return SocialNetwork(
         social: social,
         url: 'https://www.linkedin.com/in/$idUser',
-        asset: 'assets/images/linkedin.svg',
+        asset: AssetsImage.linkedin,
       );
   }
 }

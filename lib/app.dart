@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:my_portfolio/core/ext/app_localizations_context.dart';
+import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/core/theme/app_theme.dart';
 import 'package:my_portfolio/core/theme/app_theme_data.dart';
 import 'package:my_portfolio/view/navigator.dart';
@@ -23,8 +23,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: themeMode,
-      onGenerateTitle: (BuildContext context) =>
-          context.loc.appName,
+      onGenerateTitle: (BuildContext context) => context.loc.appName,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -65,7 +64,6 @@ class AppOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return AppTheme(
       themeData: _useDarkStyle(context) ? darkStyleData : lightStyleData,
       child: child,

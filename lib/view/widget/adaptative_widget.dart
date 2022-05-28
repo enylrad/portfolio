@@ -55,7 +55,6 @@ class AdaptiveScaffold extends StatefulWidget {
 class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   @override
   Widget build(BuildContext context) {
-
     // Show a navigation rail
     if (_isMediumScreen(context) || _isLargeScreen(context)) {
       return Scaffold(
@@ -66,7 +65,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               extended: _isLargeScreen(context),
               destinations: [
                 ...widget.destinations.map(
-                      (d) => NavigationRailDestination(
+                  (d) => NavigationRailDestination(
                     icon: d.icon,
                     selectedIcon: d.selectedIcon,
                     label: Text(d.title),
@@ -81,7 +80,9 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               thickness: 1,
             ),
             Expanded(
-              child: widget.body!,
+              child: SingleChildScrollView(
+                child: widget.body!,
+              ),
             ),
           ],
         ),
@@ -90,11 +91,13 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
 
     // Show a bottom app bar
     return Scaffold(
-      body: widget.body,
+      body: SingleChildScrollView(
+        child: widget.body!,
+      ),
       bottomNavigationBar: NavigationBar(
         destinations: [
           ...widget.destinations.map(
-                (d) => NavigationDestination(
+            (d) => NavigationDestination(
               icon: d.icon,
               selectedIcon: d.selectedIcon,
               label: d.title,
