@@ -16,7 +16,9 @@ class AboutMePage extends StatelessWidget {
       child: Column(
         children: [
           const AvatarProfile(),
-          const SizedBox(height: 10.0),
+          const SizedBox(
+            height: 10.0,
+          ),
           const SocialNetworks(),
           Divider(
             indent: 60,
@@ -24,7 +26,11 @@ class AboutMePage extends StatelessWidget {
             color: context.theme.colorScheme.onBackground,
           ),
           Container(
-            padding: const EdgeInsets.only(left: 70, right: 70, top: 20),
+            padding: const EdgeInsets.only(
+              left: 70,
+              right: 70,
+              top: 20,
+            ),
             child: Text(
               context.loc.aboutMe,
               textAlign: TextAlign.center,

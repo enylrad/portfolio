@@ -1,7 +1,3 @@
-// Copyright 2020, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 
 bool _isLargeScreen(BuildContext context) {
@@ -12,7 +8,6 @@ bool _isMediumScreen(BuildContext context) {
   return MediaQuery.of(context).size.width > 640.0;
 }
 
-/// See bottomNavigationBarItem or NavigationRailDestination
 class AdaptiveScaffoldDestination {
   final String title;
   final Widget icon;
@@ -25,9 +20,6 @@ class AdaptiveScaffoldDestination {
   });
 }
 
-/// A widget that adapts to the current display size, displaying a [Drawer],
-/// [NavigationRail], or [BottomNavigationBar]. Navigation destinations are
-/// defined in the [destinations] parameter.
 class AdaptiveScaffold extends StatefulWidget {
   final Widget? title;
   final List<Widget> actions;
@@ -56,7 +48,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   @override
   Widget build(BuildContext context) {
     // Show a navigation rail
-    if (_isMediumScreen(context) || _isLargeScreen(context)) {
+    if (_isMediumScreen(context)) {
       return Scaffold(
         body: Row(
           children: [

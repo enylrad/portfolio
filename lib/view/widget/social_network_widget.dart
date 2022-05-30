@@ -30,6 +30,12 @@ class SocialNetworks extends StatelessWidget {
                 'david_eny',
               ),
             ),
+            SocialButton(
+              socialNetwork: buildSocialNetwork(
+                Social.mail,
+                'enylrad@gmail.com',
+              ),
+            ),
           ],
         ),
       ],

@@ -4,6 +4,7 @@ enum Social {
   github,
   twitter,
   linkedin,
+  mail,
 }
 
 class SocialNetwork {
@@ -37,6 +38,12 @@ SocialNetwork buildSocialNetwork(Social social, String idUser) {
         social: social,
         url: 'https://www.linkedin.com/in/$idUser',
         asset: AssetsImage.linkedin,
+      );
+    case Social.mail:
+      return SocialNetwork(
+        social: social,
+        url: 'mailto:$idUser',
+        asset: AssetsImage.mail,
       );
   }
 }
