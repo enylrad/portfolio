@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/core/utils/size_utils.dart';
 
 class AdaptiveScaffoldDestination {
@@ -43,16 +42,6 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   Widget build(BuildContext context) {
     if (isMediumScreen(context)) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            context.loc.workInProgress,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          shadowColor: Colors.black,
-          backgroundColor: Colors.yellowAccent,
-        ),
         body: Row(
           children: [
             NavigationRail(
@@ -83,16 +72,6 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.loc.workInProgress,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        shadowColor: Colors.black,
-        backgroundColor: Colors.yellowAccent,
-      ),
       body: SingleChildScrollView(
         child: widget.body!,
       ),

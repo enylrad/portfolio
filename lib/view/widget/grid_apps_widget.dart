@@ -41,7 +41,7 @@ class _GridAppsState extends State<GridApps> {
                   child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(app.image),
+                          image: buildImage(app),
                           colorFilter: ColorFilter.mode(
                             context.theme.colorScheme.primary.withOpacity(0.3),
                             BlendMode.dstATop,
@@ -87,6 +87,14 @@ class _GridAppsState extends State<GridApps> {
         ),
       ),
     );
+  }
+
+  ImageProvider buildImage(AppInfo app) {
+    if (app.image.startsWith('assets')) {
+      return AssetImage(app.image);
+    } else {
+      return NetworkImage(app.image);
+    }
   }
 
   double childAspectRatioDynamic(BuildContext context) {

@@ -33,7 +33,7 @@ class SocialNetworks extends StatelessWidget {
             SocialButton(
               socialNetwork: buildSocialNetwork(
                 Social.mail,
-                'enylrad@gmail.com',
+                'david.perez.salort@gmail.com',
               ),
             ),
           ],
