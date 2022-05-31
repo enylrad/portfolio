@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
-import 'package:my_portfolio/view/widget/social/types/social_media_types.dart';
+import 'package:my_portfolio/view/widget/social/types/social_types.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class SocialButton extends StatelessWidget {
     required this.socialNetwork,
   }) : super(key: key);
 
-  final SocialNetwork socialNetwork;
+  final SocialType socialNetwork;
 
   @override
   Widget build(BuildContext context) {

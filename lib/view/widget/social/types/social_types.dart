@@ -7,40 +7,40 @@ enum Social {
   mail,
 }
 
-class SocialNetwork {
+class SocialType {
   final Social social;
   final String asset;
   final String url;
 
-  SocialNetwork({
+  SocialType({
     required this.social,
     required this.asset,
     required this.url,
   });
 }
 
-SocialNetwork buildSocialNetwork(Social social, String idUser) {
+SocialType buildSocialNetwork(Social social, String idUser) {
   switch (social) {
     case Social.github:
-      return SocialNetwork(
+      return SocialType(
         social: social,
         url: 'https://github.com/$idUser',
         asset: AssetsImage.github,
       );
     case Social.twitter:
-      return SocialNetwork(
+      return SocialType(
         social: social,
         url: 'https://twitter.com/$idUser',
         asset: AssetsImage.twitter,
       );
     case Social.linkedin:
-      return SocialNetwork(
+      return SocialType(
         social: social,
         url: 'https://www.linkedin.com/in/$idUser',
         asset: AssetsImage.linkedin,
       );
     case Social.mail:
-      return SocialNetwork(
+      return SocialType(
         social: social,
         url: 'mailto:$idUser',
         asset: AssetsImage.mail,

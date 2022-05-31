@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-
-bool _isLargeScreen(BuildContext context) {
-  return MediaQuery.of(context).size.width > 960.0;
-}
-
-bool _isMediumScreen(BuildContext context) {
-  return MediaQuery.of(context).size.width > 640.0;
-}
+import 'package:my_portfolio/core/ext/context_ext.dart';
+import 'package:my_portfolio/core/utils/size_utils.dart';
 
 class AdaptiveScaffoldDestination {
   final String title;
@@ -47,14 +41,23 @@ class AdaptiveScaffold extends StatefulWidget {
 class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
   @override
   Widget build(BuildContext context) {
-    // Show a navigation rail
-    if (_isMediumScreen(context)) {
+    if (isMediumScreen(context)) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            context.loc.workInProgress,
+            style: const TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          shadowColor: Colors.black,
+          backgroundColor: Colors.yellowAccent,
+        ),
         body: Row(
           children: [
             NavigationRail(
               leading: widget.floatingActionButton,
-              extended: _isLargeScreen(context),
+              extended: isLargeScreen(context),
               destinations: [
                 ...widget.destinations.map(
                   (d) => NavigationRailDestination(
@@ -72,17 +75,24 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
               thickness: 1,
             ),
             Expanded(
-              child: SingleChildScrollView(
-                child: widget.body!,
-              ),
+              child: widget.body!,
             ),
           ],
         ),
       );
     }
 
-    // Show a bottom app bar
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          context.loc.workInProgress,
+          style: const TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        shadowColor: Colors.black,
+        backgroundColor: Colors.yellowAccent,
+      ),
       body: SingleChildScrollView(
         child: widget.body!,
       ),
