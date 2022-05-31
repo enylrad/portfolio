@@ -18,74 +18,79 @@ class GridApps extends StatefulWidget {
 class _GridAppsState extends State<GridApps> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topCenter,
-      child: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: widget.apps.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          var app = widget.apps[index];
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              child: SizedBox(
-                child: Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  elevation: 5,
-                  margin: const EdgeInsets.all(10),
-                  child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: buildImage(app),
-                          colorFilter: ColorFilter.mode(
-                            context.theme.colorScheme.primary.withOpacity(0.3),
-                            BlendMode.dstATop,
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              app.name,
-                              style: context.theme.textTheme.titleLarge,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              app.description,
-                              style: context.theme.textTheme.bodyLarge,
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-              ),
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(context.loc.comingSoon),
-                ));
-              },
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      itemCount: widget.apps.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, index) {
+        return buildCardApp(widget.apps[index], context);
+      },
+      gridDelegate: buildGridDelegate(context),
+    );
+  }
+
+  MouseRegion buildCardApp(AppInfo app, BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        child: SizedBox(
+          child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-          );
-        },
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCountDynamic(context),
-          childAspectRatio: childAspectRatioDynamic(context),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          mainAxisExtent: 200,
+            elevation: 5,
+            margin: const EdgeInsets.all(10),
+            child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: buildImage(app),
+                    colorFilter: ColorFilter.mode(
+                      context.theme.colorScheme.primary.withOpacity(0.3),
+                      BlendMode.dstATop,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        app.name,
+                        style: context.theme.textTheme.titleLarge,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        app.description,
+                        style: context.theme.textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                )),
+          ),
         ),
+        onTap: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(context.loc.comingSoon),
+          ));
+        },
       ),
+    );
+  }
+
+  SliverGridDelegateWithFixedCrossAxisCount buildGridDelegate(
+      BuildContext context) {
+    return SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: crossAxisCountDynamic(context),
+      childAspectRatio: childAspectRatioDynamic(context),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      mainAxisExtent: 200,
     );
   }
 

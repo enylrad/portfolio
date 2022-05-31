@@ -72,9 +72,7 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
     }
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: widget.body!,
-      ),
+      body: widget.body!,
       bottomNavigationBar: NavigationBar(
         destinations: [
           ...widget.destinations.map(
