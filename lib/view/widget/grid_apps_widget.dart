@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/core/model/AppInfo.dart';
 import 'package:my_portfolio/core/utils/size_utils.dart';
+import 'package:my_portfolio/view/widget/adapter_app_widget.dart';
 
 class GridApps extends StatefulWidget {
   final List<AppInfo> apps;
@@ -23,63 +23,11 @@ class _GridAppsState extends State<GridApps> {
       itemCount: widget.apps.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return buildCardApp(widget.apps[index], context);
+        return AdapterApp(
+          app: widget.apps[index],
+        );
       },
       gridDelegate: buildGridDelegate(context),
-    );
-  }
-
-  MouseRegion buildCardApp(AppInfo app, BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        child: SizedBox(
-          child: Card(
-            semanticContainer: true,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            elevation: 5,
-            margin: const EdgeInsets.all(10),
-            child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: buildImage(app),
-                    colorFilter: ColorFilter.mode(
-                      context.theme.colorScheme.primary.withOpacity(0.3),
-                      BlendMode.dstATop,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        app.name,
-                        style: context.theme.textTheme.titleLarge,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        app.description,
-                        style: context.theme.textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-        ),
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(context.loc.comingSoon),
-          ));
-        },
-      ),
     );
   }
 
@@ -92,14 +40,6 @@ class _GridAppsState extends State<GridApps> {
       mainAxisSpacing: 10,
       mainAxisExtent: 200,
     );
-  }
-
-  ImageProvider buildImage(AppInfo app) {
-    if (app.image.startsWith('assets')) {
-      return AssetImage(app.image);
-    } else {
-      return NetworkImage(app.image);
-    }
   }
 
   double childAspectRatioDynamic(BuildContext context) {
