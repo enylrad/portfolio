@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_portfolio/core/model/dto/dto.dart';
 import 'package:my_portfolio/core/theme/app_theme_config.dart';
+import 'package:my_portfolio/core/theme/dto/dto.dart';
 import 'package:my_portfolio/core/theme/style_type.dart';
 
 part 'app_theme_config_dto.g.dart';

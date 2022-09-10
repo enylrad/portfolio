@@ -1,4 +1,4 @@
-import 'package:my_portfolio/core/constants/assets_images_const.dart';
+import 'package:my_portfolio/assets.dart';
 
 enum Social {
   github,
@@ -25,25 +25,25 @@ SocialType buildSocialNetwork(Social social, String idUser) {
       return SocialType(
         social: social,
         url: 'https://github.com/$idUser',
-        asset: AssetsImage.github,
+        asset: ImagePaths.github,
       );
     case Social.twitter:
       return SocialType(
         social: social,
         url: 'https://twitter.com/$idUser',
-        asset: AssetsImage.twitter,
+        asset: ImagePaths.twitter,
       );
     case Social.linkedin:
       return SocialType(
         social: social,
         url: 'https://www.linkedin.com/in/$idUser',
-        asset: AssetsImage.linkedin,
+        asset: ImagePaths.linkedin,
       );
     case Social.mail:
       return SocialType(
         social: social,
         url: 'mailto:$idUser',
-        asset: AssetsImage.mail,
+        asset: ImagePaths.mail,
       );
   }
 }

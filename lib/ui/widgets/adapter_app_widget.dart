@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
-import 'package:my_portfolio/core/model/AppInfo.dart';
+import 'package:my_portfolio/core/modal/app_info.dart';
 
 class AdapterApp extends StatefulWidget {
   const AdapterApp({
@@ -37,7 +36,7 @@ class _AdapterAppState extends State<AdapterApp> {
             child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: buildImage(widget.app),
+                    image: _buildImage(widget.app),
                     colorFilter: ColorFilter.mode(
                       context.theme.colorScheme.primary
                           .withOpacity(_hover ? 0.5 : 1),
@@ -70,15 +69,17 @@ class _AdapterAppState extends State<AdapterApp> {
           ),
         ),
         onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(context.loc.comingSoon),
-          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(context.loc.comingSoon),
+            ),
+          );
         },
       ),
     );
   }
 
-  ImageProvider buildImage(AppInfo app) {
+  ImageProvider _buildImage(AppInfo app) {
     if (app.image.startsWith('assets')) {
       return AssetImage(app.image);
     } else {

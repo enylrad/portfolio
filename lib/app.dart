@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
 import 'package:my_portfolio/core/theme/app_theme.dart';
 import 'package:my_portfolio/core/theme/app_theme_data.dart';
-import 'package:my_portfolio/view/navigator.dart';
+import 'package:my_portfolio/ui/navigator.dart';
 
 class App extends StatelessWidget {
   const App({

@@ -1,70 +1,70 @@
-import 'package:my_portfolio/core/constants/assets_images_const.dart';
-import 'package:my_portfolio/core/model/AppInfo.dart';
+import 'package:my_portfolio/assets.dart';
+import 'package:my_portfolio/core/modal/app_info.dart';
 
 var appsData = [
   AppInfo(
     name: 'La Última y apago',
     description: '',
-    image: AssetsImage.luya,
+    image: ImagePaths.luya,
   ),
   AppInfo(
     name: 'LaLigaFANTASY MARCA 2016',
     description: '',
-    image: AssetsImage.fantasy,
+    image: ImagePaths.fantasy,
   ),
   AppInfo(
     name: 'padeltrack',
     description: '',
-    image: AssetsImage.padeltrack,
+    image: ImagePaths.padeltrack,
   ),
   AppInfo(
     name: 'IOBI',
     description: '',
-    image: AssetsImage.iobi,
+    image: ImagePaths.iobi,
   ),
   AppInfo(
     name: 'Styloo',
     description: '',
-    image: AssetsImage.styloo,
+    image: ImagePaths.styloo,
   ),
   AppInfo(
     name: 'Bingo Falomir',
     description: '',
-    image: AssetsImage.bingo,
+    image: ImagePaths.bingo,
   ),
   AppInfo(
     name: 'The Here Gallery',
     description: '',
-    image: AssetsImage.thg,
+    image: ImagePaths.thg,
   ),
   AppInfo(
     name: 'Solidalis',
     description: '',
-    image: AssetsImage.solidalis,
+    image: ImagePaths.solidalis,
   ),
   AppInfo(
     name: 'Vouzzer',
     description: '',
-    image: AssetsImage.vouzzer,
+    image: ImagePaths.vouzzer,
   ),
   AppInfo(
     name: 'Mercurio',
     description: '',
-    image: AssetsImage.mercurio,
+    image: ImagePaths.mercurio,
   ),
   AppInfo(
     name: 'Haulap',
     description: '',
-    image: AssetsImage.haulap,
+    image: ImagePaths.haulap,
   ),
   AppInfo(
     name: 'Istobal',
     description: '',
-    image: AssetsImage.istobal,
+    image: ImagePaths.istobal,
   ),
   AppInfo(
     name: 'Bliver',
     description: '',
-    image: AssetsImage.bliver,
+    image: ImagePaths.bliver,
   ),
 ];

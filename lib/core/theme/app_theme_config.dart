@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/model/dto/app_theme_config_dto.dart';
+import 'package:my_portfolio/core/theme/dto/app_theme_config_dto.dart';
 import 'package:my_portfolio/core/theme/style_type.dart';
 
 class AppThemeConfig extends Equatable {

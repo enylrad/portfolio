@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/view/widget/social/social_button_widget.dart';
-import 'package:my_portfolio/view/widget/social/types/social_types.dart';
+import 'package:my_portfolio/ui/widgets/social/social_button_widget.dart';
+import 'package:my_portfolio/ui/widgets/social/types/social_types.dart';
 
 class SocialNetworks extends StatelessWidget {
   const SocialNetworks({Key? key}) : super(key: key);

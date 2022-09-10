@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/view/widget/error_widget.dart';
+import 'package:my_portfolio/ui/widgets/error_widget.dart';
 
 class CrashPage extends StatelessWidget {
   static const String route = '/crash';

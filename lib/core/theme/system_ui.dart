@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_portfolio/core/ext/brightness_ext.dart';
+import 'package:my_portfolio/core/theme/brightness_ext.dart';
 import 'package:my_portfolio/core/theme/color/app_color_scheme.dart';
 
 enum SystemUiType { surface, background, primary }

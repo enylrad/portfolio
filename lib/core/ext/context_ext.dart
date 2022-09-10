@@ -8,3 +8,7 @@ extension LocalizedBuildContext on BuildContext {
 extension ThemeBuildContext on BuildContext {
   ThemeData get theme => Theme.of(this);
 }
+
+extension MediaQueryBuildContext on BuildContext {
+  MediaQueryData get mediaQuery => MediaQuery.of(this);
+}

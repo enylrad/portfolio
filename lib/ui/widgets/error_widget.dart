@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_portfolio/core/constants/assets_lottie_const.dart';
+import 'package:my_portfolio/assets.dart';
 
 class ErrorLottie extends StatelessWidget {
   const ErrorLottie({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class ErrorLottie extends StatelessWidget {
       width: 500,
       padding: const EdgeInsets.all(60.0),
       alignment: Alignment.center,
-      child: Lottie.asset(AssetsLottie.crash),
+      child: Lottie.asset(ImagePaths.crash),
     );
   }
 }

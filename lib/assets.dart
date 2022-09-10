@@ -1,12 +1,9 @@
-class AssetsImage {
+class ImagePaths {
   static const _assetsImages = 'assets/images/';
+  static const _assetsSvg = 'assets/svg/';
+  static const _assetsLottie = 'assets/lottie/';
 
   static const avatar = '${_assetsImages}avatar.jpeg';
-  static const github = '${_assetsImages}github.svg';
-  static const linkedin = '${_assetsImages}linkedin.svg';
-  static const twitter = '${_assetsImages}twitter.svg';
-  static const mail = '${_assetsImages}mail.svg';
-
   static const bingo = '${_assetsImages}p_bingo.png';
   static const bliver = '${_assetsImages}p_bliver.png';
   static const diana = '${_assetsImages}p_diana.png';
@@ -21,4 +18,11 @@ class AssetsImage {
   static const styloo = '${_assetsImages}p_styloo.png';
   static const thg = '${_assetsImages}p_thg.png';
   static const vouzzer = '${_assetsImages}p_vouzzer.png';
+
+  static const github = '${_assetsSvg}github.svg';
+  static const linkedin = '${_assetsSvg}linkedin.svg';
+  static const twitter = '${_assetsSvg}twitter.svg';
+  static const mail = '${_assetsSvg}mail.svg';
+
+  static const crash = '${_assetsLottie}crash_lottie.json';
 }

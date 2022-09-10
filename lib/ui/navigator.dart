@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/view/page/about_me_page.dart';
-import 'package:my_portfolio/view/page/crash_page.dart';
-import 'package:my_portfolio/view/page/curriculum_page.dart';
-import 'package:my_portfolio/view/page/home_page.dart';
-import 'package:my_portfolio/view/page/portfolio_page.dart';
+import 'package:my_portfolio/ui/screens/about/about_me_page.dart';
+import 'package:my_portfolio/ui/screens/crash/crash_page.dart';
+import 'package:my_portfolio/ui/screens/curriculum/curriculum_page.dart';
+import 'package:my_portfolio/ui/screens/home/home_page.dart';
+import 'package:my_portfolio/ui/screens/portfolio/portfolio_page.dart';
 
 Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{

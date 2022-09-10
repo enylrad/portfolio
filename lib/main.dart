@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/app.dart';
-import 'package:my_portfolio/core/factory/app_theme_factory.dart';
+import 'package:my_portfolio/core/theme/app_theme_factory.dart';
 import 'package:my_portfolio/core/theme/style_type.dart';
 
 void main() async {

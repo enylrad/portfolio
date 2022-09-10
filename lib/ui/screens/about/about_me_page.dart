@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
-import 'package:my_portfolio/view/widget/avatar_profile_widget.dart';
-import 'package:my_portfolio/view/widget/social_buttons_widget.dart';
+import 'package:my_portfolio/ui/widgets/avatar_profile_widget.dart';
+import 'package:my_portfolio/ui/widgets/social_buttons_widget.dart';
 
 class AboutMePage extends StatelessWidget {
   static const String route = '/aboutme';

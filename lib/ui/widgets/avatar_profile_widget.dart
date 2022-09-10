@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/constants/assets_images_const.dart';
+import 'package:my_portfolio/assets.dart';
 import 'package:my_portfolio/core/ext/context_ext.dart';
 
 class AvatarProfile extends StatelessWidget {
@@ -14,7 +14,7 @@ class AvatarProfile extends StatelessWidget {
           height: 120.0,
           decoration: BoxDecoration(
             image: const DecorationImage(
-              image: AssetImage(AssetsImage.avatar),
+              image: AssetImage(ImagePaths.avatar),
               fit: BoxFit.cover,
             ),
             borderRadius: const BorderRadius.all(Radius.circular(120.0)),

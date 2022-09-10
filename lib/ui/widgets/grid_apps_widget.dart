@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/core/model/AppInfo.dart';
+import 'package:my_portfolio/core/ext/context_ext.dart';
+import 'package:my_portfolio/core/modal/app_info.dart';
 import 'package:my_portfolio/core/utils/size_utils.dart';
-import 'package:my_portfolio/view/widget/adapter_app_widget.dart';
+import 'package:my_portfolio/ui/widgets/adapter_app_widget.dart';
 
 class GridApps extends StatefulWidget {
   final List<AppInfo> apps;
@@ -43,7 +44,7 @@ class _GridAppsState extends State<GridApps> {
   }
 
   double childAspectRatioDynamic(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = context.mediaQuery.size;
 
     double height;
 
