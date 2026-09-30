@@ -130,11 +130,11 @@
         </div>
 
         <!-- Visual: head unit de vehículo con app Android -->
-        <div class="hero-visual" aria-hidden="true">
+        <div class="hero-visual">
           <div class="device tilt-scene">
             <div class="device-bezel">
               <div class="hu">
-                <div class="hu-status">
+                <div class="hu-status" aria-hidden="true">
                   <span class="hu-time">12:45</span>
                   <span class="hu-status-icons">
                     <svg viewBox="0 0 24 24"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
@@ -143,7 +143,7 @@
                   </span>
                 </div>
                 <div class="hu-grid">
-                  <div class="hu-card hu-bt">
+                  <div class="hu-card hu-bt" aria-hidden="true">
                     <div class="bt-rings"><span></span><span></span><span></span>
                       <span class="bt-icon" data-sprite="bluetooth"></span>
                     </div>
@@ -153,17 +153,17 @@
                       <p class="hu-sub">HFP · A2DP · AVRCP</p>
                     </div>
                   </div>
-                  <div class="hu-card hu-media">
-                    <div class="hu-art" data-sprite="cover"></div>
-                    <div class="hu-media-info">
-                      <p class="hu-label">Now playing</p>
-                      <p class="hu-value">It’s Time</p>
-                      <p class="hu-sub">Imagine Dragons</p>
-                      <div class="hu-eq"><span></span><span></span><span></span><span></span><span></span><span></span></div>
-                      <div class="hu-progress"><span></span></div>
-                    </div>
-                  </div>
-                  <div class="hu-card hu-nav">
+                  <button type="button" class="hu-card hu-media" data-music aria-label="Reproducir It’s Time de Imagine Dragons" data-i18n-attr="aria-label:music.play">
+                    <span class="hu-art" aria-hidden="true"><span class="hu-art-img" data-sprite="cover"></span><span class="hu-play"></span></span>
+                    <span class="hu-media-info" aria-hidden="true">
+                      <span class="hu-label">Now playing</span>
+                      <span class="hu-value">It’s Time</span>
+                      <span class="hu-sub">Imagine Dragons</span>
+                      <span class="hu-eq"><span></span><span></span><span></span><span></span><span></span><span></span></span>
+                      <span class="hu-progress"><span></span></span>
+                    </span>
+                  </button>
+                  <div class="hu-card hu-nav" aria-hidden="true">
                     <svg viewBox="0 0 40 22" class="hu-map" shape-rendering="crispEdges">
                       <path class="map-road" d="M0 17H40M0 6H40M9 0V22M30 0V22"/>
                       <path class="map-route" d="M3 17H9V6H30V11H36"/>
@@ -171,18 +171,18 @@
                     </svg>
                     <p class="hu-sub">ETA 18 min · 12 km</p>
                   </div>
-                  <div class="hu-card hu-climate">
+                  <div class="hu-card hu-climate" aria-hidden="true">
                     <p class="hu-label">Climate</p>
                     <p class="hu-big">21.5°</p>
                     <div class="hu-fan"><span></span><span></span><span></span><span></span></div>
                   </div>
                 </div>
-                <div class="hu-dock">
+                <div class="hu-dock" aria-hidden="true">
                   <span></span><span></span><span class="is-on"></span><span></span><span></span>
                 </div>
               </div>
             </div>
-            <div class="code-card">
+            <div class="code-card" aria-hidden="true">
               <div class="code-head"><i></i><i></i><i></i><span>VehicleViewModel.kt</span></div>
 <pre><code><span class="k">val</span> state <span class="k">by</span> vm.connection
     .<span class="f">collectAsStateWithLifecycle</span>()
@@ -192,9 +192,9 @@
         bt.<span class="f">startStreaming</span>()
 }</code></pre>
             </div>
-            <span class="float-chip chip-a">Kotlin</span>
-            <span class="float-chip chip-b">Jetpack Compose</span>
-            <span class="float-chip chip-c">Bluetooth LE</span>
+            <span aria-hidden="true" class="float-chip chip-a">Kotlin</span>
+            <span aria-hidden="true" class="float-chip chip-b">Jetpack Compose</span>
+            <span aria-hidden="true" class="float-chip chip-c">Bluetooth LE</span>
           </div>
         </div>
       </div>
@@ -585,6 +585,15 @@
   </footer>
 
   <div class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ MÚSICA: IT'S TIME (se carga solo al pulsar la tarjeta del head unit) ============ -->
+  <div class="music" hidden role="dialog" aria-label="It’s Time — Imagine Dragons">
+    <div class="music-head">
+      <span class="music-title">♪ It’s Time — Imagine Dragons</span>
+      <button class="music-close" type="button" aria-label="Cerrar reproductor" data-i18n-attr="aria-label:music.close">✕</button>
+    </div>
+    <div class="music-frame"></div>
+  </div>
 
   <!-- ============ EASTER EGG: DROID RUNNER ============ -->
   <dialog class="game" aria-labelledby="game-title">

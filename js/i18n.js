@@ -155,6 +155,9 @@ export const en = {
 
   'footer.top': 'Back to top ↑',
 
+  'music.play': 'Play It’s Time by Imagine Dragons',
+  'music.close': 'Close player',
+
   'game.play': 'Play Droid Runner',
   'game.close': 'Close game',
   'game.score': 'Score',

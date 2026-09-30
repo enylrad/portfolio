@@ -324,6 +324,35 @@ function heroPixelField() {
 heroPixelField();
 
 /* =========================================================
+   Música: «It's Time» desde el head unit
+   (el iframe de YouTube solo se crea al pulsar)
+   ========================================================= */
+const musicBtn = $('[data-music]');
+const musicBox = $('.music');
+const musicFrame = $('.music-frame', musicBox);
+function openMusic() {
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube-nocookie.com/embed/sENM2wA_FTg?autoplay=1&rel=0&modestbranding=1';
+  iframe.title = 'Imagine Dragons — It’s Time';
+  iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+  iframe.allowFullscreen = true;
+  musicFrame.replaceChildren(iframe);
+  musicBox.hidden = false;
+  musicBtn.classList.add('is-playing');
+  musicBtn.setAttribute('aria-expanded', 'true');
+}
+function closeMusic() {
+  musicFrame.replaceChildren();
+  musicBox.hidden = true;
+  musicBtn.classList.remove('is-playing');
+  musicBtn.setAttribute('aria-expanded', 'false');
+}
+musicBtn.setAttribute('aria-expanded', 'false');
+musicBtn.addEventListener('click', () => (musicBox.hidden ? openMusic() : closeMusic()));
+$('.music-close', musicBox).addEventListener('click', () => { closeMusic(); musicBtn.focus({ preventScroll: true }); });
+musicBox.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMusic(); musicBtn.focus({ preventScroll: true }); } });
+
+/* =========================================================
    Easter egg: Droid Runner (código Konami o el droide del footer)
    ========================================================= */
 let lenis = null;

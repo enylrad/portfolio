@@ -346,11 +346,28 @@ main, .footer { position: relative; z-index: 1; }
   position: relative; width: 28px; height: 28px; padding: 5px 7px; background: #3b82f6;
   box-shadow: 3px 3px 0 #1e3a8a;
 }
-.hu-media { display: flex; gap: 12px; align-items: center; }
-.hu-art { width: 52px; height: 52px; flex: none; box-shadow: 0 0 0 2px #2d3170, 3px 3px 0 2px #000; }
+.hu-media { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer; transition: box-shadow .15s steps(2); }
+.hu-media:hover, .hu-media:focus-visible { box-shadow: inset 0 0 0 2px #ff5c8a, inset 0 -4px 0 0 rgba(0, 0, 0, .35); outline: none; }
+.hu-media .hu-label, .hu-media .hu-sub, .hu-media .hu-progress { display: block; }
+.hu-media-info { display: block; }
+.hu-art { position: relative; display: block; width: 52px; height: 52px; flex: none; box-shadow: 0 0 0 2px #2d3170, 3px 3px 0 2px #000; }
+.hu-art-img { display: block; width: 100%; height: 100%; }
+.hu-play {
+  /* Triángulo ▶ pixel sobre la portada */
+  position: absolute; inset: 0; display: grid; place-items: center; background: rgba(8, 10, 15, .45);
+  opacity: 0; transition: opacity .15s steps(2);
+}
+.hu-play::before {
+  content: ''; width: 14px; height: 16px; background: #fff;
+  clip-path: polygon(0 0, 25% 0, 25% 12.5%, 50% 12.5%, 50% 25%, 75% 25%, 75% 37.5%, 100% 37.5%, 100% 62.5%, 75% 62.5%, 75% 75%, 50% 75%, 50% 87.5%, 25% 87.5%, 25% 100%, 0 100%);
+}
+.hu-media.is-playing .hu-play::before { width: 14px; clip-path: polygon(0 0, 35% 0, 35% 100%, 0 100%, 0 0, 65% 0, 100% 0, 100% 100%, 65% 100%, 65% 0); }
+.hu-media:hover .hu-play, .hu-media:focus-visible .hu-play, .hu-media.is-playing .hu-play { opacity: 1; }
+@media (hover: none) { .hu-play { opacity: .85; } }
 .hu-media-info { min-width: 0; flex: 1; }
 .hu-eq { display: flex; align-items: flex-end; gap: 2px; height: 12px; margin-top: 5px; }
-.hu-eq span { width: 4px; height: 100%; background: #ff5c8a; transform-origin: 50% 100%; animation: eq .9s steps(3) infinite alternate; }
+.hu-eq span { width: 4px; height: 100%; background: #ff5c8a; transform-origin: 50% 100%; transform: scaleY(.25); animation: eq .9s steps(3) infinite alternate paused; }
+.hu-media.is-playing .hu-eq span, .hu-media.is-playing .hu-progress span { animation-play-state: running; }
 .hu-eq span:nth-child(2) { animation-delay: -.3s; background: #ff8a5c; }
 .hu-eq span:nth-child(3) { animation-delay: -.6s; background: #ffb703; }
 .hu-eq span:nth-child(4) { animation-delay: -.15s; background: #ff8a5c; }
@@ -362,7 +379,7 @@ main, .footer { position: relative; z-index: 1; }
   -webkit-mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 6px);
   mask: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 6px);
 }
-.hu-progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #ff5c8a, #ffb703); transform-origin: 0 50%; animation: progress 9s steps(24) infinite; }
+.hu-progress span { display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #ff5c8a, #ffb703); transform-origin: 0 50%; animation: progress 9s steps(24) infinite paused; }
 @keyframes progress { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
 .hu-nav { padding: 8px 10px; display: flex; flex-direction: column; }
 .hu-map { flex: 1; width: 100%; min-height: 0; }
@@ -745,7 +762,7 @@ main, .footer { position: relative; z-index: 1; }
    Borde con esquinas escalonadas y sombra dura, hecho con box-shadow
    (clip-path recortaría la sombra). --pb = borde, --ps = sombra. */
 .btn, .icon-btn, .copy-btn, .social, .nav-logo-mark, .hero-eyebrow, .float-chip, .photo-badge,
-.about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close,
+.about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close, .music, .music-close,
 .hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .lang-list li {
   --pb: var(--px-line);
   --ps: var(--px-shadow);
@@ -767,6 +784,20 @@ main, .footer { position: relative; z-index: 1; }
 .btn:active, .social:active, .icon-btn:active, .copy-btn:active { translate: var(--px) var(--px); --ps: transparent; }
 .icon-btn:hover { --pb: var(--accent); }
 .toast { --pb: var(--text); }
+
+/* ---------- Mini reproductor «It's Time» ---------- */
+.music {
+  --pb: #ff5c8a;
+  position: fixed; right: 16px; bottom: 16px; z-index: 140;
+  width: min(360px, calc(100vw - 32px)); padding: 10px; background: var(--bg-2);
+}
+.music[hidden] { display: none; }
+.music-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.music-title { font: 600 .9rem/1.2 var(--font-pixel); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.music-close { --px: 3px; flex: none; width: 30px; height: 30px; display: grid; place-items: center; font: 600 .9rem/1 var(--font-pixel); background: var(--surface); }
+.music-close:hover { --pb: #ff5c8a; }
+.music-frame { aspect-ratio: 16 / 9; background: #000; }
+.music-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
 
 /* ---------- Easter egg: Droid Runner ---------- */
 .game {
