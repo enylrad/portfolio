@@ -38,7 +38,7 @@ export const en = {
   'stats.senior': 'Years as Senior',
   'stats.auto': 'Years in automotive',
 
-  'about.photoAlt': 'Pixel art portrait of David Pérez Salort holding a sword in an armoury',
+  'about.photoAlt': 'Pixel art portrait of David Pérez Salort holding a sword in a castle hall',
   'about.badge': 'Stellantis · Coremain',
   'about.kicker': 'Profile',
   'about.title': 'Native Android by trade. Continuous improvement by conviction.',
