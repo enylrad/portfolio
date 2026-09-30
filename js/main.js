@@ -223,9 +223,18 @@ function heroPixelField() {
   const hero = $('.hero');
   const CELL = 14, RADIUS = 7;
   const pointer = { x: -9999, y: -9999 };
-  let w = 0, h = 0, dpr = 1, cols = 0, rows = 0;
-  let star, phase, speed, heat;
+  let w = 0, h = 0, dpr = 1, cols = 0, rows = 0, heroTop = 0;
+  let stars = [], phase, speed, heat, isHot, hot = [];
   let base = '180,200,230', lit = '61,220,132', running = false, visible = true, frame = 0, last = 0;
+
+  // Vecindario del puntero precalculado: [dc, dr, nivel] en 4 niveles (sin degradados suaves).
+  const kernel = [];
+  for (let dr = -RADIUS; dr <= RADIUS; dr++) {
+    for (let dc = -RADIUS; dc <= RADIUS; dc++) {
+      const d = Math.hypot(dc, dr);
+      if (d <= RADIUS) kernel.push([dc, dr, Math.ceil((1 - d / RADIUS) * 4) / 4]);
+    }
+  }
 
   const readColors = () => {
     const cs = getComputedStyle(root);
@@ -235,33 +244,28 @@ function heroPixelField() {
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2);
     w = hero.clientWidth; h = hero.clientHeight;
+    heroTop = hero.getBoundingClientRect().top + scrollY;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cols = Math.ceil(w / CELL); rows = Math.ceil(h / CELL);
     const n = cols * rows;
-    star = new Uint8Array(n); phase = new Float32Array(n); speed = new Float32Array(n); heat = new Float32Array(n);
+    phase = new Float32Array(n); speed = new Float32Array(n); heat = new Float32Array(n); isHot = new Uint8Array(n);
+    stars = []; hot = [];
     for (let i = 0; i < n; i++) {
-      star[i] = Math.random() < 0.16 ? 1 : 0;
+      if (Math.random() < 0.16) stars.push(i);
       phase[i] = Math.random() * Math.PI * 2;
       speed[i] = 0.6 + Math.random() * 1.8;
     }
     if (!running) draw(performance.now(), 0);
   }
-  // Calienta las celdas alrededor de un punto, en 4 niveles (sin degradados suaves).
   function warm(px, py) {
     const pc = Math.floor(px / CELL), pr = Math.floor(py / CELL);
-    for (let dr = -RADIUS; dr <= RADIUS; dr++) {
-      const r = pr + dr;
-      if (r < 0 || r >= rows) continue;
-      for (let dc = -RADIUS; dc <= RADIUS; dc++) {
-        const c = pc + dc;
-        if (c < 0 || c >= cols) continue;
-        const d = Math.hypot(dc, dr);
-        if (d > RADIUS) continue;
-        const v = Math.ceil((1 - d / RADIUS) * 4) / 4;
-        const i = r * cols + c;
-        if (v > heat[i]) heat[i] = v;
-      }
+    for (const [dc, dr, v] of kernel) {
+      const c = pc + dc, r = pr + dr;
+      if (c < 0 || c >= cols || r < 0 || r >= rows) continue;
+      const i = r * cols + c;
+      if (v > heat[i]) heat[i] = v;
+      if (!isHot[i]) { isHot[i] = 1; hot.push(i); }
     }
   }
   function draw(now, dt) {
@@ -273,25 +277,30 @@ function heroPixelField() {
     }
     // Estrellas de 8 bits parpadeando
     ctx.fillStyle = `rgb(${base})`;
-    for (let i = 0; i < heat.length; i++) {
-      if (!star[i] || heat[i] > 0.05) continue;
+    for (const i of stars) {
+      if (heat[i] > 0.05) continue;
       const tw = 0.5 + 0.5 * Math.sin(phase[i] + t * speed[i]);
       const a = Math.round((0.05 + tw * 0.32) * 8) / 8;
       if (a <= 0) continue;
       const size = tw > 0.8 ? 3 : 2;
       ctx.globalAlpha = a;
-      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), Math.floor(i / cols) * CELL + ((CELL - size) >> 1), size, size);
+      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), ((i / cols) | 0) * CELL + ((CELL - size) >> 1), size, size);
     }
-    // Píxeles encendidos por el puntero
+    // Píxeles encendidos por el puntero (solo se recorren las celdas calientes)
     const decay = dt * 1.4;
     ctx.fillStyle = `rgb(${lit})`;
-    for (let i = 0; i < heat.length; i++) {
+    for (let k = hot.length - 1; k >= 0; k--) {
+      const i = hot[k];
       const v = heat[i];
-      if (v <= 0.05) continue;
+      if (v <= 0.05) {
+        heat[i] = 0; isHot[i] = 0;
+        hot[k] = hot[hot.length - 1]; hot.pop();
+        continue;
+      }
       const q = Math.ceil(v * 4) / 4;
       const size = 2 + Math.round(q * 4) * 2;
       ctx.globalAlpha = 0.12 + q * 0.6;
-      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), Math.floor(i / cols) * CELL + ((CELL - size) >> 1), size, size);
+      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), ((i / cols) | 0) * CELL + ((CELL - size) >> 1), size, size);
       heat[i] = Math.max(0, v - decay);
     }
     ctx.globalAlpha = 1;
@@ -309,21 +318,32 @@ function heroPixelField() {
     else if (!should && running) { running = false; cancelAnimationFrame(frame); }
   }
 
-  readColors();
-  resize();
-  let rt;
-  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
-  addEventListener('themechange', () => { readColors(); if (!running) draw(performance.now(), 0); });
-  hero.addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
-    pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
-  });
-  hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; });
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }).observe(hero);
-  document.addEventListener('visibilitychange', update);
-  update();
+  // Arranca tras el primer pintado para no competir con la carga inicial.
+  const boot = () => {
+    readColors();
+    resize();
+    let rt;
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
+    addEventListener('themechange', () => { readColors(); if (!running) draw(performance.now(), 0); });
+    // Sin getBoundingClientRect en cada movimiento: la posición del hero se calcula en resize.
+    hero.addEventListener('pointermove', (e) => { pointer.x = e.clientX; pointer.y = e.pageY - heroTop; });
+    hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; });
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }).observe(hero);
+    document.addEventListener('visibilitychange', update);
+    update();
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 1200 });
+  else setTimeout(boot, 300);
 }
 heroPixelField();
+
+/* =========================================================
+   Pausa las animaciones CSS infinitas cuando su bloque no se ve
+   ========================================================= */
+const offscreenIO = new IntersectionObserver((entries) => {
+  entries.forEach((e) => e.target.classList.toggle('is-offscreen', !e.isIntersecting));
+}, { rootMargin: '100px' });
+$$('.hero-visual, .marquee, .photo-frame').forEach((el) => offscreenIO.observe(el));
 
 /* =========================================================
    Música: «It's Time» desde el head unit
@@ -410,10 +430,14 @@ function splitName() {
   // Degradado continuo a lo largo del apellido aunque cada letra sea un elemento.
   const gradLine = $('.gradient-text', h1);
   const fitGradient = () => {
-    const width = gradLine.querySelector('.word').offsetWidth;
-    $$('.char', gradLine).forEach((c) => {
+    // Primero todas las lecturas y luego todas las escrituras (evita reflows forzados).
+    const word = gradLine.querySelector('.word');
+    const width = word.offsetWidth, wordLeft = word.offsetLeft;
+    const chars = $$('.char', gradLine);
+    const lefts = chars.map((c) => c.offsetLeft);
+    chars.forEach((c, i) => {
       c.style.backgroundSize = `${width}px 100%`;
-      c.style.backgroundPosition = `${-c.offsetLeft + gradLine.querySelector('.word').offsetLeft}px 0`;
+      c.style.backgroundPosition = `${wordLeft - lefts[i]}px 0`;
     });
   };
   fitGradient();

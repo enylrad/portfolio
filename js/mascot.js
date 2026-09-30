@@ -153,10 +153,11 @@ export function initMascot() {
     }
   }
 
+  // Redibuja solo cuando cambia el "tick": 40 ms en transiciones (pasos de 2 px) y 90 ms en reposo.
   function frame(now) {
-    const p = pose(now);
-    const key = JSON.stringify(p) + state + Math.floor(now / 90);
-    if (key !== lastKey) { lastKey = key; draw(p); }
+    const idle = state === 'idleDark' || state === 'idleLight';
+    const key = state + ':' + Math.floor(now / (idle ? 90 : 40));
+    if (key !== lastKey) { lastKey = key; draw(pose(now)); }
     raf = requestAnimationFrame(frame);
   }
   const start = () => { if (!raf) raf = requestAnimationFrame(frame); };
