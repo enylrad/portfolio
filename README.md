@@ -38,9 +38,18 @@ Cada proyecto es un `<li class="cart">` en la sección `#projects` de `index.htm
 
 Código Konami (↑↑↓↓←→←→BA) o clic en el droide del footer: abre «Droid Runner», un runner pixel art en `js/game.js`. El récord se guarda en `localStorage`.
 
-## Pendiente
+## CV en PDF
 
-- **CV:** coloca el PDF en `cv/` y cambia `href="#"` del botón `data-cv` en `index.html` por su ruta, añadiendo el atributo `download`.
+El botón «Descargar CV» sirve `cv/David-Perez-Salort-CV-ES.pdf` o `-EN.pdf` según el idioma activo. Los PDFs salen de `cv/cv.html` (misma información que la web, en ES/EN con `?lang=`). Para regenerarlos, con el servidor local en marcha:
+
+```bash
+EDGE="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
+for L in es en; do
+  "$EDGE" --headless=new --no-pdf-header-footer --virtual-time-budget=6000     --print-to-pdf="cv/David-Perez-Salort-CV-${L^^}.pdf" "http://localhost:8000/cv/cv.html?lang=$L"
+done
+```
+
+Si cambias textos de experiencia o proyectos en la web, actualízalos también en `cv/cv.html`.
 
 ## Despliegue en Firebase Hosting
 

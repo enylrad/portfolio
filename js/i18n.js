@@ -150,6 +150,7 @@ export const en = {
   'contact.copy': 'Copy',
   'contact.copied': 'Email copied to clipboard',
   'contact.cv': 'Download CV',
+  'contact.cvHref': 'cv/David-Perez-Salort-CV-EN.pdf',
   'contact.cvSoon': 'CV available soon',
 
   'footer.top': 'Back to top ↑',
