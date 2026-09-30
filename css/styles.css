@@ -786,9 +786,16 @@ main, .footer { position: relative; z-index: 1; }
 .js-anim .mask > span { transform: translateY(105%); }
 .js-anim .tl-card, .js-anim .tl-date { opacity: 0; }
 
-/* ---------- View transitions (cambio de idioma) ---------- */
+/* ---------- View transitions ---------- */
 .no-tx *, .no-tx *::before, .no-tx *::after, .no-tx { transition: none !important; }
+/* Idioma: fundido corto */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+/* Tema: la instantánea nueva se revela por cuadros (máscara desde JS);
+   la animación "hold" solo mantiene viva la transición mientras dura. */
+html.vt-pixel::view-transition-old(root),
+html.vt-pixel::view-transition-new(root) { animation: vt-hold .72s linear both; mix-blend-mode: normal; }
+html.vt-pixel::view-transition-new(root) { z-index: 1; }
+@keyframes vt-hold { from { opacity: 1; } to { opacity: 1; } }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

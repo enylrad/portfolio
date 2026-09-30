@@ -97,68 +97,65 @@ function setTheme(theme) {
   updateThemeLabel();
   window.dispatchEvent(new Event('themechange'));
 }
-// Transición pixel: cuadros que cubren la pantalla desde el botón, cambio de tema y se destapan.
+// Transición pixel: la web con el tema nuevo aparece por cuadros sobre la vieja,
+// enmascarando la instantánea nueva de la View Transition con una rejilla SVG.
 let themeBusy = false;
-function pixelThemeSwap(next, originX, originY) {
-  const CELL = 40, COVER = 380, REVEAL = 380, EDGE = 70;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  const dpr = Math.min(devicePixelRatio || 1, 2);
-  const w = innerWidth, h = innerHeight;
-  canvas.width = w * dpr; canvas.height = h * dpr;
-  canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:9999;pointer-events:none';
-  ctx.scale(dpr, dpr);
-  document.body.appendChild(canvas);
-
-  const cols = Math.ceil(w / CELL), rows = Math.ceil(h / CELL);
-  const maxD = Math.hypot(Math.max(originX, w - originX), Math.max(originY, h - originY)) / CELL;
-  const cells = [];
+function pixelThemeTransition(next, originX, originY) {
+  const CELL = 16, DURATION = 650, STEPS = 14;
+  const cols = Math.ceil(innerWidth / CELL), rows = Math.ceil(innerHeight / CELL);
+  const maxD = Math.hypot(Math.max(originX, innerWidth - originX), Math.max(originY, innerHeight - originY)) / CELL;
+  const times = new Float32Array(cols * rows);
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const d = Math.hypot(c + 0.5 - originX / CELL, r + 0.5 - originY / CELL);
-      cells.push({ x: c * CELL, y: r * CELL, t: Math.min(1, (d / maxD) * 0.8 + Math.random() * 0.2) });
+      times[r * cols + c] = Math.min(1, (d / maxD) * 0.75 + Math.random() * 0.25);
     }
   }
-  const fill = next === 'light' ? '#f6f7f9' : '#07090d';
-  const edge = next === 'light' ? '#1fb866' : '#3ddc84';
-  let start = performance.now(), phase = 'cover';
 
-  function frame(now) {
-    const el = now - start;
-    ctx.clearRect(0, 0, w, h);
-    if (phase === 'cover') {
-      const p = el / COVER;
-      for (const cell of cells) {
-        const since = el - cell.t * COVER;
-        if (since < 0) continue;
-        ctx.fillStyle = since < EDGE ? edge : fill;
-        ctx.fillRect(cell.x, cell.y, CELL, CELL);
+  const style = document.createElement('style');
+  const setMask = (progress) => {
+    let rects = '';
+    for (let r = 0; r < rows; r++) {
+      let c = 0;
+      while (c < cols) {
+        if (times[r * cols + c] > progress) { c++; continue; }
+        const start = c;
+        while (c < cols && times[r * cols + c] <= progress) c++;
+        rects += `<rect x="${start}" y="${r}" width="${c - start}" height="1"/>`;
       }
-      if (p >= 1 + EDGE / COVER) {
-        root.classList.add('no-tx');
-        setTheme(next);
-        requestAnimationFrame(() => root.classList.remove('no-tx'));
-        phase = 'reveal';
-        start = now;
-      }
-    } else {
-      ctx.fillStyle = fill;
-      for (const cell of cells) {
-        if (el < cell.t * REVEAL) ctx.fillRect(cell.x, cell.y, CELL, CELL);
-      }
-      if (el >= REVEAL) { canvas.remove(); themeBusy = false; return; }
     }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cols} ${rows}" preserveAspectRatio="none" shape-rendering="crispEdges" fill="#fff">${rects}</svg>`;
+    const url = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+    style.textContent = `html.vt-pixel::view-transition-new(root){-webkit-mask-image:${url};mask-image:${url};-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}`;
+  };
+  setMask(-1);
+  document.head.appendChild(style);
+
+  root.classList.add('vt-pixel', 'no-tx');
+  const vt = document.startViewTransition(() => setTheme(next));
+  vt.ready.then(() => {
+    const t0 = performance.now();
+    let lastStep = -1;
+    const frame = (now) => {
+      const step = Math.min(STEPS, Math.floor(((now - t0) / DURATION) * STEPS));
+      if (step !== lastStep) { lastStep = step; setMask(step / STEPS); }
+      if (step < STEPS) requestAnimationFrame(frame);
+    };
     requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  }).catch(() => {});
+  vt.finished.finally(() => {
+    style.remove();
+    root.classList.remove('vt-pixel', 'no-tx');
+    themeBusy = false;
+  });
 }
 $('.theme-toggle').addEventListener('click', (e) => {
   const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-  if (reducedMotion) return setTheme(next);
+  if (reducedMotion || !document.startViewTransition) return setTheme(next);
   if (themeBusy) return;
   themeBusy = true;
   const r = e.currentTarget.getBoundingClientRect();
-  pixelThemeSwap(next, r.left + r.width / 2, r.top + r.height / 2);
+  pixelThemeTransition(next, r.left + r.width / 2, r.top + r.height / 2);
 });
 themeMeta.setAttribute('content', root.dataset.theme === 'light' ? '#f6f7f9' : '#07090d');
 
