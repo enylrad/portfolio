@@ -137,6 +137,12 @@ export const en = {
   'edu.c2': 'Android: Introduction to Programming (verified certificate)',
   'edu.c3': 'Git, version control',
   'edu.c4': 'CCNA Exploration: Network Fundamentals, LAN Switching and Wireless, Routing Protocols',
+  'edu.langs': 'Languages',
+  'lang.es': 'Spanish',
+  'lang.esLevel': 'Native',
+  'lang.en': 'English',
+  'lang.enLevel': 'Limited working proficiency',
+  'lang.more': 'I also speak Galician and Catalan.',
 
   'contact.kicker': 'Contact',
   'contact.title': "Let's build something solid.",

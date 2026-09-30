@@ -656,7 +656,15 @@ main, .footer { position: relative; z-index: 1; }
 .edu-year { grid-row: span 2; font: 500 .9rem/1.5 var(--font-pixel); color: var(--accent-text); }
 .edu-list strong { font: 600 1rem/1.4 var(--font-display); }
 .edu-list li > span:last-child { font-size: .86rem; color: var(--muted); }
+.edu-langs { margin-top: clamp(40px, 5vw, 64px); }
+.lang-list { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 24px; }
+.lang-list li { display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; background: var(--surface); }
+.lang-code { display: grid; place-items: center; width: 34px; height: 34px; font: 600 .95rem/1 var(--font-pixel); color: var(--on-accent); background: var(--accent); box-shadow: 3px 3px 0 var(--px-shadow); }
+.lang-list strong { font: 600 1rem/1.3 var(--font-display); }
+.lang-list li > span:last-child { font-size: .88rem; color: var(--muted); }
+.lang-more { margin-top: 18px; font-size: .9rem; color: var(--faint); }
 @media (max-width: 860px) { .edu-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .lang-list { flex-direction: column; } }
 @media (max-width: 480px) { .edu-list li { grid-template-columns: 1fr; } .edu-year { grid-row: auto; } }
 
 /* ---------- Contact ---------- */
@@ -729,7 +737,7 @@ main, .footer { position: relative; z-index: 1; }
    (clip-path recortaría la sombra). --pb = borde, --ps = sombra. */
 .btn, .icon-btn, .copy-btn, .social, .nav-logo-mark, .hero-eyebrow, .float-chip, .photo-badge,
 .about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close,
-.hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight {
+.hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .lang-list li {
   --pb: var(--px-line);
   --ps: var(--px-shadow);
   border: 0; border-radius: 0;
@@ -743,7 +751,7 @@ main, .footer { position: relative; z-index: 1; }
 }
 /* Chips pequeños: trazo de 2px y sin sombra */
 .hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .float-chip { --px: 2px; --ps: transparent; }
-.hero-eyebrow, .photo-badge, .icon-btn, .copy-btn, .nav-logo-mark { --px: 3px; }
+.hero-eyebrow, .photo-badge, .icon-btn, .copy-btn, .nav-logo-mark, .lang-list li { --px: 3px; }
 .btn-primary { --pb: var(--text); }
 .btn-primary:hover { --pb: var(--accent); }
 .btn-cv { --pb: var(--accent); }
