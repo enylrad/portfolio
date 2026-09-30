@@ -325,17 +325,17 @@ heroPixelField();
 
 /* =========================================================
    Música: «It's Time» desde el head unit
-   (el iframe de YouTube solo se crea al pulsar)
+   (el iframe de Spotify solo se crea al pulsar)
    ========================================================= */
 const musicBtn = $('[data-music]');
 const musicBox = $('.music');
 const musicFrame = $('.music-frame', musicBox);
 function openMusic() {
   const iframe = document.createElement('iframe');
-  iframe.src = 'https://www.youtube-nocookie.com/embed/sENM2wA_FTg?autoplay=1&rel=0&modestbranding=1';
-  iframe.title = 'Imagine Dragons — It’s Time';
-  iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
-  iframe.allowFullscreen = true;
+  iframe.src = 'https://open.spotify.com/embed/track/7MXlTgQeo3IVlMpLnZuhxc?theme=0';
+  iframe.title = 'Imagine Dragons — It’s Time (Spotify)';
+  iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+  iframe.loading = 'eager';
   musicFrame.replaceChildren(iframe);
   musicBox.hidden = false;
   musicBtn.classList.add('is-playing');
