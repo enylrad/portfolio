@@ -1,5 +1,6 @@
 import { en, esExtra, meta } from './i18n.js';
 import { mountSprites } from './sprites.js';
+import { initMascot } from './mascot.js';
 
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
@@ -13,6 +14,7 @@ const store = {
 
 $('.year').textContent = new Date().getFullYear();
 mountSprites();
+initMascot();
 
 /* =========================================================
    Reloj del head unit con la hora local del visitante

@@ -348,6 +348,25 @@ export const SPRITES = {
     '....WW...',
     '....W....',
   ],
+  // Mascota del nav (ver js/mascot.js)
+  mascotShades: [
+    'KKKKKKKKKKKK',
+    '.KKKK..KKKK.',
+    '..KK....KK..',
+  ],
+  mascotHeart: [
+    'RR.RR',
+    'RRRRR',
+    '.RRR.',
+    '..R..',
+  ],
+  mascotSparkle: [
+    '..Y..',
+    '..Y..',
+    'YYWYY',
+    '..Y..',
+    '..Y..',
+  ],
   // Portada nocturna para el «Now playing» del head unit.
   cover: [
     'NNNNNNNNNNNNNNNN',

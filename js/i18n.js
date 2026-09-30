@@ -17,6 +17,7 @@ export const en = {
   navLabel: 'Main',
   langLabel: 'Cambiar a español',
   themeLabel: 'Toggle colour theme',
+  'mascot.label': 'Say hi to the droid',
   scrollHint: 'Scroll down',
 
   'nav.about': 'Profile',

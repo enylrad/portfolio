@@ -19,6 +19,7 @@ Hace falta servirlo por HTTP (no con `file://`), porque `js/main.js` es un módu
 | `js/i18n.js` | Traducciones al inglés y metadatos por idioma |
 | `js/main.js` | Tema, idioma, animaciones e interacciones |
 | `js/sprites.js` | Sprites pixel art (matrices de caracteres) para la web y el juego |
+| `js/mascot.js` | Droide del nav: se pone gafas de sol en modo claro y saluda al pulsarlo |
 | `js/game.js` | Easter egg «Droid Runner» (se carga solo al activarlo) |
 | `css/styles.css` | Estilos y tokens de tema claro/oscuro |
 | `vendor/` | GSAP 3.13, ScrollTrigger y Lenis 1.3 (minificados) |
