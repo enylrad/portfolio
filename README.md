@@ -40,7 +40,7 @@ Código Konami (↑↑↓↓←→←→BA) o clic en el droide del footer: abre
 
 ## CV en PDF
 
-El botón «Descargar CV» sirve `cv/David-Perez-Salort-CV-ES.pdf` o `-EN.pdf` según el idioma activo. Los PDFs salen de `cv/cv.html` (misma información que la web, en ES/EN con `?lang=`). Para regenerarlos, con el servidor local en marcha:
+El botón «Descargar CV» sirve `cv/David-Perez-Salort-CV-ES.pdf` o `-EN.pdf` según el idioma activo. Los PDFs salen de `cv/cv.html`: una página centrada en experiencia y tecnologías, en ES/EN con `?lang=`. Para regenerarlos, con el servidor local en marcha:
 
 ```bash
 EDGE="/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe"
@@ -49,7 +49,7 @@ for L in es en; do
 done
 ```
 
-Si cambias textos de experiencia o proyectos en la web, actualízalos también en `cv/cv.html`.
+Si cambias la experiencia o el stack en la web, actualízalos también en `cv/cv.html` y regenera los PDFs.
 
 ## Despliegue en Firebase Hosting
 

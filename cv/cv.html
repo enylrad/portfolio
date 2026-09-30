@@ -6,289 +6,144 @@
   <title>David Pérez Salort — CV</title>
   <meta name="robots" content="noindex">
   <!--
-    Plantilla del CV en PDF. Se renderiza en español o inglés con ?lang=es|en
-    y se exporta a PDF con un navegador sin cabeza (ver README, sección «CV»).
+    Plantilla del CV en PDF (una página). Se renderiza en español o inglés con ?lang=es|en
+    y se exporta a PDF con un navegador sin cabeza (ver README, sección «CV en PDF»).
   -->
   <style>
     @font-face { font-family: 'Inter'; src: url('../assets/fonts/inter.woff2') format('woff2-variations'); font-weight: 100 900; }
     @font-face { font-family: 'Space Grotesk'; src: url('../assets/fonts/space-grotesk.woff2') format('woff2-variations'); font-weight: 300 700; }
 
-    :root {
-      --ink: #0f172a;
-      --text: #1f2937;
-      --muted: #5b6474;
-      --faint: #8a93a3;
-      --line: #e3e7ee;
-      --accent: #0a7d42;
-      --accent-soft: #e8f6ee;
-      --side: #f6f8fa;
-    }
-    @page { size: A4; margin: 10mm 13mm; }
+    :root { --ink: #0f172a; --text: #1f2937; --muted: #5b6474; --line: #dfe3ea; --accent: #0a7d42; }
+    @page { size: A4; margin: 14mm 16mm; }
     * { box-sizing: border-box; }
     html { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-variant-ligatures: no-common-ligatures; }
-    body {
-      margin: 0; background: #fff; color: var(--text);
-      font: 400 8.7pt/1.42 'Inter', system-ui, sans-serif;
-    }
+    body { margin: 0; background: #fff; color: var(--text); font: 400 9.4pt/1.45 'Inter', system-ui, sans-serif; }
     h1, h2, h3, p, ul { margin: 0; padding: 0; }
     ul { list-style: none; }
     a { color: inherit; text-decoration: none; }
 
-    .page { width: 184mm; }
+    .page { width: 178mm; }
 
-    /* ---------- Cabecera ---------- */
-    .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10mm; padding-bottom: 6mm; border-bottom: 2px solid var(--ink); }
-    .name { font: 700 25pt/1 'Space Grotesk', sans-serif; letter-spacing: -.03em; color: var(--ink); }
-    .role { margin-top: 2.2mm; font: 600 11pt/1.2 'Space Grotesk', sans-serif; color: var(--accent); letter-spacing: -.01em; }
-    .contact { text-align: right; font-size: 8.4pt; line-height: 1.65; color: var(--muted); }
-    .contact a { color: var(--text); }
-    .contact b { font-weight: 600; color: var(--text); }
+    .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 8mm; padding-bottom: 4mm; border-bottom: 1.5px solid var(--ink); }
+    .name { font: 700 22pt/1 'Space Grotesk', sans-serif; letter-spacing: -.02em; color: var(--ink); }
+    .role { margin-top: 1.8mm; font: 600 11pt/1.2 'Space Grotesk', sans-serif; color: var(--accent); }
+    .contact { text-align: right; font-size: 8.8pt; line-height: 1.6; color: var(--muted); }
+    .summary { margin-top: 4mm; font-size: 9.6pt; }
 
-    /* ---------- Rejilla principal ---------- */
-    .cols { display: grid; grid-template-columns: minmax(0, 1fr) 55mm; gap: 8mm; margin-top: 6mm; }
+    .chips { margin-top: 3.5mm; display: flex; flex-wrap: wrap; gap: 1.6mm; }
+    .chips li { padding: .7mm 2.2mm; border: 1px solid #c9d0da; border-radius: 1mm; font-size: 8.6pt; font-weight: 600; color: var(--ink); }
 
-    .sec + .sec { margin-top: 5mm; }
+    .sec { margin-top: 6mm; }
     .sec-title {
-      display: flex; align-items: center; gap: 2.2mm; margin-bottom: 3mm;
-      font: 700 8.2pt/1 'Space Grotesk', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); font-variant-ligatures: none;
+      margin-bottom: 3mm; padding-bottom: 1.2mm; border-bottom: 1px solid var(--line);
+      font: 700 8.6pt/1 'Space Grotesk', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+      font-variant-ligatures: none;
     }
-    .sec-title::before { content: ''; width: 2.2mm; height: 2.2mm; background: var(--accent); flex: none; }
-    .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
-    .summary { font-size: 9pt; line-height: 1.5; color: var(--text); }
-
-    /* Experiencia */
-    .job-top, .job-org { break-after: avoid; }
-    .job li, .job .tags { break-inside: avoid; }
-    .job + .job { margin-top: 3.6mm; }
+    .job { break-inside: avoid; }
+    .job + .job { margin-top: 3.8mm; }
     .job-top { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
-    .job h3 { font: 600 10.2pt/1.25 'Space Grotesk', sans-serif; color: var(--ink); }
-    .job-date { flex: none; font-size: 8.2pt; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
-    .job-org { margin-top: .6mm; font-size: 8.6pt; font-weight: 600; color: var(--accent); }
-    .job-org span { font-weight: 400; color: var(--muted); }
-    .job-sum { margin-top: 1.4mm; }
-    .job > ul:not(.tags) { margin-top: 1.4mm; display: grid; gap: .7mm; }
-    .job > ul:not(.tags) > li { position: relative; padding-left: 3.6mm; }
-    .job > ul:not(.tags) > li::before { content: ''; position: absolute; left: .4mm; top: .62em; width: 1.4mm; height: 1.4mm; background: var(--accent); }
-    .tags { margin-top: 1.8mm; display: flex; flex-wrap: wrap; gap: 1.2mm; }
-    .tags li { padding: .5mm 1.8mm; font-size: 7.4pt; font-weight: 500; color: var(--muted); background: var(--side); border: 1px solid var(--line); border-radius: 1mm; }
+    .job h3 { font: 600 10.4pt/1.3 'Space Grotesk', sans-serif; color: var(--ink); }
+    .job h3 span { font-weight: 500; color: var(--muted); }
+    .job-date { flex: none; font-size: 8.8pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .job ul { margin-top: 1.2mm; display: grid; gap: .5mm; }
+    .job li { position: relative; padding-left: 4mm; }
+    .job li::before { content: ''; position: absolute; left: .6mm; top: .6em; width: 1.3mm; height: 1.3mm; background: var(--accent); }
+    .job-tech { margin-top: 1.1mm; font-size: 8.6pt; color: var(--muted); }
+    .job-tech b { font-weight: 600; color: var(--text); }
 
-    /* Barra lateral */
-    .side { background: var(--side); padding: 5mm 4.5mm; border-radius: 1.5mm; align-self: start; }
-    .side .sec + .sec { margin-top: 5mm; }
-    .side .sec-title { margin-bottom: 2.4mm; }
-    .skill-group + .skill-group { margin-top: 2.6mm; }
-    .skill-group h3 { font: 600 8.2pt/1.3 'Space Grotesk', sans-serif; color: var(--ink); }
-    .skill-group p { margin-top: .6mm; font-size: 8.2pt; line-height: 1.5; color: var(--muted); }
-    .item + .item { margin-top: 2.4mm; }
-    .item strong { display: block; font: 600 8.4pt/1.35 'Space Grotesk', sans-serif; color: var(--ink); }
-    .item span { display: block; font-size: 7.9pt; color: var(--muted); line-height: 1.4; }
-    .lang { display: flex; justify-content: space-between; gap: 2mm; font-size: 8.4pt; }
-    .lang + .lang { margin-top: 1.2mm; }
-    .lang b { font-weight: 600; color: var(--ink); }
-    .lang span { color: var(--muted); text-align: right; }
-    .lang-more { margin-top: 1.6mm; font-size: 7.9pt; color: var(--faint); }
-
-    /* Proyectos */
-    .projects { margin-top: 6mm; }
-    .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2mm 6mm; }
-    .proj { break-inside: avoid; padding-top: 2mm; border-top: 1px solid var(--line); }
-    .proj-top { display: flex; justify-content: space-between; align-items: baseline; gap: 3mm; }
-    .proj h3 { font: 600 9.4pt/1.25 'Space Grotesk', sans-serif; color: var(--ink); }
-    .proj-meta { flex: none; font-size: 7.6pt; color: var(--muted); }
-    .proj-meta b { font-weight: 600; color: var(--accent); }
-    .proj p { margin-top: .7mm; font-size: 7.8pt; line-height: 1.4; }
-    .proj .tags { margin-top: 1.2mm; }
-    .proj .tags li { font-size: 7.1pt; padding: .3mm 1.6mm; }
-
-    .foot { margin-top: 6mm; padding-top: 2.5mm; border-top: 1px solid var(--line); font-size: 7.4pt; color: var(--faint); display: flex; justify-content: space-between; }
-
-    @media screen {
-      body { background: #e9edf2; }
-      .page { margin: 10mm auto; padding: 12mm 13mm; width: 210mm; background: #fff; box-shadow: 0 10px 40px rgba(15, 23, 42, .15); }
-    }
+    .rows p + p { margin-top: 1.3mm; }
+    .rows b { font-weight: 600; color: var(--ink); }
   </style>
 </head>
 <body>
   <main class="page" id="cv"></main>
 
   <script>
+    const KEY_TECH = ['Kotlin', 'Kotlin Multiplatform', 'Jetpack Compose', 'Coroutines', 'Flow', 'Hilt', 'Koin', 'Dagger 2', 'Room', 'Retrofit', 'Ktor', 'Bluetooth', 'MVVM', 'Clean Architecture'];
+
     const DATA = {
       es: {
         role: 'Senior Android Software Engineer',
         location: 'Galicia, España · Remoto',
-        summaryT: 'Perfil',
-        summary: 'Ingeniero de software con más de 10 años de experiencia en desarrollo Android nativo, los últimos 7 como Senior en proyectos de automoción y movilidad. Especializado en Kotlin, arquitectura de aplicaciones móviles e integración de software en plataformas de vehículo; actualmente desarrollo software para Stellantis. Trabajo con Jetpack Compose, Coroutines, Flow y Kotlin Multiplatform, aplicando arquitecturas limpias, code reviews y calidad continua para entregar productos robustos y mantenibles.',
-        expT: 'Experiencia profesional',
-        present: 'Actualidad',
+        summary: 'Desarrollador Android con más de 10 años de experiencia, los últimos 7 como Senior en automoción y movilidad. Especializado en Kotlin, arquitectura de apps y software para vehículos; actualmente en proyectos de Stellantis.',
+        techLabel: 'Tecnologías',
+        expT: 'Experiencia',
         jobs: [
-          { role: 'Senior Android Engineer', org: 'Coremain', meta: 'Proyecto Stellantis · Remoto', date: 'Jun 2024 — Actualidad',
-            sum: 'Desarrollo de software Android para las plataformas de vehículo de Stellantis.',
-            bullets: ['Desarrollo de funcionalidades nativas en Kotlin con Jetpack Compose, Coroutines y Flow.', 'Desarrollo con Kotlin Multiplatform para compartir lógica entre plataformas.', 'Integración de software Android en plataformas de vehículo.', 'Calidad continua con TeamCity y SonarQube, code reviews y seguimiento en Jira.'],
-            tags: ['Kotlin', 'KMP', 'Compose', 'Koin', 'Coroutines', 'TeamCity', 'SonarQube'] },
-          { role: 'Senior Android Engineer', org: 'SIVSA', meta: 'Proyecto Stellantis · Remoto', date: 'Mar 2023 — May 2024',
-            sum: 'Desarrollo Android para el ecosistema de vehículos de Stellantis, con foco en la conectividad entre dispositivo y vehículo.',
-            bullets: ['Implementación de protocolos Bluetooth para la comunicación con plataformas de vehículo.', 'Desarrollo y evolución de funcionalidades en Kotlin sobre arquitectura MVVM.'],
-            tags: ['Bluetooth', 'Kotlin', 'MVVM', 'Automoción'] },
-          { role: 'Senior Android Engineer', org: 'SIVSA', meta: 'Proyecto OMNI · Remoto', date: 'Oct 2019 — Feb 2023',
-            sum: 'Evolución y mantenimiento de la aplicación Android del proyecto OMNI.',
-            bullets: ['Refactorización de arquitecturas complejas hacia patrones modernos y mantenibles.', 'Code reviews y definición de buenas prácticas dentro del equipo.', 'Gestión de integraciones en entornos de CI/CD.'],
-            tags: ['Kotlin', 'Java', 'CI/CD', 'Code review'] },
-          { role: 'Android Developer', org: 'zinkers.io', meta: 'Pedreguer, Alicante', date: 'Mar 2016 — Jun 2019',
-            sum: 'Único desarrollador Android del equipo, responsable del ciclo de vida completo de varias aplicaciones: del diseño a producción.',
-            bullets: ['Implementación de pantallas, flujos y funcionalidades a partir de diseños y especificaciones, con foco en el rendimiento.', 'Publicación en Google Play: fichas, versiones y actualizaciones.', 'Control de calidad y corrección proactiva de errores con Crashlytics.'],
-            tags: ['Kotlin', 'Java', 'MVP', 'MVVM', 'Dagger 2', 'Firebase'] },
-          { role: 'Android Developer · Prácticas', org: 'Incomar Informática', meta: 'Dénia, Alicante', date: 'Mar 2015 — May 2015',
-            sum: 'Aplicación nativa Android para la gestión de gastos de una flota de taxis, con servicios web JSON y back-end en PHP y MySQL.',
-            bullets: [], tags: ['Java', 'PHP', 'MySQL', 'REST'] },
+          ['Senior Android Engineer', 'Coremain · Stellantis', 'Jun 2024 — Actualidad', [
+            'Desarrollo Android nativo para plataformas de vehículo.',
+            'Lógica compartida entre plataformas con Kotlin Multiplatform.',
+            'Calidad continua: code reviews, TeamCity y SonarQube.'],
+            'Kotlin, KMP, Jetpack Compose, Coroutines, Flow, Koin, TeamCity, SonarQube'],
+          ['Senior Android Engineer', 'SIVSA · Stellantis', 'Mar 2023 — May 2024', [
+            'Conectividad dispositivo-vehículo: implementación de protocolos Bluetooth.',
+            'Funcionalidades en Kotlin sobre arquitectura MVVM.'],
+            'Kotlin, Bluetooth, MVVM'],
+          ['Senior Android Engineer', 'SIVSA · Proyecto OMNI', 'Oct 2019 — Feb 2023', [
+            'Refactorización de arquitectura hacia patrones modernos y mantenibles.',
+            'Code reviews, buenas prácticas de equipo e integraciones de CI/CD.'],
+            'Kotlin, Java, CI/CD'],
+          ['Android Developer', 'zinkers.io', 'Mar 2016 — Jun 2019', [
+            'Único desarrollador Android: 12 apps de cliente, del diseño a Google Play y su mantenimiento.',
+            'Apps: LaLiga Fantasy MARCA, SmartStation (white-label con product flavors), Padeltrack, Bingo Falomir, Styloo, Haulap, IOBI Cloud.'],
+            'Kotlin, Java, MVP, MVVM, Dagger 2, Retrofit, RxJava, Room, Firebase, Crashlytics'],
+          ['Android Developer (prácticas)', 'Incomar Informática', 'Mar 2015 — May 2015', [
+            'App nativa de gestión de gastos con servicios web JSON y back-end en PHP y MySQL.'],
+            ''],
         ],
-        skillsT: 'Stack técnico',
-        skills: [
-          ['Lenguajes', 'Kotlin, Java, Dart'],
-          ['Android', 'Jetpack Compose, Coroutines, Flow, Room, Hilt, Koin, Dagger 2, Retrofit, Ktor, RxJava, Bluetooth'],
-          ['Multiplataforma', 'Kotlin Multiplatform, Flutter'],
+        stackT: 'Stack',
+        stack: [
           ['Arquitectura', 'MVVM, MVP, Clean Code'],
-          ['Calidad y CI/CD', 'Gradle, Git, TeamCity, SonarQube, Jira, Firebase, Crashlytics'],
-          ['IA en el flujo de trabajo', 'Claude, GitHub Copilot, Gemini'],
+          ['Herramientas', 'Gradle, Git, TeamCity, SonarQube, Jira, Firebase, Crashlytics'],
+          ['También', 'Java, RxJava, Flutter · IA en el día a día (Claude, GitHub Copilot, Gemini)'],
         ],
-        langT: 'Idiomas',
-        langs: [['Español', 'Nativo'], ['Inglés', 'Profesional básico']],
-        langMore: 'También gallego y catalán.',
-        eduT: 'Formación',
-        edu: [
-          ['Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)', 'IES Número 1 · 2013 — 2015'],
-          ['Técnico Superior en Administración de Sistemas Informáticos en Red (ASIR)', 'IES Pere Maria Orts i Bosch · 2011 — 2013'],
-          ['Técnico en Equipos e Instalaciones Eléctricas', 'IES Maria Ibars · 2008 — 2011'],
+        otherT: 'Formación e idiomas',
+        other: [
+          ['Formación', 'Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM), 2015 · Técnico Superior en Administración de Sistemas en Red (ASIR), 2013'],
+          ['Idiomas', 'Español (nativo) · Inglés (profesional básico) · Gallego y catalán'],
         ],
-        certT: 'Certificaciones',
-        certs: [
-          ['Formación en Clean Code', 'Fundae · 2020'],
-          ['Android: Introducción a la programación (verificado)', 'edX'],
-          ['Git, control de versiones', 'Clúster TIC Galicia'],
-          ['CCNA Exploration (3 módulos)', 'Cisco · 2012'],
-        ],
-        projT: 'Proyectos destacados',
-        ctx: { personal: 'Personal', zinkers: 'zinkers.io', edu: 'Formación' },
-        foot: 'CV actualizado',
       },
       en: {
         role: 'Senior Android Software Engineer',
         location: 'Galicia, Spain · Remote',
-        summaryT: 'Profile',
-        summary: 'Software engineer with 10+ years of native Android development, the last 7 as a Senior on automotive and mobility projects. Specialised in Kotlin, mobile app architecture and in-vehicle software integration; currently building software for Stellantis. I work with Jetpack Compose, Coroutines, Flow and Kotlin Multiplatform, applying clean architecture, code reviews and continuous quality to ship robust, maintainable products.',
-        expT: 'Professional experience',
-        present: 'Present',
+        summary: 'Android developer with 10+ years of experience, the last 7 as a Senior in automotive and mobility. Specialised in Kotlin, app architecture and in-vehicle software; currently working on Stellantis projects.',
+        techLabel: 'Tech',
+        expT: 'Experience',
         jobs: [
-          { role: 'Senior Android Engineer', org: 'Coremain', meta: 'Stellantis project · Remote', date: 'Jun 2024 — Present',
-            sum: 'Android software development for Stellantis vehicle platforms.',
-            bullets: ['Building native features in Kotlin with Jetpack Compose, Coroutines and Flow.', 'Building with Kotlin Multiplatform to share logic across platforms.', 'Integrating Android software into vehicle platforms.', 'Continuous quality with TeamCity and SonarQube, code reviews and Jira tracking.'],
-            tags: ['Kotlin', 'KMP', 'Compose', 'Koin', 'Coroutines', 'TeamCity', 'SonarQube'] },
-          { role: 'Senior Android Engineer', org: 'SIVSA', meta: 'Stellantis project · Remote', date: 'Mar 2023 — May 2024',
-            sum: 'Android development for the Stellantis vehicle ecosystem, focused on device-to-vehicle connectivity.',
-            bullets: ['Implemented Bluetooth protocols for communication with vehicle platforms.', 'Built and evolved Kotlin features on an MVVM architecture.'],
-            tags: ['Bluetooth', 'Kotlin', 'MVVM', 'Automotive'] },
-          { role: 'Senior Android Engineer', org: 'SIVSA', meta: 'OMNI project · Remote', date: 'Oct 2019 — Feb 2023',
-            sum: 'Evolution and maintenance of the OMNI project Android app.',
-            bullets: ['Refactored complex architectures towards modern, maintainable patterns.', 'Led code reviews and helped define team best practices.', 'Managed integrations across CI/CD environments.'],
-            tags: ['Kotlin', 'Java', 'CI/CD', 'Code review'] },
-          { role: 'Android Developer', org: 'zinkers.io', meta: 'Pedreguer, Alicante', date: 'Mar 2016 — Jun 2019',
-            sum: 'Sole Android developer on the team, owning the full lifecycle of several apps — from design to production.',
-            bullets: ['Implemented screens, user flows and features from designs and specs, with a focus on performance.', 'Google Play publishing: store listings, releases and updates.', 'Quality control and proactive bug fixing with Crashlytics.'],
-            tags: ['Kotlin', 'Java', 'MVP', 'MVVM', 'Dagger 2', 'Firebase'] },
-          { role: 'Android Developer · Internship', org: 'Incomar Informática', meta: 'Dénia, Alicante', date: 'Mar 2015 — May 2015',
-            sum: 'Native Android app to manage expenses for a taxi fleet, backed by JSON web services with PHP and MySQL.',
-            bullets: [], tags: ['Java', 'PHP', 'MySQL', 'REST'] },
+          ['Senior Android Engineer', 'Coremain · Stellantis', 'Jun 2024 — Present', [
+            'Native Android development for vehicle platforms.',
+            'Shared cross-platform logic with Kotlin Multiplatform.',
+            'Continuous quality: code reviews, TeamCity and SonarQube.'],
+            'Kotlin, KMP, Jetpack Compose, Coroutines, Flow, Koin, TeamCity, SonarQube'],
+          ['Senior Android Engineer', 'SIVSA · Stellantis', 'Mar 2023 — May 2024', [
+            'Device-to-vehicle connectivity: implemented Bluetooth protocols.',
+            'Kotlin features on an MVVM architecture.'],
+            'Kotlin, Bluetooth, MVVM'],
+          ['Senior Android Engineer', 'SIVSA · OMNI project', 'Oct 2019 — Feb 2023', [
+            'Refactored the architecture towards modern, maintainable patterns.',
+            'Code reviews, team best practices and CI/CD integrations.'],
+            'Kotlin, Java, CI/CD'],
+          ['Android Developer', 'zinkers.io', 'Mar 2016 — Jun 2019', [
+            'Sole Android developer: 12 client apps, from design to Google Play release and maintenance.',
+            'Apps: LaLiga Fantasy MARCA, SmartStation (white-label with product flavors), Padeltrack, Bingo Falomir, Styloo, Haulap, IOBI Cloud.'],
+            'Kotlin, Java, MVP, MVVM, Dagger 2, Retrofit, RxJava, Room, Firebase, Crashlytics'],
+          ['Android Developer (internship)', 'Incomar Informática', 'Mar 2015 — May 2015', [
+            'Native expense-management app with JSON web services and a PHP and MySQL back end.'],
+            ''],
         ],
-        skillsT: 'Tech stack',
-        skills: [
-          ['Languages', 'Kotlin, Java, Dart'],
-          ['Android', 'Jetpack Compose, Coroutines, Flow, Room, Hilt, Koin, Dagger 2, Retrofit, Ktor, RxJava, Bluetooth'],
-          ['Cross-platform', 'Kotlin Multiplatform, Flutter'],
+        stackT: 'Stack',
+        stack: [
           ['Architecture', 'MVVM, MVP, Clean Code'],
-          ['Quality & CI/CD', 'Gradle, Git, TeamCity, SonarQube, Jira, Firebase, Crashlytics'],
-          ['AI in my workflow', 'Claude, GitHub Copilot, Gemini'],
+          ['Tools', 'Gradle, Git, TeamCity, SonarQube, Jira, Firebase, Crashlytics'],
+          ['Also', 'Java, RxJava, Flutter · AI in daily work (Claude, GitHub Copilot, Gemini)'],
         ],
-        langT: 'Languages',
-        langs: [['Spanish', 'Native'], ['English', 'Limited working proficiency']],
-        langMore: 'Also Galician and Catalan.',
-        eduT: 'Education',
-        edu: [
-          ['Higher Diploma in Cross-Platform Application Development (DAM)', 'IES Número 1 · 2013 — 2015'],
-          ['Higher Diploma in Networked Computer Systems Administration (ASIR)', 'IES Pere Maria Orts i Bosch · 2011 — 2013'],
-          ['Diploma in Electrical Equipment and Installations', 'IES Maria Ibars · 2008 — 2011'],
+        otherT: 'Education & languages',
+        other: [
+          ['Education', 'Higher Diploma in Cross-Platform Application Development (DAM), 2015 · Higher Diploma in Networked Systems Administration (ASIR), 2013'],
+          ['Languages', 'Spanish (native) · English (limited working proficiency) · Galician and Catalan'],
         ],
-        certT: 'Certifications',
-        certs: [
-          ['Clean Code training', 'Fundae · 2020'],
-          ['Android: Introduction to Programming (verified)', 'edX'],
-          ['Git, version control', 'Clúster TIC Galicia'],
-          ['CCNA Exploration (3 modules)', 'Cisco · 2012'],
-        ],
-        projT: 'Selected projects',
-        ctx: { personal: 'Personal', zinkers: 'zinkers.io', edu: 'Education' },
-        foot: 'CV updated',
       },
     };
-
-    // Proyectos: mismos textos que la web (index.html / js/i18n.js).
-    const PROJECTS = [
-      ['Mercurio', 'personal', { es: '2018 — Actualidad', en: '2018 — Present' },
-        'App informativa del Centro de FP Específica Mercurio. Primera versión nativa en Kotlin con Android Jetpack (MVVM, ViewModel, LiveData, Navigation) y Dagger 2; posteriormente migrada a Flutter/Dart. Contenidos gestionados en Firebase (Firestore y Storage) y monitorización con Crashlytics.',
-        'Information app for the Mercurio vocational training centre. First built natively in Kotlin with Android Jetpack (MVVM, ViewModel, LiveData, Navigation) and Dagger 2, then migrated to Flutter/Dart. Content managed in Firebase (Firestore and Storage), monitored with Crashlytics.',
-        ['Kotlin', 'Flutter', 'MVVM', 'Firestore', 'Dagger 2']],
-      ['LaLiga Fantasy MARCA', 'zinkers', '2016 — 2017',
-        'Juego fantasy de la liga española para LaLiga y MARCA, mi primera app profesional. Responsable del desarrollo, la publicación y el mantenimiento: red con OkHttp 3, imágenes con Picasso, monetización con Google Mobile Ads, deep linking con Branch y Crashlytics.',
-        'Fantasy football game for LaLiga and MARCA, my first professional app. Owned development, release and maintenance: networking with OkHttp 3, images with Picasso, monetisation with Google Mobile Ads, deep linking with Branch and Crashlytics.',
-        ['Java', 'OkHttp', 'Picasso', 'Mobile Ads', 'Branch']],
-      ['SmartStation', 'zinkers', '2018 — 2019',
-        'Plataforma white-label de gestión de estaciones de servicio. Una única base de código con product flavors de Gradle para generar una app personalizada por cliente; Dianaok fue la primera app de cliente.',
-        'White-label platform for fuel station management. A single codebase using Gradle product flavors to generate a customised app per client; Dianaok was the first client app.',
-        ['Android', 'Gradle flavors', 'White-label']],
-      ['Haulap', 'zinkers', '2018',
-        'App Android en Kotlin sobre MVVM con Android Jetpack (ViewModel, LiveData, Room, Navigation y WorkManager para tareas en segundo plano). Programación reactiva con RxJava, red con Retrofit 2, inyección de dependencias con Dagger 2, Firebase y Crashlytics.',
-        'Kotlin Android app on MVVM with Android Jetpack (ViewModel, LiveData, Room, Navigation and WorkManager for background work). Reactive programming with RxJava, networking with Retrofit 2, dependency injection with Dagger 2, Firebase and Crashlytics.',
-        ['Kotlin', 'MVVM', 'Room', 'WorkManager', 'RxJava', 'Dagger 2']],
-      ['Padeltrack', 'zinkers', '2016 — 2019',
-        'App para organizar partidos de pádel. Retomé un proyecto iniciado en 2013: actualización a las versiones de Android de 2016, finalización del desarrollo y evolución posterior. Comunicación en tiempo real con Socket.io, Glide, Analytics y Crashlytics; seguimiento con el cliente vía Trello.',
-        'Padel match organiser. I took over a project started in 2013: upgraded it to 2016 Android versions, completed its development and drove its evolution. Real-time communication with Socket.io, Glide, Analytics and Crashlytics; client follow-up via Trello.',
-        ['Java', 'Socket.io', 'Glide', 'Analytics']],
-      ['Bingo Falomir', 'zinkers', '2017 — 2019',
-        'App complementaria para el bingo de Falomir en Kotlin con MVP, Dagger 2, Firebase y Crashlytics. Desarrollo coordinado con los equipos de iOS y diseño mediante Trello, Slack e InVision.',
-        'Companion app for the Falomir bingo in Kotlin with MVP, Dagger 2, Firebase and Crashlytics. Development coordinated with the iOS and design teams through Trello, Slack and InVision.',
-        ['Kotlin', 'MVP', 'Dagger 2', 'Firebase']],
-      ['Styloo', 'zinkers', '2017',
-        'Marketplace para negocios de estética. App Android en Kotlin (MVP, Dagger 2, Retrofit 2, Glide) desarrollada en coordinación con los equipos de back-end, iOS y diseño mediante Trello, Slack e InVision.',
-        'Marketplace for beauty businesses. Kotlin Android app (MVP, Dagger 2, Retrofit 2, Glide) built in coordination with the back-end, iOS and design teams through Trello, Slack and InVision.',
-        ['Kotlin', 'MVP', 'Dagger 2', 'Retrofit']],
-      ['Vouzzer', 'zinkers', '2018',
-        'App Android en Kotlin con arquitectura MVP. Inyección de dependencias con Dagger 2, consumo de API REST con Retrofit 2, carga de imágenes con Glide, servicios de Firebase y monitorización de errores con Crashlytics.',
-        'Kotlin Android app with an MVP architecture. Dependency injection with Dagger 2, REST APIs via Retrofit 2, image loading with Glide, Firebase services and crash monitoring with Crashlytics.',
-        ['Kotlin', 'MVP', 'Dagger 2', 'Retrofit', 'Glide']],
-      ['Solidalis', 'zinkers', '2017 — 2018',
-        'Desarrollo de la app Android en Kotlin con arquitectura MVP y Dagger 2, integración con API REST mediante Retrofit 2, Firebase y Crashlytics para el control de calidad en producción.',
-        'Built the Kotlin Android app with an MVP architecture and Dagger 2, REST API integration via Retrofit 2, Firebase, and Crashlytics for production quality control.',
-        ['Kotlin', 'MVP', 'Dagger 2', 'Retrofit', 'Crashlytics']],
-      ['The Here Gallery', 'zinkers', '2017',
-        'Marketplace de venta de cuadros. App Android en Kotlin con MVP y Dagger 2, Retrofit 2 para la API REST, Glide para la carga de imágenes, Firebase y Crashlytics.',
-        'Marketplace for selling paintings. Kotlin Android app with MVP and Dagger 2, Retrofit 2 for the REST API, Glide for image loading, Firebase and Crashlytics.',
-        ['Kotlin', 'MVP', 'Retrofit', 'Glide']],
-      ['IOBI Cloud', 'zinkers', '2017 — 2019',
-        'App para monitorizar desde el móvil las máquinas y procesos de la plataforma IOBI Cloud. Cliente nativo en Java que integra la plataforma mediante WebView, con Retrofit 2 y Butterknife.',
-        'App to monitor the machines and processes of the IOBI Cloud platform from a phone. Native Java client that embeds the platform through a WebView, with Retrofit 2 and Butterknife.',
-        ['Java', 'WebView', 'Retrofit', 'Butterknife']],
-      ['Bliver', 'zinkers', '2019',
-        'App para la creación y gestión de eventos. Desarrollo del cliente Android integrado con Firebase como back-end.',
-        'Event creation and management app. Built the Android client on top of a Firebase back end.',
-        ['Android', 'Firebase']],
-      ['Istobal', 'zinkers', '2019',
-        'Mantenimiento evolutivo y correctivo de la app Android de Istobal: resolución de incidencias, actualizaciones y estabilidad en producción.',
-        'Corrective and evolutionary maintenance of Istobal’s Android app: issue resolution, updates and production stability.',
-        ['Android']],
-      ['Trivial La Última y Apago', 'edu', '2015',
-        'Proyecto de fin de ciclo (DAM): app de trivial para el podcast La Última y Apago. Cliente Android en Java con SQLite para datos locales y back-end propio en PHP y MySQL.',
-        'Final-year project (DAM): trivia app for the La Última y Apago podcast. Java Android client with SQLite for local data and a custom PHP and MySQL back end.',
-        ['Java', 'SQLite', 'PHP', 'MySQL']],
-    ];
 
     const lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'es';
     const d = DATA[lang];
@@ -296,9 +151,7 @@
     document.title = `David Pérez Salort — CV (${lang.toUpperCase()})`;
 
     const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-    const tags = (list) => `<ul class="tags">${list.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`;
-    const sec = (title, body, cls = '') => `<section class="sec ${cls}"><h2 class="sec-title">${esc(title)}</h2>${body}</section>`;
-    const today = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'es-ES', { month: 'long', year: 'numeric' }).format(new Date());
+    const rows = (list) => `<div class="rows">${list.map(([k, v]) => `<p><b>${esc(k)}:</b> ${esc(v)}</p>`).join('')}</div>`;
 
     document.getElementById('cv').innerHTML = `
       <header class="head">
@@ -306,43 +159,34 @@
           <h1 class="name">David Pérez Salort</h1>
           <p class="role">${esc(d.role)}</p>
         </div>
-        <div class="contact">
-          <b>${esc(d.location)}</b><br>
+        <p class="contact">
+          ${esc(d.location)}<br>
           <a href="mailto:david.perez.salort@gmail.com">david.perez.salort@gmail.com</a><br>
-          <a href="https://www.linkedin.com/in/davidperezsalort/">linkedin.com/in/davidperezsalort</a><br>
-          <a href="https://github.com/enylrad">github.com/enylrad</a>
-        </div>
+          <a href="https://www.linkedin.com/in/davidperezsalort/">linkedin.com/in/davidperezsalort</a> · <a href="https://github.com/enylrad">github.com/enylrad</a>
+        </p>
       </header>
+      <p class="summary">${esc(d.summary)}</p>
+      <ul class="chips">${KEY_TECH.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
 
-      <div class="cols">
-        <div class="main">
-          ${sec(d.summaryT, `<p class="summary">${esc(d.summary)}</p>`)}
-          ${sec(d.expT, d.jobs.map((j) => `
-            <article class="job">
-              <div class="job-top"><h3>${esc(j.role)}</h3><span class="job-date">${esc(j.date)}</span></div>
-              <p class="job-org">${esc(j.org)} <span>· ${esc(j.meta)}</span></p>
-              <p class="job-sum">${esc(j.sum)}</p>
-              ${j.bullets.length ? `<ul>${j.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
-              ${tags(j.tags)}
-            </article>`).join(''))}
-        </div>
+      <section class="sec">
+        <h2 class="sec-title">${esc(d.expT)}</h2>
+        ${d.jobs.map(([role, org, date, bullets, tech]) => `
+          <article class="job">
+            <div class="job-top"><h3>${esc(role)} <span>· ${esc(org)}</span></h3><span class="job-date">${esc(date)}</span></div>
+            <ul>${bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+            ${tech ? `<p class="job-tech"><b>${esc(d.techLabel)}:</b> ${esc(tech)}</p>` : ''}
+          </article>`).join('')}
+      </section>
 
-        <aside class="side">
-          ${sec(d.skillsT, d.skills.map(([h, p]) => `<div class="skill-group"><h3>${esc(h)}</h3><p>${esc(p)}</p></div>`).join(''))}
-          ${sec(d.langT, d.langs.map(([l, v]) => `<p class="lang"><b>${esc(l)}</b><span>${esc(v)}</span></p>`).join('') + `<p class="lang-more">${esc(d.langMore)}</p>`)}
-          ${sec(d.eduT, d.edu.map(([t, s]) => `<div class="item"><strong>${esc(t)}</strong><span>${esc(s)}</span></div>`).join(''))}
-          ${sec(d.certT, d.certs.map(([t, s]) => `<div class="item"><strong>${esc(t)}</strong><span>${esc(s)}</span></div>`).join(''))}
-        </aside>
-      </div>
+      <section class="sec">
+        <h2 class="sec-title">${esc(d.stackT)}</h2>
+        ${rows(d.stack)}
+      </section>
 
-      ${sec(d.projT, `<div class="proj-grid">${PROJECTS.map(([name, ctx, date, es, en, tg]) => `
-        <article class="proj">
-          <div class="proj-top"><h3>${esc(name)}</h3><span class="proj-meta"><b>${esc(d.ctx[ctx])}</b> · ${esc(typeof date === 'string' ? date : date[lang])}</span></div>
-          <p>${esc(lang === 'en' ? en : es)}</p>
-          ${tags(tg)}
-        </article>`).join('')}</div>`, 'projects')}
-
-      <footer class="foot"><span>David Pérez Salort · ${esc(d.role)}</span><span>${esc(d.foot)}: ${esc(today)}</span></footer>
+      <section class="sec">
+        <h2 class="sec-title">${esc(d.otherT)}</h2>
+        ${rows(d.other)}
+      </section>
     `;
   </script>
 </body>
