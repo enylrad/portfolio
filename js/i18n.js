@@ -167,6 +167,16 @@ export const en = {
   'game.start': 'Press Space or tap to start',
   'game.retry': 'Press Space or tap to retry',
   'game.record': 'New record!',
+  'game.viewRanking': 'R for ranking',
+  'game.enterName': 'Enter your initials',
+  'game.next': 'Next letter',
+  'game.prev': 'Previous letter',
+  'game.playAgain': '▶ Play',
+  'game.saving': 'Saving…',
+  'game.saved': 'Saved to the ranking!',
+  'game.blocked': 'Try other initials',
+  'game.rankError': 'Ranking unavailable',
+  'game.noScores': 'No scores yet. Be the first!',
 };
 
 // Textos que solo usa JS (no están en el HTML).
@@ -176,6 +186,12 @@ export const esExtra = {
   'game.start': 'Pulsa Espacio o toca para empezar',
   'game.retry': 'Pulsa Espacio o toca para reintentar',
   'game.record': '¡Nuevo récord!',
+  'game.viewRanking': 'R para ver el ranking',
+  'game.saving': 'Guardando…',
+  'game.saved': '¡Guardado en el ranking!',
+  'game.blocked': 'Prueba con otras iniciales',
+  'game.rankError': 'Ranking no disponible',
+  'game.noScores': 'Aún no hay puntuaciones. ¡Sé el primero!',
   langLabel: 'Switch to English',
   themeLabel: 'Cambiar tema de color',
 };

@@ -39,6 +39,18 @@ Cada proyecto es un `<li class="cart">` en la sección `#projects` de `index.htm
 
 Código Konami (↑↑↓↓←→←→BA) o clic en el droide del footer: abre «Droid Runner», un runner pixel art en `js/game.js`. El récord se guarda en `localStorage`.
 
+
+### Ranking online
+
+- `js/leaderboard.js` habla con Firestore por su API REST (sin SDK) usando identidades **anónimas** de Firebase Auth. Tiene que estar activado el proveedor «Anónimo» en la consola.
+- La seguridad está en `firestore.rules`:
+  - solo se puede leer el top 10;
+  - cada jugador tiene una única entrada, que solo puede mejorar;
+  - las iniciales se validan (`^[A-Z0-9]{3}$` y lista de palabras bloqueadas);
+  - la puntuación debe ser coherente con el tiempo real transcurrido desde que el servidor selló el inicio de la partida (máximo ~90 pts/s, al menos 3 s);
+  - nadie puede borrar ni editar puntuaciones ajenas.
+- Desplegar reglas: `firebase deploy --only firestore:rules`.
+- Borrar una entrada: `firebase firestore:delete scores/<uid> --force` (o desde la consola).
 ## CV en PDF
 
 El botón «Descargar CV» sirve `cv/David-Perez-Salort-CV-ES.pdf` o `-EN.pdf` según el idioma activo. Los PDFs salen de `cv/cv.html`: una página centrada en experiencia y tecnologías, en ES/EN con `?lang=`. Para regenerarlos, con el servidor local en marcha:

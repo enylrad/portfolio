@@ -770,7 +770,7 @@ main, .footer { position: relative; z-index: 1; }
    Borde con esquinas escalonadas y sombra dura, hecho con box-shadow
    (clip-path recortaría la sombra). --pb = borde, --ps = sombra. */
 .btn, .icon-btn, .copy-btn, .social, .nav-logo-mark, .hero-eyebrow, .float-chip, .photo-badge,
-.about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close, .music, .music-close,
+.about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close, .music, .music-close, .board-ok, .board-play,
 .hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .lang-list li {
   --pb: var(--px-line);
   --ps: var(--px-shadow);
@@ -834,6 +834,45 @@ main, .footer { position: relative; z-index: 1; }
 .game-msg-title { font: 700 clamp(1.5rem, 6vw, 2.6rem)/1 var(--font-pixel); color: var(--accent-text); text-shadow: 4px 4px 0 var(--px-shadow); }
 .game-msg-text { font: 500 clamp(.8rem, 2.2vw, 1rem)/1.3 var(--font-pixel); animation: blink 1.1s steps(1) infinite; }
 .game-help { margin-top: 12px; font-size: .8rem; color: var(--faint); }
+
+/* Ranking: entrada de iniciales y tabla HIGH SCORES (encima del canvas) */
+.game-board {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; place-content: safe center; justify-items: center; gap: 6px; padding: 10px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  font-family: var(--font-pixel); text-align: center; overflow: auto; cursor: default;
+}
+.game-board[hidden], .board-entry[hidden], .board-table[hidden] { display: none; }
+.board-entry, .board-table { display: grid; justify-items: center; gap: clamp(4px, 1.2vw, 10px); }
+.board-title { font: 700 clamp(1rem, 3.6vw, 1.7rem)/1 var(--font-pixel); color: var(--accent-text); text-shadow: 3px 3px 0 var(--px-shadow); animation: blink 1s steps(1) infinite; }
+.board-sub { font-size: clamp(.72rem, 2vw, .95rem); color: var(--muted); }
+.initials { display: flex; gap: clamp(8px, 2.5vw, 18px); }
+.slot { display: grid; justify-items: center; gap: 2px; }
+.slot-char {
+  display: grid; place-items: center; width: clamp(30px, 7vw, 52px); height: clamp(34px, 8vw, 58px);
+  font: 700 clamp(1.4rem, 5vw, 2.4rem)/1 var(--font-pixel); color: var(--text);
+  border-bottom: 4px solid var(--border-strong);
+}
+.slot.is-active .slot-char { color: var(--accent-text); border-color: var(--accent); animation: blink .8s steps(1) infinite; }
+.slot-up, .slot-down { width: 30px; height: 22px; font-size: .75rem; color: var(--muted); }
+.slot-up:hover, .slot-down:hover { color: var(--accent-text); }
+.board-ok, .board-play {
+  --px: 3px; margin-top: 4px; padding: 6px 16px;
+  font: 600 clamp(.8rem, 2vw, .95rem)/1 var(--font-pixel); background: var(--accent); color: var(--on-accent);
+}
+.board-list { display: grid; gap: 1px; min-width: min(260px, 70vw); font-size: clamp(.68rem, 2.1vw, .95rem); line-height: 1.25; }
+.board-list li { display: grid; grid-template-columns: 2.4em 1fr auto; gap: 12px; text-align: left; font-variant-numeric: tabular-nums; }
+.board-list li b { font-weight: 600; letter-spacing: .12em; }
+.board-list li.is-me { color: var(--accent-text); animation: blink 1s steps(1) infinite; }
+.board-empty { display: block !important; text-align: center !important; color: var(--muted); }
+@media (max-width: 520px) {
+  .game-board { gap: 2px; padding: 6px; }
+  .board-entry, .board-table { gap: 3px; }
+  .slot-up, .slot-down { height: 16px; }
+  .slot-char { height: 30px; border-bottom-width: 3px; }
+  .board-ok, .board-play { margin-top: 0; padding: 4px 14px; }
+}
+.board-status { min-height: 1em; font-size: clamp(.7rem, 1.8vw, .85rem); color: var(--muted); }
 
 /* ---------- Estado inicial de animaciones (solo si JS/GSAP activos) ---------- */
 .js-anim [data-hero], .js-anim .hero-visual, .js-anim .reveal { opacity: 0; }

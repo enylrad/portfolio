@@ -1,0 +1,61 @@
+rules_version = '2';
+
+// Ranking de Droid Runner (js/leaderboard.js).
+// Todo está cerrado salvo lo imprescindible, y cada puntuación debe ser coherente
+// con el tiempo real (hora del servidor) transcurrido desde el inicio de su partida.
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    function signedIn(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // Inicio de partida: solo el propio jugador, y la hora la pone el servidor.
+    match /runs/{uid} {
+      allow get: if signedIn(uid);
+      allow list: if false;
+      allow create, update: if signedIn(uid)
+        && request.resource.data.keys().hasOnly(['startedAt'])
+        && request.resource.data.startedAt == request.time;
+      allow delete: if false;
+    }
+
+    // Una entrada por jugador (su mejor puntuación). Lectura pública del top 10.
+    match /scores/{uid} {
+      allow get: if true;
+      allow list: if request.query.limit <= 10;
+
+      function run() {
+        return get(/databases/$(db)/documents/runs/$(uid)).data;
+      }
+
+      function valid() {
+        let d = request.resource.data;
+        let elapsed = request.time.toMillis() - run().startedAt.toMillis();
+        return signedIn(uid)
+          && d.keys().hasOnly(['name', 'score', 'createdAt', 'runStartedAt'])
+          && d.name is string
+          && d.name.matches('^[A-Z0-9]{3}$')
+          && !d.name.matches('^(ASS|FCK|FUK|FUC|SEX|KKK|NAZ|NIG|CUM|DIC|COK|PUT|PNE|CAC|CUL|PIS)$')
+          && d.score is int
+          && d.score > 0
+          && d.score <= 100000
+          && d.createdAt == request.time
+          && d.runStartedAt == run().startedAt
+          && elapsed >= 3000
+          && d.score <= elapsed / 1000 * 90 + 50;
+      }
+
+      allow create: if valid();
+      allow update: if valid()
+        && request.resource.data.score > resource.data.score
+        && request.resource.data.runStartedAt != resource.data.runStartedAt;
+      allow delete: if false;
+    }
+
+    // Cualquier otra ruta: cerrada.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

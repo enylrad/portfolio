@@ -616,6 +616,24 @@
           <p class="game-msg-title">PRESS START</p>
           <p class="game-msg-text"></p>
         </div>
+        <div class="game-board" hidden>
+          <div class="board-entry" hidden>
+            <p class="board-title">NEW HIGH SCORE!</p>
+            <p class="board-sub" data-i18n="game.enterName">Escribe tus iniciales</p>
+            <div class="initials">
+              <div class="slot"><button class="slot-up" type="button" aria-label="Letra siguiente" data-i18n-attr="aria-label:game.next">▲</button><span class="slot-char" aria-live="polite">A</span><button class="slot-down" type="button" aria-label="Letra anterior" data-i18n-attr="aria-label:game.prev">▼</button></div>
+              <div class="slot"><button class="slot-up" type="button" aria-label="Letra siguiente" data-i18n-attr="aria-label:game.next">▲</button><span class="slot-char" aria-live="polite">A</span><button class="slot-down" type="button" aria-label="Letra anterior" data-i18n-attr="aria-label:game.prev">▼</button></div>
+              <div class="slot"><button class="slot-up" type="button" aria-label="Letra siguiente" data-i18n-attr="aria-label:game.next">▲</button><span class="slot-char" aria-live="polite">A</span><button class="slot-down" type="button" aria-label="Letra anterior" data-i18n-attr="aria-label:game.prev">▼</button></div>
+            </div>
+            <button class="board-ok" type="button">OK</button>
+          </div>
+          <div class="board-table" hidden>
+            <p class="board-title">HIGH SCORES</p>
+            <ol class="board-list"></ol>
+            <button class="board-play" type="button" data-i18n="game.playAgain">▶ Jugar</button>
+          </div>
+          <p class="board-status" aria-live="polite"></p>
+        </div>
       </div>
       <p class="game-help" data-i18n="game.hint">Espacio o ↑ para saltar · ↓ para agacharte · Esc para salir. En el móvil: toca para saltar y desliza hacia abajo para agacharte.</p>
     </div>
