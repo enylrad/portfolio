@@ -22,6 +22,7 @@
 
   <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/pixelify-sans.woff2" as="font" type="font/woff2" crossorigin>
 
   <script>
     // Aplica tema e idioma guardados antes del primer pintado (sin parpadeo).
@@ -50,7 +51,7 @@
     "email": "mailto:david.perez.salort@gmail.com",
     "address": { "@type": "PostalAddress", "addressRegion": "Galicia", "addressCountry": "ES" },
     "sameAs": ["https://www.linkedin.com/in/davidperezsalort/"],
-    "knowsAbout": ["Android", "Kotlin", "Jetpack Compose", "Kotlin Coroutines", "Automotive software", "Bluetooth"]
+    "knowsAbout": ["Android", "Kotlin", "Kotlin Multiplatform", "Jetpack Compose", "Kotlin Coroutines", "Automotive software", "Bluetooth"]
   }
   </script>
 </head>
@@ -70,6 +71,7 @@
           <li><a href="#about" data-i18n="nav.about">Perfil</a></li>
           <li><a href="#skills" data-i18n="nav.skills">Stack</a></li>
           <li><a href="#experience" data-i18n="nav.experience">Experiencia</a></li>
+          <li><a href="#projects" data-i18n="nav.projects">Proyectos</a></li>
           <li><a href="#education" data-i18n="nav.education">Formación</a></li>
           <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
         </ul>
@@ -91,7 +93,6 @@
     <section class="hero" aria-labelledby="hero-name">
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div class="hero-grid" aria-hidden="true"></div>
 
       <div class="container hero-inner">
         <div class="hero-copy">
@@ -106,12 +107,11 @@
           <p class="hero-role" data-hero>
             <span class="role-bracket" aria-hidden="true">&lt;</span><span class="role-text" data-type="Senior Android Software Engineer">Senior Android Software Engineer</span><span class="role-bracket" aria-hidden="true"> /&gt;</span><span class="caret" aria-hidden="true"></span>
           </p>
-          <p class="hero-desc" data-hero data-i18n="hero.desc">Ingeniero de software especializado en desarrollo nativo con Kotlin, arquitectura de aplicaciones móviles e integración de software automotriz. Hoy construyo software para vehículos de Stellantis e integro la IA en mi flujo de trabajo para entregar código de más calidad, más rápido.</p>
+          <p class="hero-desc" data-hero data-i18n="hero.desc">Ingeniero de software especializado en desarrollo nativo con Kotlin, arquitectura de aplicaciones móviles e integración de software automotriz. Hoy construyo software para vehículos de Stellantis.</p>
           <ul class="hero-tags" data-hero>
             <li data-i18n="hero.tag1">Android nativo</li>
             <li data-i18n="hero.tag2">Kotlin first</li>
             <li data-i18n="hero.tag3">Software automotriz</li>
-            <li data-i18n="hero.tag4">Desarrollo potenciado por IA</li>
           </ul>
           <div class="hero-ctas" data-hero>
             <a class="btn btn-primary magnetic" href="#experience">
@@ -143,7 +143,7 @@
                 <div class="hu-grid">
                   <div class="hu-card hu-bt">
                     <div class="bt-rings"><span></span><span></span><span></span>
-                      <svg viewBox="0 0 24 24" class="bt-icon"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
+                      <span class="bt-icon" data-sprite="bluetooth"></span>
                     </div>
                     <div>
                       <p class="hu-label">Bluetooth</p>
@@ -152,20 +152,20 @@
                     </div>
                   </div>
                   <div class="hu-card hu-media">
-                    <div class="hu-art"></div>
+                    <div class="hu-art" data-sprite="cover"></div>
                     <div class="hu-media-info">
                       <p class="hu-label">Now playing</p>
-                      <p class="hu-value">Coroutines &amp; Chill</p>
+                      <p class="hu-value">It’s Time</p>
+                      <p class="hu-sub">Imagine Dragons</p>
+                      <div class="hu-eq"><span></span><span></span><span></span><span></span><span></span><span></span></div>
                       <div class="hu-progress"><span></span></div>
                     </div>
                   </div>
                   <div class="hu-card hu-nav">
-                    <svg viewBox="0 0 160 90" class="hu-map">
-                      <path class="map-road" d="M0 70 L40 60 L70 72 L110 40 L160 48"/>
-                      <path class="map-road" d="M30 0 L45 90"/>
-                      <path class="map-road" d="M120 0 L100 90"/>
-                      <path class="map-route" d="M12 67 L40 60 L70 72 L110 40 L148 46"/>
-                      <circle class="map-pin" cx="148" cy="46" r="4"/>
+                    <svg viewBox="0 0 40 22" class="hu-map" shape-rendering="crispEdges">
+                      <path class="map-road" d="M0 17H40M0 6H40M9 0V22M30 0V22"/>
+                      <path class="map-route" d="M3 17H9V6H30V11H36"/>
+                      <rect class="map-pin" x="35" y="9" width="3" height="3"/>
                     </svg>
                     <p class="hu-sub">ETA 18 min · 12 km</p>
                   </div>
@@ -203,7 +203,7 @@
     <!-- ============ MARQUEE ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>Kotlin</span><span>Jetpack Compose</span><span>Coroutines</span><span>Flow</span><span>Hilt</span><span>Room</span><span>Ktor</span><span>Bluetooth</span><span>Gradle</span><span>TeamCity</span><span>SonarQube</span><span>Flutter</span><span>GitHub Copilot</span>
+        <span>Kotlin</span><span>Kotlin Multiplatform</span><span>Jetpack Compose</span><span>Coroutines</span><span>Flow</span><span>Hilt</span><span>Room</span><span>Ktor</span><span>Bluetooth</span><span>Gradle</span><span>TeamCity</span><span>SonarQube</span><span>Flutter</span><span>GitHub Copilot</span>
       </div>
     </div>
 
@@ -212,7 +212,7 @@
       <div class="container about">
         <div class="about-photo reveal">
           <div class="photo-frame">
-            <img src="assets/img/avatar.jpeg" alt="Retrato de David Pérez Salort" data-i18n-attr="alt:about.photoAlt" width="310" height="338" loading="lazy" decoding="async">
+            <img src="assets/img/avatar-pixel.jpg" alt="Retrato en pixel art de David Pérez Salort con una espada en una sala de armas" data-i18n-attr="alt:about.photoAlt" width="800" height="800" loading="lazy" decoding="async">
           </div>
           <div class="photo-badge">
             <span class="pulse-dot" aria-hidden="true"></span>
@@ -224,11 +224,11 @@
           <h2 class="section-title" id="about-title"><span class="mask"><span data-i18n="about.title">Android nativo por oficio. Mejora continua por convicción.</span></span></h2>
           <p class="reveal" data-i18n="about.p1">Mi interés por la tecnología empezó pronto: montando mis propios ordenadores y explorando el diseño 3D. En la programación encontré el terreno donde unir creatividad y resolución de problemas.</p>
           <p class="reveal" data-i18n="about.p2">Desde 2015 me dedico al desarrollo Android. Empecé con Java y hoy trabajo con Kotlin, Jetpack Compose, Coroutines y Flow, aplicando arquitecturas limpias y buenas prácticas para construir productos robustos, mantenibles y de alto rendimiento. Mi etapa con Flutter me aportó una visión multiplataforma que sigo aplicando al diseñar soluciones.</p>
-          <p class="reveal" data-i18n="about.p3">Hoy incorporo la IA a mi día a día —asistentes de código, revisión y refactorización— como palanca para aprender más rápido y elevar la calidad de cada entrega. Mejorar un poco cada día forma parte de mi manera de trabajar.</p>
+          <p class="reveal" data-i18n="about.p3">Me gusta aprender cada día y usar las herramientas que me hacen mejor, la IA incluida, para cuidar la calidad de cada entrega.</p>
           <ul class="about-pillars reveal">
             <li><strong data-i18n="about.pillar1t">Calidad</strong><span data-i18n="about.pillar1">Código limpio, revisado y testeable.</span></li>
             <li><strong data-i18n="about.pillar2t">Arquitectura</strong><span data-i18n="about.pillar2">Soluciones escalables y fáciles de mantener.</span></li>
-            <li><strong data-i18n="about.pillar3t">IA aplicada</strong><span data-i18n="about.pillar3">Herramientas modernas al servicio del producto.</span></li>
+            <li><strong data-i18n="about.pillar3t">Mejora continua</strong><span data-i18n="about.pillar3">Aprender cada día, con las mejores herramientas.</span></li>
           </ul>
         </div>
       </div>
@@ -247,6 +247,7 @@
             <h3 class="skill-group-title reveal"><span class="sg-index">A</span><span>Core</span></h3>
             <ul class="tech-grid">
               <li class="tech-card reveal" style="--c:#8b6cff"><span class="tech-icon">Kt</span><span class="tech-name">Kotlin</span><span class="tech-desc" data-i18n="tech.kotlin">Lenguaje principal</span></li>
+              <li class="tech-card reveal" style="--c:#7f52ff"><span class="tech-icon">Km</span><span class="tech-name">Kotlin Multiplatform</span><span class="tech-desc" data-i18n="tech.kmp">Lógica compartida entre plataformas</span></li>
               <li class="tech-card reveal" style="--c:#f89820"><span class="tech-icon">Jv</span><span class="tech-name">Java</span><span class="tech-desc" data-i18n="tech.java">Base sólida y código legado</span></li>
               <li class="tech-card reveal" style="--c:#c084fc"><span class="tech-icon">Co</span><span class="tech-name">Coroutines</span><span class="tech-desc" data-i18n="tech.coroutines">Concurrencia estructurada</span></li>
               <li class="tech-card reveal" style="--c:#22d3ee"><span class="tech-icon">Fl</span><span class="tech-name">Flow</span><span class="tech-desc" data-i18n="tech.flow">Streams reactivos</span></li>
@@ -256,7 +257,6 @@
             <h3 class="skill-group-title reveal"><span class="sg-index">B</span><span data-i18n="skills.ui">UI y arquitectura</span></h3>
             <ul class="tech-grid">
               <li class="tech-card reveal" style="--c:#4c8dff"><span class="tech-icon">Jc</span><span class="tech-name">Jetpack Compose</span><span class="tech-desc" data-i18n="tech.compose">UI declarativa</span></li>
-              <li class="tech-card reveal" style="--c:#3ddc84"><span class="tech-icon">Vb</span><span class="tech-name">ViewBinding</span><span class="tech-desc" data-i18n="tech.viewbinding">Vistas con tipado seguro</span></li>
               <li class="tech-card reveal" style="--c:#fbbf24"><span class="tech-icon">Hi</span><span class="tech-name">Hilt</span><span class="tech-desc" data-i18n="tech.hilt">Inyección de dependencias</span></li>
             </ul>
           </div>
@@ -289,7 +289,7 @@
           <div class="extra-block extra-ai reveal">
             <h3><span class="ai-spark" aria-hidden="true">✦</span> <span data-i18n="skills.aiTitle">IA en mi flujo de trabajo</span></h3>
             <ul class="pill-list">
-              <li>GitHub Copilot</li><li>Gemini</li><li data-i18n="skills.aiAssistants">Asistentes de código con IA</li>
+              <li>Claude</li><li>GitHub Copilot</li><li>Gemini</li><li data-i18n="skills.aiAssistants">Asistentes de código con IA</li>
             </ul>
             <p data-i18n="skills.aiText">La uso para acelerar revisiones, refactorizaciones y aprendizaje, siempre con criterio de ingeniería.</p>
           </div>
@@ -319,10 +319,11 @@
               <p data-i18n="exp.e1.summary">Desarrollo de software Android para las plataformas de vehículo de Stellantis.</p>
               <ul>
                 <li data-i18n="exp.e1.b1">Desarrollo de funcionalidades nativas en Kotlin con Jetpack Compose, Coroutines y Flow.</li>
+                <li data-i18n="exp.e1.kmp">Desarrollo con Kotlin Multiplatform para compartir lógica entre plataformas.</li>
                 <li data-i18n="exp.e1.b2">Integración de software Android en plataformas de vehículo.</li>
                 <li data-i18n="exp.e1.b3">Calidad continua con TeamCity y SonarQube, code reviews y seguimiento en Jira.</li>
               </ul>
-              <ul class="tl-tags"><li>Kotlin</li><li>Compose</li><li>Koin</li><li>Coroutines</li><li>TeamCity</li><li>SonarQube</li></ul>
+              <ul class="tl-tags"><li>Kotlin</li><li>KMP</li><li>Compose</li><li>Koin</li><li>Coroutines</li><li>TeamCity</li><li>SonarQube</li></ul>
             </article>
           </li>
 
@@ -388,23 +389,104 @@
           </ol>
         </div>
 
-        <details class="projects reveal">
-          <summary>
-            <span>
-              <span class="projects-title" data-i18n="projects.title">Proyectos anteriores · 2015–2019</span>
-              <span class="projects-note" data-i18n="projects.note">Selección de apps de etapas anteriores. La mayoría ya no están publicadas.</span>
-            </span>
-            <span class="projects-toggle" aria-hidden="true"></span>
-          </summary>
-          <ul class="projects-list">
-            <li><h4>LaLiga Fantasy MARCA</h4><p data-i18n="projects.p1">Juego fantasy de la liga española para LaLiga y MARCA. Mi primera app profesional: desarrollo, publicación y mantenimiento.</p><span>Java · OkHttp · Google Mobile Ads · Crashlytics</span></li>
-            <li><h4>SmartStation</h4><p data-i18n="projects.p2">Plataforma de gestión de estaciones de servicio, personalizada por cliente mediante product flavors sobre una única base de código.</p><span>Android · Product flavors</span></li>
-            <li><h4>Haulap</h4><p data-i18n="projects.p3">Aplicación construida con Jetpack y arquitectura MVVM.</p><span>Kotlin · Room · Navigation · WorkManager · RxJava · Dagger 2</span></li>
-            <li><h4>Padeltrack</h4><p data-i18n="projects.p4">App para organizar partidos de pádel: modernización, cierre del desarrollo y evolución posterior.</p><span>Java · Socket.io · Glide</span></li>
-            <li><h4>Mercurio</h4><p data-i18n="projects.p5">App informativa de un centro de FP, primero nativa y después migrada a Flutter.</p><span>Kotlin · Flutter · Firebase</span></li>
-            <li><h4>Trivial La Última y Apago</h4><p data-i18n="projects.p6">Proyecto de fin de ciclo: app de trivial para un podcast, con back-end propio.</p><span>Java · PHP · MySQL · SQLite</span></li>
-          </ul>
-        </details>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="section-kicker reveal">04 — <span data-i18n="projects.kicker">Proyectos</span></p>
+          <h2 class="section-title" id="projects-title"><span class="mask"><span data-i18n="projects.title">Productos que he construido, publicado y mantenido.</span></span></h2>
+          <p class="section-lead reveal" data-i18n="projects.lead">Apps para clientes de sectores muy distintos: deporte, ocio, retail, industria y educación. En la mayoría fui el único desarrollador Android, de la primera pantalla a Google Play.</p>
+        </header>
+
+        <ul class="cart-grid">
+          <li class="cart reveal" data-context="personal">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-mercurio"></span><p class="cart-label"><span class="cart-ctx"><span data-i18n="projects.ctx.personal">Personal</span></span><span class="cart-date">2018 — <span data-i18n="exp.present">Actualidad</span></span></p></div>
+            <h3>Mercurio</h3>
+            <p data-i18n="projects.mercurio">App oficial del Centro de FP Específica Mercurio. La desarrollé en nativo con Kotlin y Android Jetpack (MVVM) y después la migré a Flutter, con los contenidos servidos desde Firebase.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>Flutter</li><li>Jetpack</li><li>Firebase</li><li>Dagger 2</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-bliver"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2019</span></p></div>
+            <h3>Bliver</h3>
+            <p data-i18n="projects.bliver">App para crear y organizar eventos, con un back-end en tiempo real sobre Firebase.</p>
+            <ul class="cart-tags"><li>Android</li><li>Firebase</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-istobal"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2019</span></p></div>
+            <h3>Istobal</h3>
+            <p data-i18n="projects.istobal">Evolución y mantenimiento de la app Android de Istobal en producción.</p>
+            <ul class="cart-tags"><li>Android</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-smartstation"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2018 — 2019</span></p></div>
+            <h3>SmartStation</h3>
+            <p data-i18n="projects.smartstation">Plataforma white-label para estaciones de servicio: una única base de código que, con product flavors, genera una app personalizada para cada cliente. Dianaok fue la primera app de cliente.</p>
+            <ul class="cart-tags"><li>Android</li><li>Product flavors</li><li>White-label</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-haulap"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2018</span></p></div>
+            <h3>Haulap</h3>
+            <p data-i18n="projects.haulap">App desarrollada con arquitectura MVVM sobre Android Jetpack (Room, Navigation, WorkManager), con RxJava, Retrofit y Dagger 2.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>Jetpack</li><li>RxJava</li><li>Dagger 2</li><li>Retrofit</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-vouzzer"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2018</span></p></div>
+            <h3>Vouzzer</h3>
+            <p data-i18n="projects.vouzzer">App Android en Kotlin con arquitectura MVP, inyección de dependencias con Dagger 2 y consumo de APIs REST con Retrofit.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>MVP</li><li>Dagger 2</li><li>Retrofit</li><li>Firebase</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-solidalis"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2017 — 2018</span></p></div>
+            <h3>Solidalis</h3>
+            <p data-i18n="projects.solidalis">Desarrollo de la app Android en Kotlin sobre MVP, integrada con Firebase y monitorizada con Crashlytics.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>MVP</li><li>Firebase</li><li>Crashlytics</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-falomir"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2017 — 2019</span></p></div>
+            <h3>Bingo Falomir</h3>
+            <p data-i18n="projects.falomir">App complementaria para el bingo de Falomir. Desarrollo Android coordinado con los equipos de iOS y diseño mediante Trello, Slack e InVision.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>MVP</li><li>Dagger 2</li><li>Firebase</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-heregallery"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2017</span></p></div>
+            <h3>The Here Gallery</h3>
+            <p data-i18n="projects.heregallery">Marketplace para la venta de cuadros, desarrollado en Kotlin con arquitectura MVP y Retrofit.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>MVP</li><li>Retrofit</li><li>Firebase</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-styloo"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2017</span></p></div>
+            <h3>Styloo</h3>
+            <p data-i18n="projects.styloo">Marketplace para negocios de estética. App Android desarrollada en coordinación con los equipos de back-end, iOS y diseño.</p>
+            <ul class="cart-tags"><li>Kotlin</li><li>MVP</li><li>Dagger 2</li><li>Retrofit</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-iobi"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2017 — 2019</span></p></div>
+            <h3>IOBI Cloud</h3>
+            <p data-i18n="projects.iobi">App para consultar desde el móvil las máquinas y los procesos de la plataforma IOBI Cloud.</p>
+            <ul class="cart-tags"><li>Java</li><li>WebView</li><li>Retrofit</li><li>Butterknife</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-padeltrack"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2016 — 2019</span></p></div>
+            <h3>Padeltrack</h3>
+            <p data-i18n="projects.padeltrack">App para organizar partidos de pádel. La actualicé a las versiones modernas de Android, completé su desarrollo y me encargué de su evolución en contacto directo con el cliente.</p>
+            <ul class="cart-tags"><li>Java</li><li>Socket.io</li><li>Glide</li><li>Analytics</li></ul>
+          </li>
+          <li class="cart reveal" data-context="zinkers">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-fantasy"></span><p class="cart-label"><span class="cart-ctx">zinkers.io</span><span class="cart-date">2016 — 2017</span></p></div>
+            <h3>LaLiga Fantasy MARCA</h3>
+            <p data-i18n="projects.fantasy">Juego fantasy de la liga española para LaLiga y MARCA. Mi primera app profesional: responsable de su desarrollo, publicación y mantenimiento.</p>
+            <ul class="cart-tags"><li>Java</li><li>OkHttp</li><li>Google Mobile Ads</li><li>Branch</li></ul>
+          </li>
+          <li class="cart reveal" data-context="edu">
+            <div class="cart-art"><span class="cart-icon" data-sprite="p-trivial"></span><p class="cart-label"><span class="cart-ctx"><span data-i18n="projects.ctx.edu">Formación</span></span><span class="cart-date">2015</span></p></div>
+            <h3>Trivial La Última y Apago</h3>
+            <p data-i18n="projects.trivial">Proyecto de fin de ciclo: app de trivial para el podcast La Última y Apago, con back-end propio en PHP y MySQL.</p>
+            <ul class="cart-tags"><li>Java</li><li>PHP</li><li>MySQL</li><li>SQLite</li></ul>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -412,7 +494,7 @@
     <section class="section" id="education" aria-labelledby="edu-title">
       <div class="container">
         <header class="section-head">
-          <p class="section-kicker reveal">04 — <span data-i18n="edu.kicker">Formación</span></p>
+          <p class="section-kicker reveal">05 — <span data-i18n="edu.kicker">Formación</span></p>
           <h2 class="section-title" id="edu-title"><span class="mask"><span data-i18n="edu.title">Base técnica y aprendizaje continuo.</span></span></h2>
         </header>
         <div class="edu-grid">
@@ -440,7 +522,7 @@
     <!-- ============ CONTACT ============ -->
     <section class="section contact" id="contact" aria-labelledby="contact-title">
       <div class="container contact-inner">
-        <p class="section-kicker reveal">05 — <span data-i18n="contact.kicker">Contacto</span></p>
+        <p class="section-kicker reveal">06 — <span data-i18n="contact.kicker">Contacto</span></p>
         <h2 class="contact-title" id="contact-title"><span class="mask"><span data-i18n="contact.title">Construyamos algo sólido.</span></span></h2>
         <p class="contact-text reveal" data-i18n="contact.text">¿Tienes un proyecto Android, un reto de arquitectura o una posición en la que pueda aportar? Hablemos.</p>
 
@@ -484,12 +566,38 @@
   <footer class="footer">
     <div class="container footer-inner">
       <p>© <span class="year">2026</span> David Pérez Salort</p>
-      <p data-i18n="footer.built">Diseñado y desarrollado con HTML, CSS y GSAP.</p>
+      <button class="footer-droid" type="button" data-game aria-label="Jugar a Droid Runner" data-i18n-attr="aria-label:game.play">
+        <span class="footer-droid-sprite" data-sprite="droid"></span>
+        <span class="footer-droid-text">▶ press start</span>
+      </button>
       <a href="#top" class="to-top" data-i18n="footer.top">Volver arriba ↑</a>
     </div>
   </footer>
 
   <div class="toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ EASTER EGG: DROID RUNNER ============ -->
+  <dialog class="game" aria-labelledby="game-title">
+    <div class="game-box">
+      <header class="game-head">
+        <h2 class="game-title" id="game-title">Droid Runner</h2>
+        <button class="game-close" type="button" aria-label="Cerrar juego" data-i18n-attr="aria-label:game.close">✕</button>
+      </header>
+      <div class="game-hud" aria-live="off">
+        <span><span data-i18n="game.score">Puntos</span> <b data-game-score>00000</b></span>
+        <span class="game-level" data-game-level>API 21</span>
+        <span><span data-i18n="game.hi">Récord</span> <b data-game-hi>00000</b></span>
+      </div>
+      <div class="game-stage" tabindex="0" autofocus>
+        <canvas class="game-canvas" width="256" height="144" aria-label="Droid Runner"></canvas>
+        <div class="game-msg">
+          <p class="game-msg-title">PRESS START</p>
+          <p class="game-msg-text"></p>
+        </div>
+      </div>
+      <p class="game-help" data-i18n="game.hint">Espacio o ↑ para saltar · ↓ para agacharte · Esc para salir. En el móvil: toca para saltar y desliza hacia abajo para agacharte.</p>
+    </div>
+  </dialog>
 
   <script src="vendor/gsap.min.js" defer></script>
   <script src="vendor/ScrollTrigger.min.js" defer></script>

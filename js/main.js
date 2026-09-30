@@ -1,4 +1,5 @@
 import { en, esExtra, meta } from './i18n.js';
+import { mountSprites } from './sprites.js';
 
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
@@ -11,6 +12,18 @@ const store = {
 };
 
 $('.year').textContent = new Date().getFullYear();
+mountSprites();
+
+/* =========================================================
+   Reloj del head unit con la hora local del visitante
+   ========================================================= */
+const huTime = $('.hu-time');
+const clockFmt = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+function tickClock() {
+  huTime.textContent = clockFmt.format(new Date());
+  setTimeout(tickClock, 60000 - (Date.now() % 60000) + 50);
+}
+tickClock();
 
 /* =========================================================
    Toast
@@ -84,23 +97,68 @@ function setTheme(theme) {
   updateThemeLabel();
   window.dispatchEvent(new Event('themechange'));
 }
+// Transición pixel: cuadros que cubren la pantalla desde el botón, cambio de tema y se destapan.
+let themeBusy = false;
+function pixelThemeSwap(next, originX, originY) {
+  const CELL = 40, COVER = 380, REVEAL = 380, EDGE = 70;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  const w = innerWidth, h = innerHeight;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:9999;pointer-events:none';
+  ctx.scale(dpr, dpr);
+  document.body.appendChild(canvas);
+
+  const cols = Math.ceil(w / CELL), rows = Math.ceil(h / CELL);
+  const maxD = Math.hypot(Math.max(originX, w - originX), Math.max(originY, h - originY)) / CELL;
+  const cells = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const d = Math.hypot(c + 0.5 - originX / CELL, r + 0.5 - originY / CELL);
+      cells.push({ x: c * CELL, y: r * CELL, t: Math.min(1, (d / maxD) * 0.8 + Math.random() * 0.2) });
+    }
+  }
+  const fill = next === 'light' ? '#f6f7f9' : '#07090d';
+  const edge = next === 'light' ? '#1fb866' : '#3ddc84';
+  let start = performance.now(), phase = 'cover';
+
+  function frame(now) {
+    const el = now - start;
+    ctx.clearRect(0, 0, w, h);
+    if (phase === 'cover') {
+      const p = el / COVER;
+      for (const cell of cells) {
+        const since = el - cell.t * COVER;
+        if (since < 0) continue;
+        ctx.fillStyle = since < EDGE ? edge : fill;
+        ctx.fillRect(cell.x, cell.y, CELL, CELL);
+      }
+      if (p >= 1 + EDGE / COVER) {
+        root.classList.add('no-tx');
+        setTheme(next);
+        requestAnimationFrame(() => root.classList.remove('no-tx'));
+        phase = 'reveal';
+        start = now;
+      }
+    } else {
+      ctx.fillStyle = fill;
+      for (const cell of cells) {
+        if (el < cell.t * REVEAL) ctx.fillRect(cell.x, cell.y, CELL, CELL);
+      }
+      if (el >= REVEAL) { canvas.remove(); themeBusy = false; return; }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
 $('.theme-toggle').addEventListener('click', (e) => {
   const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-  if (!document.startViewTransition || reducedMotion) return setTheme(next);
-
+  if (reducedMotion) return setTheme(next);
+  if (themeBusy) return;
+  themeBusy = true;
   const r = e.currentTarget.getBoundingClientRect();
-  const x = r.left + r.width / 2;
-  const y = r.top + r.height / 2;
-  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-  root.classList.add('vt-theme', 'no-tx');
-  const vt = document.startViewTransition(() => setTheme(next));
-  vt.ready.then(() => {
-    root.animate(
-      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
-      { duration: 750, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' },
-    );
-  });
-  vt.finished.finally(() => root.classList.remove('vt-theme', 'no-tx'));
+  pixelThemeSwap(next, r.left + r.width / 2, r.top + r.height / 2);
 });
 themeMeta.setAttribute('content', root.dataset.theme === 'light' ? '#f6f7f9' : '#07090d');
 
@@ -158,75 +216,105 @@ $$('.tech-card').forEach((card) => {
 });
 
 /* =========================================================
-   Canvas del hero: red de nodos que reacciona al puntero
+   Canvas del hero: campo de píxeles que se encienden cerca del puntero
    ========================================================= */
-function heroNetwork() {
+function heroPixelField() {
   const canvas = $('.hero-canvas');
   const ctx = canvas.getContext('2d');
   const hero = $('.hero');
+  const CELL = 14, RADIUS = 7;
   const pointer = { x: -9999, y: -9999 };
-  let w = 0, h = 0, dpr = 1, nodes = [], color = '180,200,230', running = false, visible = true, frame = 0;
+  let w = 0, h = 0, dpr = 1, cols = 0, rows = 0;
+  let star, phase, speed, heat;
+  let base = '180,200,230', lit = '61,220,132', running = false, visible = true, frame = 0, last = 0;
 
-  const readColor = () => { color = getComputedStyle(root).getPropertyValue('--particle').trim() || color; };
+  const readColors = () => {
+    const cs = getComputedStyle(root);
+    base = cs.getPropertyValue('--particle').trim() || base;
+    lit = cs.getPropertyValue('--pixel-lit').trim() || lit;
+  };
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2);
     w = hero.clientWidth; h = hero.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.min(60, Math.round((w * h) / 22000));
-    nodes = Array.from({ length: count }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
-      r: Math.random() * 1.4 + 0.6,
-    }));
-    if (!running) draw();
+    cols = Math.ceil(w / CELL); rows = Math.ceil(h / CELL);
+    const n = cols * rows;
+    star = new Uint8Array(n); phase = new Float32Array(n); speed = new Float32Array(n); heat = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      star[i] = Math.random() < 0.16 ? 1 : 0;
+      phase[i] = Math.random() * Math.PI * 2;
+      speed[i] = 0.6 + Math.random() * 1.8;
+    }
+    if (!running) draw(performance.now(), 0);
   }
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    const link = 130, link2 = link * link;
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      if (running) {
-        a.x += a.vx; a.y += a.vy;
-        if (a.x < 0 || a.x > w) a.vx *= -1;
-        if (a.y < 0 || a.y > h) a.vy *= -1;
-        const dx = a.x - pointer.x, dy = a.y - pointer.y, d2 = dx * dx + dy * dy;
-        if (d2 < 22000) { const f = (1 - d2 / 22000) * 0.6; a.x += dx * f * 0.02; a.y += dy * f * 0.02; }
+  // Calienta las celdas alrededor de un punto, en 4 niveles (sin degradados suaves).
+  function warm(px, py) {
+    const pc = Math.floor(px / CELL), pr = Math.floor(py / CELL);
+    for (let dr = -RADIUS; dr <= RADIUS; dr++) {
+      const r = pr + dr;
+      if (r < 0 || r >= rows) continue;
+      for (let dc = -RADIUS; dc <= RADIUS; dc++) {
+        const c = pc + dc;
+        if (c < 0 || c >= cols) continue;
+        const d = Math.hypot(dc, dr);
+        if (d > RADIUS) continue;
+        const v = Math.ceil((1 - d / RADIUS) * 4) / 4;
+        const i = r * cols + c;
+        if (v > heat[i]) heat[i] = v;
       }
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        const dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
-        if (d2 < link2) {
-          ctx.strokeStyle = `rgba(${color},${(1 - d2 / link2) * 0.22})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-        }
-      }
-      const pdx = a.x - pointer.x, pdy = a.y - pointer.y, pd2 = pdx * pdx + pdy * pdy;
-      if (pd2 < 32000) {
-        ctx.strokeStyle = `rgba(61,220,132,${(1 - pd2 / 32000) * 0.45})`;
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(pointer.x, pointer.y); ctx.stroke();
-      }
-      ctx.fillStyle = `rgba(${color},.55)`;
-      ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
     }
   }
-  function loop() {
+  function draw(now, dt) {
+    const t = now / 1000;
+    ctx.clearRect(0, 0, w, h);
+    if (running) {
+      if (finePointer) { if (pointer.x > -999) warm(pointer.x, pointer.y); }
+      else warm(w * (0.5 + 0.38 * Math.sin(t * 0.35)), h * (0.45 + 0.3 * Math.sin(t * 0.57)));
+    }
+    // Estrellas de 8 bits parpadeando
+    ctx.fillStyle = `rgb(${base})`;
+    for (let i = 0; i < heat.length; i++) {
+      if (!star[i] || heat[i] > 0.05) continue;
+      const tw = 0.5 + 0.5 * Math.sin(phase[i] + t * speed[i]);
+      const a = Math.round((0.05 + tw * 0.32) * 8) / 8;
+      if (a <= 0) continue;
+      const size = tw > 0.8 ? 3 : 2;
+      ctx.globalAlpha = a;
+      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), Math.floor(i / cols) * CELL + ((CELL - size) >> 1), size, size);
+    }
+    // Píxeles encendidos por el puntero
+    const decay = dt * 1.4;
+    ctx.fillStyle = `rgb(${lit})`;
+    for (let i = 0; i < heat.length; i++) {
+      const v = heat[i];
+      if (v <= 0.05) continue;
+      const q = Math.ceil(v * 4) / 4;
+      const size = 2 + Math.round(q * 4) * 2;
+      ctx.globalAlpha = 0.12 + q * 0.6;
+      ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), Math.floor(i / cols) * CELL + ((CELL - size) >> 1), size, size);
+      heat[i] = Math.max(0, v - decay);
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop(now) {
     if (!running) return;
-    draw();
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    draw(now, dt);
     frame = requestAnimationFrame(loop);
   }
   function update() {
     const should = visible && !document.hidden && !reducedMotion;
-    if (should && !running) { running = true; loop(); }
+    if (should && !running) { running = true; last = performance.now(); frame = requestAnimationFrame(loop); }
     else if (!should && running) { running = false; cancelAnimationFrame(frame); }
   }
 
-  readColor();
+  readColors();
   resize();
   let rt;
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
-  addEventListener('themechange', () => { readColor(); if (!running) draw(); });
+  addEventListener('themechange', () => { readColors(); if (!running) draw(performance.now(), 0); });
   hero.addEventListener('pointermove', (e) => {
     const r = hero.getBoundingClientRect();
     pointer.x = e.clientX - r.left; pointer.y = e.clientY - r.top;
@@ -236,7 +324,27 @@ function heroNetwork() {
   document.addEventListener('visibilitychange', update);
   update();
 }
-heroNetwork();
+heroPixelField();
+
+/* =========================================================
+   Easter egg: Droid Runner (código Konami o el droide del footer)
+   ========================================================= */
+let lenis = null;
+let gameModule = null;
+async function launchGame() {
+  if ($('.game').open) return;
+  gameModule ??= await import('./game.js');
+  gameModule.openGame({ t, onOpen: () => lenis?.stop(), onClose: () => lenis?.start() });
+}
+$$('[data-game]').forEach((btn) => btn.addEventListener('click', launchGame));
+const KONAMI = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+let konamiPos = 0;
+addEventListener('keydown', (e) => {
+  if ($('.game').open) return;
+  const key = e.key.toLowerCase();
+  konamiPos = key === KONAMI[konamiPos] ? konamiPos + 1 : (key === KONAMI[0] ? (konamiPos === 2 ? 2 : 1) : 0);
+  if (konamiPos === KONAMI.length) { konamiPos = 0; launchGame(); }
+});
 
 /* =========================================================
    Animaciones (GSAP + ScrollTrigger + Lenis)
@@ -288,7 +396,6 @@ function splitName() {
 
 function animate() {
   // ---------- Scroll suave ----------
-  let lenis = null;
   if (Lenis) {
     lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
     lenis.on('scroll', ScrollTrigger.update);
@@ -317,8 +424,8 @@ function animate() {
   intro
     .fromTo(heroBits[0], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1 })
     .fromTo(chars,
-      { opacity: 0, yPercent: 115, rotateX: -70, filter: 'blur(10px)' },
-      { opacity: 1, yPercent: 0, rotateX: 0, filter: 'blur(0px)', duration: 1.3, stagger: 0.035 }, '-=0.7')
+      { opacity: 0, yPercent: 110 },
+      { opacity: 1, yPercent: 0, duration: 0.7, stagger: 0.04, ease: 'steps(5)' }, '-=0.7')
     .fromTo(heroBits[1], { opacity: 0 }, { opacity: 1, duration: 0.3 }, '-=0.8')
     .to({ n: 0 }, {
       n: roleFull.length, duration: 1.1, ease: 'none',
@@ -371,7 +478,7 @@ function animate() {
   });
 
   // ---------- Barra de progreso ----------
-  gsap.to('.scroll-progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
+  gsap.to('.scroll-progress', { '--p': '100%', ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
   // ---------- Títulos con máscara ----------
   $$('.mask > span').forEach((span) => {
@@ -382,12 +489,12 @@ function animate() {
   });
 
   // ---------- Scroll reveal ----------
-  gsap.set('.reveal', { y: 40 });
+  gsap.set('.reveal', { y: 24 });
   ScrollTrigger.batch('.reveal', {
     start: 'top 90%',
     once: true,
     onEnter: (batch) => gsap.to(batch, {
-      opacity: 1, y: 0, duration: 1, stagger: 0.07, ease: 'expo.out', overwrite: true,
+      opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: 'steps(6)', overwrite: true,
       onComplete() { gsap.set(this.targets(), { clearProps: 'transform' }); },
     }),
   });

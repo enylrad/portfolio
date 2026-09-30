@@ -18,15 +18,25 @@ Hace falta servirlo por HTTP (no con `file://`), porque `js/main.js` es un módu
 | `index.html` | Marcado y textos en español (fuente principal) |
 | `js/i18n.js` | Traducciones al inglés y metadatos por idioma |
 | `js/main.js` | Tema, idioma, animaciones e interacciones |
+| `js/sprites.js` | Sprites pixel art (matrices de caracteres) para la web y el juego |
+| `js/game.js` | Easter egg «Droid Runner» (se carga solo al activarlo) |
 | `css/styles.css` | Estilos y tokens de tema claro/oscuro |
 | `vendor/` | GSAP 3.13, ScrollTrigger y Lenis 1.3 (minificados) |
-| `assets/` | Fuentes, favicons y foto |
+| `assets/` | Fuentes (Inter, Space Grotesk, Pixelify Sans), favicons y foto |
 | `cv/` | Aquí va el PDF del CV |
 
 ## Editar textos
 
 - **Español:** directamente en `index.html`.
 - **Inglés:** la misma clave `data-i18n` en `js/i18n.js`.
+
+## Proyectos
+
+Cada proyecto es un `<li class="cart">` en la sección `#projects` de `index.html`. El icono de la etiqueta es un sprite de `js/sprites.js` (`data-sprite="p-<slug>"`) y el texto en inglés va en `js/i18n.js` con la clave `projects.<slug>`.
+
+## Easter egg
+
+Código Konami (↑↑↓↓←→←→BA) o clic en el droide del footer: abre «Droid Runner», un runner pixel art en `js/game.js`. El récord se guarda en `localStorage`.
 
 ## Pendiente
 
