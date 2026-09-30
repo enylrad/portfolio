@@ -1,16 +1,45 @@
-# my_portfolio
+# David Pérez Salort — Portfolio
 
-A new Flutter project.
+Web personal de una sola página: HTML, CSS y JavaScript sin paso de build. Las animaciones usan GSAP + ScrollTrigger y el scroll suave usa Lenis. Todo está alojado en el propio repo (`vendor/`, `assets/fonts/`), sin dependencias de CDN.
 
-## Getting Started
+## Ver en local
 
-This project is a starting point for a Flutter application.
+```bash
+python3 -m http.server 8000
+# abre http://localhost:8000
+```
 
-A few resources to get you started if this is your first Flutter project:
+Hace falta servirlo por HTTP (no con `file://`), porque `js/main.js` es un módulo ES.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Estructura
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Ruta | Contenido |
+| --- | --- |
+| `index.html` | Marcado y textos en español (fuente principal) |
+| `js/i18n.js` | Traducciones al inglés y metadatos por idioma |
+| `js/main.js` | Tema, idioma, animaciones e interacciones |
+| `css/styles.css` | Estilos y tokens de tema claro/oscuro |
+| `vendor/` | GSAP 3.13, ScrollTrigger y Lenis 1.3 (minificados) |
+| `assets/` | Fuentes, favicons y foto |
+| `cv/` | Aquí va el PDF del CV |
+
+## Editar textos
+
+- **Español:** directamente en `index.html`.
+- **Inglés:** la misma clave `data-i18n` en `js/i18n.js`.
+
+## Pendiente
+
+- **CV:** coloca el PDF en `cv/` y cambia `href="#"` del botón `data-cv` en `index.html` por su ruta, añadiendo el atributo `download`.
+- **GitHub:** rellena el `href="#"` del icono de GitHub en la sección de contacto.
+
+## Despliegue en Firebase Hosting
+
+```bash
+npm i -g firebase-tools
+firebase login
+firebase init hosting   # public directory: .   · single-page app: No
+firebase deploy
+```
+
+Conviene añadir en `firebase.json` un `ignore` para `README.md`, `cv/.gitkeep` y los ficheros ocultos.
