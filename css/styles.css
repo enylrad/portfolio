@@ -659,7 +659,10 @@ main, .footer { position: relative; z-index: 1; }
 .js-anim .tl-card, .js-anim .tl-date { opacity: 0; }
 
 /* ---------- View transitions (cambio de tema) ---------- */
-::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.vt-theme::view-transition-old(root), html.vt-theme::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.vt-theme::view-transition-new(root) { z-index: 9999; }
+.no-tx *, .no-tx *::before, .no-tx *::after, .no-tx { transition: none !important; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
