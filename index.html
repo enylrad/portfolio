@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>David Pérez Salort · Senior Android Software Engineer</title>
+  <meta name="description" content="Senior Android Software Engineer especializado en Kotlin, arquitectura de aplicaciones móviles e integración de software automotriz. Galicia, España.">
+  <meta name="author" content="David Pérez Salort">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#07090d">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="David Pérez Salort · Senior Android Software Engineer">
+  <meta property="og:description" content="Desarrollo Android nativo con Kotlin, arquitectura móvil e integración de software automotriz.">
+  <meta property="og:image" content="assets/img/avatar.jpeg">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-icon-180x180.png">
+
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script>
+    // Aplica tema e idioma guardados antes del primer pintado (sin parpadeo).
+    (function () {
+      var d = document.documentElement, t, l;
+      try { t = localStorage.getItem('theme'); l = localStorage.getItem('lang'); } catch (e) {}
+      if (t === 'light' || t === 'dark') d.dataset.theme = t;
+      if (!l) l = (navigator.language || '').toLowerCase().indexOf('en') === 0 ? 'en' : 'es';
+      d.dataset.lang = l;
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('js-anim');
+        // Red de seguridad: si las animaciones no arrancan, mostrar todo.
+        setTimeout(function () { if (!window.__animReady) d.classList.remove('js-anim'); }, 2500);
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "David Pérez Salort",
+    "jobTitle": "Senior Android Software Engineer",
+    "email": "mailto:david.perez.salort@gmail.com",
+    "address": { "@type": "PostalAddress", "addressRegion": "Galicia", "addressCountry": "ES" },
+    "sameAs": ["https://www.linkedin.com/in/davidperezsalort/"],
+    "knowsAbout": ["Android", "Kotlin", "Jetpack Compose", "Kotlin Coroutines", "Automotive software", "Bluetooth"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Saltar al contenido</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <div class="cursor-halo" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="top">
+    <div class="nav-inner container">
+      <a class="nav-logo" href="#top" aria-label="David Pérez Salort">
+        <span class="nav-logo-mark">DP</span><span class="nav-logo-dot"></span>
+      </a>
+      <nav aria-label="Principal" data-i18n-attr="aria-label:navLabel">
+        <ul class="nav-links">
+          <li><a href="#about" data-i18n="nav.about">Perfil</a></li>
+          <li><a href="#skills" data-i18n="nav.skills">Stack</a></li>
+          <li><a href="#experience" data-i18n="nav.experience">Experiencia</a></li>
+          <li><a href="#education" data-i18n="nav.education">Formación</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn lang-toggle" type="button" aria-label="Switch to English" data-i18n-attr="aria-label:langLabel">
+          <span class="lang-current">ES</span><span class="lang-sep">/</span><span class="lang-other">EN</span>
+        </button>
+        <button class="icon-btn theme-toggle" type="button" aria-label="Cambiar a tema claro" data-i18n-attr="aria-label:themeLabel">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-name">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="hero-eyebrow" data-hero>
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span data-i18n="hero.location">Galicia, España · Trabajo en remoto</span>
+          </p>
+          <h1 class="hero-name" id="hero-name" aria-label="David Pérez Salort">
+            <span class="split" aria-hidden="true">David Pérez</span>
+            <span class="split gradient-text" aria-hidden="true">Salort</span>
+          </h1>
+          <p class="hero-role" data-hero>
+            <span class="role-bracket" aria-hidden="true">&lt;</span><span class="role-text" data-type="Senior Android Software Engineer">Senior Android Software Engineer</span><span class="role-bracket" aria-hidden="true"> /&gt;</span><span class="caret" aria-hidden="true"></span>
+          </p>
+          <p class="hero-desc" data-hero data-i18n="hero.desc">Ingeniero de software especializado en desarrollo nativo con Kotlin, arquitectura de aplicaciones móviles e integración de software automotriz. Hoy construyo software para vehículos de Stellantis e integro la IA en mi flujo de trabajo para entregar código de más calidad, más rápido.</p>
+          <ul class="hero-tags" data-hero>
+            <li data-i18n="hero.tag1">Android nativo</li>
+            <li data-i18n="hero.tag2">Kotlin first</li>
+            <li data-i18n="hero.tag3">Software automotriz</li>
+            <li data-i18n="hero.tag4">Desarrollo potenciado por IA</li>
+          </ul>
+          <div class="hero-ctas" data-hero>
+            <a class="btn btn-primary magnetic" href="#experience">
+              <span data-i18n="hero.ctaExp">Ver trayectoria</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            </a>
+            <a class="btn btn-ghost magnetic" href="#contact"><span data-i18n="hero.ctaContact">Contactar</span></a>
+          </div>
+          <dl class="hero-stats" data-hero>
+            <div><dt data-i18n="stats.android">Años en Android</dt><dd><span data-count="10">10</span>+</dd></div>
+            <div><dt data-i18n="stats.senior">Años como Senior</dt><dd><span data-count="7">7</span></dd></div>
+            <div><dt data-i18n="stats.auto">Años en automoción</dt><dd><span data-count="3">3</span>+</dd></div>
+          </dl>
+        </div>
+
+        <!-- Visual: head unit de vehículo con app Android -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="device tilt-scene">
+            <div class="device-bezel">
+              <div class="hu">
+                <div class="hu-status">
+                  <span class="hu-time">12:45</span>
+                  <span class="hu-status-icons">
+                    <svg viewBox="0 0 24 24"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M2 20h2v-3H2zM7 20h2v-6H7zM12 20h2v-9h-2zM17 20h2V8h-2z"/></svg>
+                    <span class="hu-temp">18°</span>
+                  </span>
+                </div>
+                <div class="hu-grid">
+                  <div class="hu-card hu-bt">
+                    <div class="bt-rings"><span></span><span></span><span></span>
+                      <svg viewBox="0 0 24 24" class="bt-icon"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
+                    </div>
+                    <div>
+                      <p class="hu-label">Bluetooth</p>
+                      <p class="hu-value"><span class="hu-ok"></span>Connected</p>
+                      <p class="hu-sub">HFP · A2DP · AVRCP</p>
+                    </div>
+                  </div>
+                  <div class="hu-card hu-media">
+                    <div class="hu-art"></div>
+                    <div class="hu-media-info">
+                      <p class="hu-label">Now playing</p>
+                      <p class="hu-value">Coroutines &amp; Chill</p>
+                      <div class="hu-progress"><span></span></div>
+                    </div>
+                  </div>
+                  <div class="hu-card hu-nav">
+                    <svg viewBox="0 0 160 90" class="hu-map">
+                      <path class="map-road" d="M0 70 L40 60 L70 72 L110 40 L160 48"/>
+                      <path class="map-road" d="M30 0 L45 90"/>
+                      <path class="map-road" d="M120 0 L100 90"/>
+                      <path class="map-route" d="M12 67 L40 60 L70 72 L110 40 L148 46"/>
+                      <circle class="map-pin" cx="148" cy="46" r="4"/>
+                    </svg>
+                    <p class="hu-sub">ETA 18 min · 12 km</p>
+                  </div>
+                  <div class="hu-card hu-climate">
+                    <p class="hu-label">Climate</p>
+                    <p class="hu-big">21.5°</p>
+                    <div class="hu-fan"><span></span><span></span><span></span><span></span></div>
+                  </div>
+                </div>
+                <div class="hu-dock">
+                  <span></span><span></span><span class="is-on"></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="code-card">
+              <div class="code-head"><i></i><i></i><i></i><span>VehicleViewModel.kt</span></div>
+<pre><code><span class="k">val</span> state <span class="k">by</span> vm.connection
+    .<span class="f">collectAsStateWithLifecycle</span>()
+
+<span class="f">LaunchedEffect</span>(state) {
+    <span class="k">if</span> (state <span class="k">is</span> <span class="t">Connected</span>)
+        bt.<span class="f">startStreaming</span>()
+}</code></pre>
+            </div>
+            <span class="float-chip chip-a">Kotlin</span>
+            <span class="float-chip chip-b">Jetpack Compose</span>
+            <span class="float-chip chip-c">Bluetooth LE</span>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-hint" href="#about" aria-label="Bajar" data-i18n-attr="aria-label:scrollHint"><span></span></a>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Kotlin</span><span>Jetpack Compose</span><span>Coroutines</span><span>Flow</span><span>Hilt</span><span>Room</span><span>Ktor</span><span>Bluetooth</span><span>Gradle</span><span>TeamCity</span><span>SonarQube</span><span>Flutter</span><span>GitHub Copilot</span>
+      </div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container about">
+        <div class="about-photo reveal">
+          <div class="photo-frame">
+            <img src="assets/img/avatar.jpeg" alt="Retrato de David Pérez Salort" data-i18n-attr="alt:about.photoAlt" width="310" height="338" loading="lazy" decoding="async">
+          </div>
+          <div class="photo-badge">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span data-i18n="about.badge">Stellantis · Coremain</span>
+          </div>
+        </div>
+        <div class="about-text">
+          <p class="section-kicker reveal">01 — <span data-i18n="about.kicker">Perfil</span></p>
+          <h2 class="section-title" id="about-title"><span class="mask"><span data-i18n="about.title">Android nativo por oficio. Mejora continua por convicción.</span></span></h2>
+          <p class="reveal" data-i18n="about.p1">Mi interés por la tecnología empezó pronto: montando mis propios ordenadores y explorando el diseño 3D. En la programación encontré el terreno donde unir creatividad y resolución de problemas.</p>
+          <p class="reveal" data-i18n="about.p2">Desde 2015 me dedico al desarrollo Android. Empecé con Java y hoy trabajo con Kotlin, Jetpack Compose, Coroutines y Flow, aplicando arquitecturas limpias y buenas prácticas para construir productos robustos, mantenibles y de alto rendimiento. Mi etapa con Flutter me aportó una visión multiplataforma que sigo aplicando al diseñar soluciones.</p>
+          <p class="reveal" data-i18n="about.p3">Hoy incorporo la IA a mi día a día —asistentes de código, revisión y refactorización— como palanca para aprender más rápido y elevar la calidad de cada entrega. Mejorar un poco cada día forma parte de mi manera de trabajar.</p>
+          <ul class="about-pillars reveal">
+            <li><strong data-i18n="about.pillar1t">Calidad</strong><span data-i18n="about.pillar1">Código limpio, revisado y testeable.</span></li>
+            <li><strong data-i18n="about.pillar2t">Arquitectura</strong><span data-i18n="about.pillar2">Soluciones escalables y fáciles de mantener.</span></li>
+            <li><strong data-i18n="about.pillar3t">IA aplicada</strong><span data-i18n="about.pillar3">Herramientas modernas al servicio del producto.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="section-kicker reveal">02 — <span data-i18n="skills.kicker">Stack</span></p>
+          <h2 class="section-title" id="skills-title"><span class="mask"><span data-i18n="skills.title">Tecnologías con las que entrego software en producción.</span></span></h2>
+        </header>
+
+        <div class="skill-groups">
+          <div class="skill-group">
+            <h3 class="skill-group-title reveal"><span class="sg-index">A</span><span>Core</span></h3>
+            <ul class="tech-grid">
+              <li class="tech-card reveal" style="--c:#8b6cff"><span class="tech-icon">Kt</span><span class="tech-name">Kotlin</span><span class="tech-desc" data-i18n="tech.kotlin">Lenguaje principal</span></li>
+              <li class="tech-card reveal" style="--c:#f89820"><span class="tech-icon">Jv</span><span class="tech-name">Java</span><span class="tech-desc" data-i18n="tech.java">Base sólida y código legado</span></li>
+              <li class="tech-card reveal" style="--c:#c084fc"><span class="tech-icon">Co</span><span class="tech-name">Coroutines</span><span class="tech-desc" data-i18n="tech.coroutines">Concurrencia estructurada</span></li>
+              <li class="tech-card reveal" style="--c:#22d3ee"><span class="tech-icon">Fl</span><span class="tech-name">Flow</span><span class="tech-desc" data-i18n="tech.flow">Streams reactivos</span></li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group-title reveal"><span class="sg-index">B</span><span data-i18n="skills.ui">UI y arquitectura</span></h3>
+            <ul class="tech-grid">
+              <li class="tech-card reveal" style="--c:#4c8dff"><span class="tech-icon">Jc</span><span class="tech-name">Jetpack Compose</span><span class="tech-desc" data-i18n="tech.compose">UI declarativa</span></li>
+              <li class="tech-card reveal" style="--c:#3ddc84"><span class="tech-icon">Vb</span><span class="tech-name">ViewBinding</span><span class="tech-desc" data-i18n="tech.viewbinding">Vistas con tipado seguro</span></li>
+              <li class="tech-card reveal" style="--c:#fbbf24"><span class="tech-icon">Hi</span><span class="tech-name">Hilt</span><span class="tech-desc" data-i18n="tech.hilt">Inyección de dependencias</span></li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group-title reveal"><span class="sg-index">C</span><span data-i18n="skills.data">Datos y red</span></h3>
+            <ul class="tech-grid">
+              <li class="tech-card reveal" style="--c:#34d399"><span class="tech-icon">Rm</span><span class="tech-name">Room</span><span class="tech-desc" data-i18n="tech.room">Persistencia local</span></li>
+              <li class="tech-card reveal" style="--c:#a78bfa"><span class="tech-icon">Kr</span><span class="tech-name">Ktor</span><span class="tech-desc" data-i18n="tech.ktor">Cliente HTTP asíncrono</span></li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3 class="skill-group-title reveal"><span class="sg-index">D</span><span data-i18n="skills.tooling">Entorno y CI/CD</span></h3>
+            <ul class="tech-grid">
+              <li class="tech-card reveal" style="--c:#3ddc84"><span class="tech-icon">As</span><span class="tech-name">Android Studio</span><span class="tech-desc" data-i18n="tech.studio">IDE y profiling</span></li>
+              <li class="tech-card reveal" style="--c:#38bdf8"><span class="tech-icon">Gr</span><span class="tech-name">Gradle</span><span class="tech-desc" data-i18n="tech.gradle">Builds y variantes</span></li>
+              <li class="tech-card reveal" style="--c:#f97316"><span class="tech-icon">Gt</span><span class="tech-name">Git</span><span class="tech-desc" data-i18n="tech.git">Control de versiones</span></li>
+              <li class="tech-card reveal" style="--c:#3b82f6"><span class="tech-icon">Ji</span><span class="tech-name">Jira</span><span class="tech-desc" data-i18n="tech.jira">Gestión ágil</span></li>
+              <li class="tech-card reveal" style="--c:#e879f9"><span class="tech-icon">Tc</span><span class="tech-name">TeamCity</span><span class="tech-desc" data-i18n="tech.teamcity">Integración continua</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="skill-extra">
+          <div class="extra-block reveal">
+            <h3 data-i18n="skills.alsoTitle">También he trabajado con</h3>
+            <ul class="pill-list">
+              <li>Flutter</li><li>Dart</li><li>Koin</li><li>Dagger 2</li><li>Retrofit</li><li>RxJava</li><li>Firebase</li><li>SonarQube</li><li>Bluetooth</li><li>MVVM</li><li>Clean Code</li>
+            </ul>
+          </div>
+          <div class="extra-block extra-ai reveal">
+            <h3><span class="ai-spark" aria-hidden="true">✦</span> <span data-i18n="skills.aiTitle">IA en mi flujo de trabajo</span></h3>
+            <ul class="pill-list">
+              <li>GitHub Copilot</li><li>Gemini</li><li data-i18n="skills.aiAssistants">Asistentes de código con IA</li>
+            </ul>
+            <p data-i18n="skills.aiText">La uso para acelerar revisiones, refactorizaciones y aprendizaje, siempre con criterio de ingeniería.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience" aria-labelledby="exp-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="section-kicker reveal">03 — <span data-i18n="exp.kicker">Experiencia</span></p>
+          <h2 class="section-title" id="exp-title"><span class="mask"><span data-i18n="exp.title">Más de una década construyendo para Android.</span></span></h2>
+        </header>
+
+        <div class="timeline">
+          <div class="timeline-line" aria-hidden="true"><span class="timeline-progress"></span></div>
+          <ol class="tl-list">
+
+          <li class="tl-item">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <p class="tl-date"><time datetime="2024-06">Jun 2024</time> — <span data-i18n="exp.present">Actualidad</span></p>
+            <article class="tl-card">
+              <p class="tl-highlight" data-i18n="exp.hlAuto">Integración de software automotriz</p>
+              <h3>Senior Android Engineer</h3>
+              <p class="tl-company">Coremain · <span data-i18n="exp.stellantis">Proyecto Stellantis</span> · <span data-i18n="exp.remote">Remoto</span></p>
+              <p data-i18n="exp.e1.summary">Desarrollo de software Android para las plataformas de vehículo de Stellantis.</p>
+              <ul>
+                <li data-i18n="exp.e1.b1">Desarrollo de funcionalidades nativas en Kotlin con Jetpack Compose, Coroutines y Flow.</li>
+                <li data-i18n="exp.e1.b2">Integración de software Android en plataformas de vehículo.</li>
+                <li data-i18n="exp.e1.b3">Calidad continua con TeamCity y SonarQube, code reviews y seguimiento en Jira.</li>
+              </ul>
+              <ul class="tl-tags"><li>Kotlin</li><li>Compose</li><li>Koin</li><li>Coroutines</li><li>TeamCity</li><li>SonarQube</li></ul>
+            </article>
+          </li>
+
+          <li class="tl-item">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <p class="tl-date"><time datetime="2023-03">Mar 2023</time> — <time datetime="2024-05">May 2024</time></p>
+            <article class="tl-card">
+              <p class="tl-highlight" data-i18n="exp.hlBt">Conectividad Bluetooth</p>
+              <h3>Senior Android Engineer</h3>
+              <p class="tl-company">SIVSA · <span data-i18n="exp.stellantis">Proyecto Stellantis</span> · <span data-i18n="exp.remote">Remoto</span></p>
+              <p data-i18n="exp.e2.summary">Desarrollo Android para el ecosistema de vehículos de Stellantis, con foco en la conectividad entre dispositivo y vehículo.</p>
+              <ul>
+                <li data-i18n="exp.e2.b1">Implementación de protocolos Bluetooth para la comunicación con plataformas de vehículo.</li>
+                <li data-i18n="exp.e2.b2">Desarrollo y evolución de funcionalidades en Kotlin sobre arquitectura MVVM.</li>
+              </ul>
+              <ul class="tl-tags"><li>Bluetooth</li><li>Kotlin</li><li>MVVM</li><li data-i18n="exp.tagAuto">Automoción</li></ul>
+            </article>
+          </li>
+
+          <li class="tl-item">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <p class="tl-date"><time datetime="2019-10">Oct 2019</time> — <time datetime="2023-02">Feb 2023</time></p>
+            <article class="tl-card">
+              <p class="tl-highlight" data-i18n="exp.hlArch">Arquitectura y mantenimiento</p>
+              <h3>Senior Android Engineer</h3>
+              <p class="tl-company">SIVSA · <span data-i18n="exp.omni">Proyecto OMNI</span> · <span data-i18n="exp.remote">Remoto</span></p>
+              <p data-i18n="exp.e3.summary">Evolución y mantenimiento de la aplicación Android del proyecto OMNI.</p>
+              <ul>
+                <li data-i18n="exp.e3.b1">Refactorización de arquitecturas complejas hacia patrones modernos y mantenibles.</li>
+                <li data-i18n="exp.e3.b2">Code reviews y definición de buenas prácticas dentro del equipo.</li>
+                <li data-i18n="exp.e3.b3">Gestión de integraciones en entornos de CI/CD.</li>
+              </ul>
+              <ul class="tl-tags"><li>Kotlin</li><li>Java</li><li>CI/CD</li><li>Code review</li></ul>
+            </article>
+          </li>
+
+          <li class="tl-item">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <p class="tl-date"><time datetime="2016-03">Mar 2016</time> — <time datetime="2019-06">Jun 2019</time></p>
+            <article class="tl-card">
+              <h3>Android Developer</h3>
+              <p class="tl-company">zinkers.io · Pedreguer, Alicante</p>
+              <p data-i18n="exp.e4.summary">Único desarrollador Android del equipo, responsable del ciclo de vida completo de varias aplicaciones: del diseño a producción.</p>
+              <ul>
+                <li data-i18n="exp.e4.b1">Implementación de pantallas, flujos y funcionalidades a partir de diseños y especificaciones, con foco en el rendimiento.</li>
+                <li data-i18n="exp.e4.b2">Publicación en Google Play: fichas, versiones y actualizaciones.</li>
+                <li data-i18n="exp.e4.b3">Control de calidad y corrección proactiva de errores con Crashlytics.</li>
+              </ul>
+              <ul class="tl-tags"><li>Kotlin</li><li>Java</li><li>MVP</li><li>MVVM</li><li>Dagger 2</li><li>Firebase</li></ul>
+            </article>
+          </li>
+
+          <li class="tl-item">
+            <span class="tl-dot" aria-hidden="true"></span>
+            <p class="tl-date"><time datetime="2015-03">Mar 2015</time> — <time datetime="2015-05">May 2015</time></p>
+            <article class="tl-card">
+              <h3 data-i18n="exp.e5.role">Android Developer · Prácticas</h3>
+              <p class="tl-company">Incomar Informática · Dénia, Alicante</p>
+              <p data-i18n="exp.e5.summary">Aplicación nativa Android para la gestión de gastos de una flota de taxis, con servicios web JSON y back-end en PHP y MySQL.</p>
+              <ul class="tl-tags"><li>Java</li><li>PHP</li><li>MySQL</li><li>REST</li></ul>
+            </article>
+          </li>
+          </ol>
+        </div>
+
+        <details class="projects reveal">
+          <summary>
+            <span>
+              <span class="projects-title" data-i18n="projects.title">Proyectos anteriores · 2015–2019</span>
+              <span class="projects-note" data-i18n="projects.note">Selección de apps de etapas anteriores. La mayoría ya no están publicadas.</span>
+            </span>
+            <span class="projects-toggle" aria-hidden="true"></span>
+          </summary>
+          <ul class="projects-list">
+            <li><h4>LaLiga Fantasy MARCA</h4><p data-i18n="projects.p1">Juego fantasy de la liga española para LaLiga y MARCA. Mi primera app profesional: desarrollo, publicación y mantenimiento.</p><span>Java · OkHttp · Google Mobile Ads · Crashlytics</span></li>
+            <li><h4>SmartStation</h4><p data-i18n="projects.p2">Plataforma de gestión de estaciones de servicio, personalizada por cliente mediante product flavors sobre una única base de código.</p><span>Android · Product flavors</span></li>
+            <li><h4>Haulap</h4><p data-i18n="projects.p3">Aplicación construida con Jetpack y arquitectura MVVM.</p><span>Kotlin · Room · Navigation · WorkManager · RxJava · Dagger 2</span></li>
+            <li><h4>Padeltrack</h4><p data-i18n="projects.p4">App para organizar partidos de pádel: modernización, cierre del desarrollo y evolución posterior.</p><span>Java · Socket.io · Glide</span></li>
+            <li><h4>Mercurio</h4><p data-i18n="projects.p5">App informativa de un centro de FP, primero nativa y después migrada a Flutter.</p><span>Kotlin · Flutter · Firebase</span></li>
+            <li><h4>Trivial La Última y Apago</h4><p data-i18n="projects.p6">Proyecto de fin de ciclo: app de trivial para un podcast, con back-end propio.</p><span>Java · PHP · MySQL · SQLite</span></li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION ============ -->
+    <section class="section" id="education" aria-labelledby="edu-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="section-kicker reveal">04 — <span data-i18n="edu.kicker">Formación</span></p>
+          <h2 class="section-title" id="edu-title"><span class="mask"><span data-i18n="edu.title">Base técnica y aprendizaje continuo.</span></span></h2>
+        </header>
+        <div class="edu-grid">
+          <div class="edu-col">
+            <h3 class="edu-head reveal" data-i18n="edu.degrees">Titulaciones</h3>
+            <ul class="edu-list">
+              <li class="reveal"><span class="edu-year">2013 — 2015</span><strong data-i18n="edu.d1">Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)</strong><span>IES Número 1</span></li>
+              <li class="reveal"><span class="edu-year">2011 — 2013</span><strong data-i18n="edu.d2">Técnico Superior en Administración de Sistemas Informáticos en Red (ASIR)</strong><span>IES Pere Maria Orts i Bosch</span></li>
+              <li class="reveal"><span class="edu-year">2008 — 2011</span><strong data-i18n="edu.d3">Técnico en Equipos e Instalaciones Eléctricas</strong><span>IES Maria Ibars</span></li>
+            </ul>
+          </div>
+          <div class="edu-col">
+            <h3 class="edu-head reveal" data-i18n="edu.certs">Certificaciones</h3>
+            <ul class="edu-list">
+              <li class="reveal"><span class="edu-year">2020</span><strong data-i18n="edu.c1">Formación en Clean Code</strong><span>Fundae</span></li>
+              <li class="reveal"><span class="edu-year">edX</span><strong data-i18n="edu.c2">Android: Introducción a la programación (certificado verificado)</strong><span>edX</span></li>
+              <li class="reveal"><span class="edu-year">Git</span><strong data-i18n="edu.c3">Git, control de versiones</strong><span>Clúster TIC Galicia</span></li>
+              <li class="reveal"><span class="edu-year">2012</span><strong data-i18n="edu.c4">CCNA Exploration: Network Fundamentals, LAN Switching and Wireless, Routing Protocols</strong><span>Cisco</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-inner">
+        <p class="section-kicker reveal">05 — <span data-i18n="contact.kicker">Contacto</span></p>
+        <h2 class="contact-title" id="contact-title"><span class="mask"><span data-i18n="contact.title">Construyamos algo sólido.</span></span></h2>
+        <p class="contact-text reveal" data-i18n="contact.text">¿Tienes un proyecto Android, un reto de arquitectura o una posición en la que pueda aportar? Hablemos.</p>
+
+        <div class="contact-mail reveal">
+          <a class="mail-link" href="mailto:david.perez.salort@gmail.com">david.perez.salort@gmail.com</a>
+          <button class="copy-btn" type="button" data-copy="david.perez.salort@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+            <span data-i18n="contact.copy">Copiar</span>
+          </button>
+        </div>
+
+        <div class="contact-actions reveal">
+          <!-- Sustituye href="#" por la ruta del PDF (p. ej. cv/David-Perez-Salort-CV.pdf) y añade el atributo download -->
+          <a class="btn btn-cv magnetic" href="#" data-cv>
+            <span class="btn-cv-shine" aria-hidden="true"></span>
+            <svg class="cv-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+            <span data-i18n="contact.cv">Descargar CV</span>
+          </a>
+          <ul class="socials">
+            <li>
+              <a class="social magnetic" href="https://www.linkedin.com/in/davidperezsalort/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="social magnetic" href="#" target="_blank" rel="noopener" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3"/></svg>
+              </a>
+            </li>
+            <li>
+              <a class="social magnetic" href="mailto:david.perez.salort@gmail.com" aria-label="Email">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="stroke"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span class="year">2026</span> David Pérez Salort</p>
+      <p data-i18n="footer.built">Diseñado y desarrollado con HTML, CSS y GSAP.</p>
+      <a href="#top" class="to-top" data-i18n="footer.top">Volver arriba ↑</a>
+    </div>
+  </footer>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/lenis.min.js" defer></script>
+  <script src="js/main.js" type="module"></script>
+</body>
+</html>
