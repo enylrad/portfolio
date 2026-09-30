@@ -194,7 +194,7 @@ main, .footer { position: relative; z-index: 1; }
   background: var(--accent);
 }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
-.mascot { width: 40px; height: 48px; margin-left: 2px; }
+.mascot { position: relative; top: -7px; width: 40px; height: 48px; margin-left: 2px; } /* el droide ocupa la parte baja del lienzo: se sube para centrarlo con los iconos */
 .mascot-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; }
 .mascot:focus-visible { outline-offset: 2px; }
 .icon-btn {
