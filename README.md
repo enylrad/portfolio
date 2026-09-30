@@ -54,11 +54,9 @@ Si cambias la experiencia o el stack en la web, actualízalos también en `cv/cv
 
 ## Despliegue en Firebase Hosting
 
-```bash
-npm i -g firebase-tools
-firebase login
-firebase init hosting   # public directory: .   · single-page app: No
-firebase deploy
-```
+Proyecto `portfolio-8fa1d` → https://portfolio-8fa1d.web.app. La configuración ya está en `firebase.json` y `.firebaserc`, que sirven la raíz del repo, ignoran `README.md` y los ficheros ocultos y ponen caché larga a fuentes e imágenes.
 
-Conviene añadir en `firebase.json` un `ignore` para `README.md`, `cv/.gitkeep` y los ficheros ocultos.
+```bash
+firebase hosting:channel:deploy preview --expires 7d   # URL temporal para revisar
+firebase deploy --only hosting                         # publicar en producción
+```
