@@ -41,7 +41,6 @@ Código Konami (↑↑↓↓←→←→BA) o clic en el droide del footer: abre
 ## Pendiente
 
 - **CV:** coloca el PDF en `cv/` y cambia `href="#"` del botón `data-cv` en `index.html` por su ruta, añadiendo el atributo `download`.
-- **GitHub:** rellena el `href="#"` del icono de GitHub en la sección de contacto.
 
 ## Despliegue en Firebase Hosting
 
