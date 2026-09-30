@@ -22,7 +22,7 @@ Hace falta servirlo por HTTP (no con `file://`), porque `js/main.js` es un módu
 | `js/game.js` | Easter egg «Droid Runner» (se carga solo al activarlo) |
 | `css/styles.css` | Estilos y tokens de tema claro/oscuro |
 | `vendor/` | GSAP 3.13, ScrollTrigger y Lenis 1.3 (minificados) |
-| `assets/` | Fuentes (Inter, Space Grotesk, Pixelify Sans), favicons y foto |
+| `assets/` | Fuentes (Inter, Space Grotesk, Pixelify Sans y VT323 para los números), favicons y foto |
 | `cv/` | Aquí va el PDF del CV |
 
 ## Editar textos
