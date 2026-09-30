@@ -187,8 +187,9 @@
     .<span class="f">collectAsStateWithLifecycle</span>()
 
 <span class="f">LaunchedEffect</span>(state) {
-    <span class="k">if</span> (state <span class="k">is</span> <span class="t">Connected</span>)
+    <span class="k">if</span> (state <span class="k">is</span> <span class="t">Connected</span>) {
         bt.<span class="f">startStreaming</span>()
+    }
 }</code></pre>
             </div>
             <span aria-hidden="true" class="float-chip chip-a">Kotlin</span>
