@@ -1,12 +1,12 @@
-// Mascota del nav: un droide pixel que reacciona al tema.
-// Oscuro: tranquilo. Claro: se quema los ojos y se pone gafas de sol. Clic: salta y saluda.
+// Nav mascot: a pixel droid that reacts to the theme.
+// Dark: calm. Light: its eyes burn and it puts on sunglasses. Click: it jumps and waves.
 import { drawSprite } from './sprites.js';
 
 const W = 20, H = 24;
-const OX = 2, OY = 8;               // origen del droide (16×15) dentro del lienzo
-const EYES = [[5, 4], [10, 4]];     // ojos relativos al droide
+const OX = 2, OY = 8;               // droid origin (16×15) inside the canvas
+const EYES = [[5, 4], [10, 4]];     // eyes, relative to the droid
 const GREEN = '#3ddc84', GREEN_DARK = '#1f8a50', SMOKE = '#9aa3b2';
-const SHADES_Y = OY + 3;            // gafas puestas
+const SHADES_Y = OY + 3;            // sunglasses on
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isLight = () => document.documentElement.dataset.theme === 'light';
@@ -34,7 +34,7 @@ export function initMascot() {
     if (!reducedMotion && (state === 'idleDark' || state === 'idleLight')) go('wave');
   });
 
-  // ---------- Pose de cada instante ----------
+  // ---------- Pose at each instant ----------
   function pose(now) {
     const e = now - t0;
     const p = { dx: 0, dy: 0, eyes: 'open', shades: null, glint: -1, arm: 'down', smoke: -1, heart: null };
@@ -52,7 +52,7 @@ export function initMascot() {
         p.dy = breathe;
         p.shades = SHADES_Y;
         const g = reducedMotion ? -1 : (now % 3200);
-        if (g < 360) p.glint = Math.floor(g / 60); // brillo que recorre el cristal
+        if (g < 360) p.glint = Math.floor(g / 60); // glint sweeping across the lens
         break;
       }
 
@@ -87,7 +87,7 @@ export function initMascot() {
     return p;
   }
 
-  // ---------- Dibujo ----------
+  // ---------- Drawing ----------
   function draw(p) {
     ctx.clearRect(0, 0, W, H);
     const ox = OX + p.dx, oy = OY + p.dy;
@@ -95,7 +95,7 @@ export function initMascot() {
 
     drawSprite(ctx, 'droid', ox, oy);
 
-    // Brazo derecho: se quita el de reposo y se dibuja en la pose que toque
+    // Right arm: erase the resting one and draw the current pose
     if (p.arm !== 'down') {
       ctx.clearRect(ox + 15, oy + 7, 1, 4);
       if (p.arm === 'forehead') { px(ox + 15, oy + 5, GREEN); px(ox + 15, oy + 4, GREEN); px(ox + 14, oy + 3, GREEN); px(ox + 13, oy + 3, GREEN); }
@@ -103,7 +103,7 @@ export function initMascot() {
       if (p.arm === 'wave2') { px(ox + 16, oy + 6, GREEN); px(ox + 16, oy + 5, GREEN); px(ox + 17, oy + 4, GREEN); px(ox + 17, oy + 3, GREEN); }
     }
 
-    // Ojos
+    // Eyes
     EYES.forEach(([ex, ey]) => {
       const x = ox + ex, y = oy + ey;
       if (p.eyes === 'blink') { px(x, y, GREEN_DARK); }
@@ -116,7 +116,7 @@ export function initMascot() {
       }
     });
 
-    // Humo saliendo de la cabeza
+    // Smoke rising from the head
     if (p.smoke >= 0) {
       for (let i = 0; i < 6; i++) {
         const age = p.smoke - i * 90;
@@ -130,9 +130,9 @@ export function initMascot() {
       }
     }
 
-    // Gafas de sol (y brillo que recorre el cristal)
+    // Sunglasses (and the glint sweeping across the lens)
     if (p.shades !== null) {
-      const sy = p.shades + p.dy; // las gafas se mueven con la cabeza
+      const sy = p.shades + p.dy; // the sunglasses move with the head
       drawSprite(ctx, 'mascotShades', ox + 2, sy);
       if (p.glint >= 0 && p.glint < 6) {
         const gx = [1, 2, 3, 7, 8, 9][p.glint];
@@ -140,20 +140,20 @@ export function initMascot() {
       }
     }
 
-    // Corazón que sube al volver al modo oscuro
+    // Heart floating up when switching back to dark mode
     if (p.heart !== null && p.heart < 600) {
       ctx.globalAlpha = p.heart > 400 ? 1 - (p.heart - 400) / 200 : 1;
       drawSprite(ctx, 'mascotHeart', ox + 13, oy - 3 - Math.floor(p.heart / 100));
       ctx.globalAlpha = 1;
     }
-    // Chispa al ponerse las gafas
+    // Sparkle when the sunglasses go on
     if (state === 'toLight') {
       const e = performance.now() - t0;
       if (e >= 1400 && e < 1650) drawSprite(ctx, 'mascotSparkle', ox + 12, oy);
     }
   }
 
-  // Redibuja solo cuando cambia el "tick": 40 ms en transiciones (pasos de 2 px) y 90 ms en reposo.
+  // Redraws only when the "tick" changes: 40 ms during transitions (2 px steps) and 90 ms at rest.
   function frame(now) {
     const idle = state === 'idleDark' || state === 'idleLight';
     const key = state + ':' + Math.floor(now / (idle ? 90 : 40));
@@ -162,12 +162,10 @@ export function initMascot() {
   }
   const start = () => { if (!raf) raf = requestAnimationFrame(frame); };
   const stop = () => { cancelAnimationFrame(raf); raf = 0; };
-  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : !reducedMotion && start()));
 
   draw(pose(performance.now()));
   if (!reducedMotion) start();
   else window.addEventListener('themechange', () => draw(pose(performance.now())));
 
-  // Para depurar desde la consola: window.__mascot('toLight', 900) dibuja ese estado en ese instante.
-  window.__mascot = (name, at = 0) => { state = name; t0 = performance.now() - at; draw(pose(performance.now())); };
 }

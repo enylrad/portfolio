@@ -109,7 +109,7 @@ body {
   overflow-x: clip;
   transition: background-color .5s var(--ease), color .5s var(--ease);
 }
-/* Scanlines sutiles */
+/* Subtle scanlines */
 body::after {
   content: '';
   position: fixed; inset: 0;
@@ -194,7 +194,7 @@ main, .footer { position: relative; z-index: 1; }
   background: var(--accent);
 }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
-.mascot { position: relative; top: -7px; width: 40px; height: 48px; margin-left: 2px; } /* el droide ocupa la parte baja del lienzo: se sube para centrarlo con los iconos */
+.mascot { position: relative; top: -7px; width: 40px; height: 48px; margin-left: 2px; } /* the droid sits in the lower part of the canvas: shift it up to centre it with the icons */
 .mascot-canvas { display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; }
 .mascot:focus-visible { outline-offset: 2px; }
 .icon-btn {
@@ -275,7 +275,7 @@ main, .footer { position: relative; z-index: 1; }
 .hero-name .gradient-text .char {
   background: inherit; -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-/* El degradado del apellido se aplica por letra para que funcione con el split */
+/* The surname gradient is applied per letter so it works with the split */
 .hero-name .gradient-text { background: none; }
 .hero-name .gradient-text .char { background-image: linear-gradient(100deg, var(--accent) 0%, var(--accent-3) 55%, var(--accent-2) 110%); background-repeat: no-repeat; }
 
@@ -356,7 +356,7 @@ main, .footer { position: relative; z-index: 1; }
 .hu-art { position: relative; display: block; width: 52px; height: 52px; flex: none; box-shadow: 0 0 0 2px #2d3170, 3px 3px 0 2px #000; }
 .hu-art-img { display: block; width: 100%; height: 100%; }
 .hu-play {
-  /* Triángulo ▶ pixel sobre la portada */
+  /* Pixel ▶ triangle over the cover art */
   position: absolute; inset: 0; display: grid; place-items: center; background: rgba(8, 10, 15, .45);
   opacity: 0; transition: opacity .15s steps(2);
 }
@@ -486,7 +486,7 @@ main, .footer { position: relative; z-index: 1; }
   clip-path: polygon(0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px));
   isolation: isolate;
 }
-/* Borde degradado giratorio: una capa que rota con transform (va por GPU, sin repintar) */
+/* Rotating gradient border: a layer rotated with transform (GPU-composited, no repaints) */
 .photo-frame::before {
   content: ''; position: absolute; inset: -50%; z-index: -1;
   background: conic-gradient(var(--accent), var(--accent-3), var(--accent-2), var(--accent));
@@ -535,13 +535,13 @@ main, .footer { position: relative; z-index: 1; }
 }
 .tech-card.is-tilting { transition: transform .12s linear, border-color .35s, background-color .35s, box-shadow .35s; }
 .tech-card::before {
-  /* Foco que sigue al cursor */
+  /* Spotlight that follows the cursor */
   content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1;
   background: radial-gradient(240px circle at var(--mx) var(--my), color-mix(in srgb, var(--c) 22%, transparent), transparent 65%);
   opacity: 0; transition: opacity .35s;
 }
 .tech-card::after {
-  /* Borde iluminado */
+  /* Lit border */
   content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none;
   background: radial-gradient(180px circle at var(--mx) var(--my), var(--c), transparent 70%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -630,7 +630,7 @@ main, .footer { position: relative; z-index: 1; }
   .tl-card, .tl-item:nth-child(even) .tl-card { grid-column: 1; grid-row: 2; }
 }
 
-/* ---------- Projects: cartuchos ---------- */
+/* ---------- Projects: cartridges ---------- */
 .cart-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 36px 28px; }
 .cart {
   --cc: var(--accent-3);
@@ -642,14 +642,14 @@ main, .footer { position: relative; z-index: 1; }
 .cart[data-context="personal"] { --cc: var(--accent); }
 .cart[data-context="edu"] { --cc: var(--accent-2); }
 .cart::before {
-  /* Ranuras de la parte superior del cartucho */
+  /* Grooves along the top of the cartridge */
   content: ''; position: absolute; left: 24px; right: 24px; top: 6px; height: 6px;
   background: repeating-linear-gradient(90deg, var(--px-line) 0 4px, transparent 4px 8px);
 }
 .cart:hover { --pb: var(--cc); translate: 0 -4px; }
 .cart > h3, .cart > p, .cart > ul { margin-inline: 20px; }
 
-/* Etiqueta ilustrada del cartucho */
+/* Illustrated cartridge label */
 .cart-art {
   position: relative; display: grid; place-items: center;
   height: 150px; margin: 0 12px 18px; overflow: hidden;
@@ -660,7 +660,7 @@ main, .footer { position: relative; z-index: 1; }
   box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--cc) 45%, transparent);
 }
 .cart-art::after {
-  /* Suelo pixel */
+  /* Pixel ground */
   content: ''; position: absolute; left: 3px; right: 3px; bottom: 3px; height: 12px;
   background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--cc) 40%, transparent) 0 8px, color-mix(in srgb, var(--cc) 25%, transparent) 8px 16px);
 }
@@ -766,9 +766,9 @@ main, .footer { position: relative; z-index: 1; }
 }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
-/* ---------- Marco pixel compartido ----------
-   Borde con esquinas escalonadas y sombra dura, hecho con box-shadow
-   (clip-path recortaría la sombra). --pb = borde, --ps = sombra. */
+/* ---------- Shared pixel frame ----------
+   Border with stepped corners and a hard shadow, built with box-shadow
+   (clip-path would clip the shadow). --pb = border, --ps = shadow. */
 .btn, .icon-btn, .copy-btn, .social, .nav-logo-mark, .hero-eyebrow, .float-chip, .photo-badge,
 .about-pillars li, .tech-card, .extra-block, .tl-card, .cart, .toast, .game-box, .game-close, .music, .music-close, .board-ok, .board-play,
 .hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .lang-list li {
@@ -783,7 +783,7 @@ main, .footer { position: relative; z-index: 1; }
     var(--px) calc(var(--px) * 2) 0 0 var(--ps),
     calc(var(--px) * 2) var(--px) 0 0 var(--ps);
 }
-/* Chips pequeños: trazo de 2px y sin sombra */
+/* Small chips: 2px stroke and no shadow */
 .hero-tags li, .pill-list li, .tl-tags li, .cart-tags li, .tl-highlight, .float-chip { --px: 2px; --ps: transparent; }
 .hero-eyebrow, .photo-badge, .icon-btn, .copy-btn, .nav-logo-mark, .lang-list li { --px: 3px; }
 .btn-primary { --pb: var(--text); }
@@ -793,7 +793,7 @@ main, .footer { position: relative; z-index: 1; }
 .icon-btn:hover { --pb: var(--accent); }
 .toast { --pb: var(--text); }
 
-/* ---------- Mini reproductor «It's Time» ---------- */
+/* ---------- "It's Time" mini player ---------- */
 .music {
   --pb: #ff5c8a;
   position: fixed; right: 16px; bottom: 16px; z-index: 140;
@@ -835,7 +835,7 @@ main, .footer { position: relative; z-index: 1; }
 .game-msg-text { font: 500 clamp(.8rem, 2.2vw, 1rem)/1.3 var(--font-pixel); animation: blink 1.1s steps(1) infinite; }
 .game-help { margin-top: 12px; font-size: .8rem; color: var(--faint); }
 
-/* Ranking: entrada de iniciales y tabla HIGH SCORES (encima del canvas) */
+/* Leaderboard: initials entry and HIGH SCORES table (over the canvas) */
 .game-board {
   position: absolute; inset: 0; z-index: 2;
   display: grid; place-content: safe center; justify-items: center; gap: 6px; padding: 10px;
@@ -874,7 +874,7 @@ main, .footer { position: relative; z-index: 1; }
 }
 .board-status { min-height: 1em; font-size: clamp(.7rem, 1.8vw, .85rem); color: var(--muted); }
 
-/* ---------- Estado inicial de animaciones (solo si JS/GSAP activos) ---------- */
+/* ---------- Initial animation state (only when JS/GSAP are active) ---------- */
 .js-anim [data-hero], .js-anim .hero-visual, .js-anim .reveal { opacity: 0; }
 .js-anim .hero-name .split { opacity: 0; }
 .js-anim .hero-name.is-split .split { opacity: 1; }
@@ -883,16 +883,16 @@ main, .footer { position: relative; z-index: 1; }
 
 /* ---------- View transitions ---------- */
 .no-tx *, .no-tx *::before, .no-tx *::after, .no-tx { transition: none !important; }
-/* Idioma: fundido corto */
+/* Language: short crossfade */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
-/* Tema: la instantánea nueva se revela por cuadros (máscara desde JS);
-   la animación "hold" solo mantiene viva la transición mientras dura. */
+/* Theme: the new snapshot is revealed cell by cell (mask set from JS);
+   the "hold" animation only keeps the transition alive while it runs. */
 html.vt-pixel::view-transition-old(root),
 html.vt-pixel::view-transition-new(root) { animation: vt-hold .72s linear both; mix-blend-mode: normal; }
 html.vt-pixel::view-transition-new(root) { z-index: 1; }
 @keyframes vt-hold { from { opacity: 1; } to { opacity: 1; } }
 
-/* ---------- Animaciones en pausa fuera de pantalla (JS añade .is-offscreen) ---------- */
+/* ---------- Animations paused off-screen (JS adds .is-offscreen) ---------- */
 .is-offscreen, .is-offscreen::before, .is-offscreen::after, .is-offscreen *, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }
 
 /* ---------- Reduced motion ---------- */

@@ -1,5 +1,5 @@
-// Ranking online de Droid Runner sobre Firestore (API REST, sin SDK).
-// La seguridad está en firestore.rules: esta clave es pública por diseño en Firebase web.
+// Droid Runner online leaderboard on Firestore (REST API, no SDK).
+// Security lives in firestore.rules: this key is public by design in Firebase web apps.
 const API_KEY = 'AIzaSyCYzY5ppBKZR4iMAgmjgbPyz4S-h28MmaU';
 const PROJECT = 'portfolio-8fa1d';
 const DOCS = `projects/${PROJECT}/databases/(default)/documents`;
@@ -10,7 +10,7 @@ export const BLOCKED = ['ASS', 'FCK', 'FUK', 'FUC', 'SEX', 'KKK', 'NAZ', 'NIG', 
 
 const store = {
   get: () => { try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch { return null; } },
-  set: (v) => { try { localStorage.setItem(AUTH_KEY, JSON.stringify(v)); } catch { /* sin almacenamiento */ } },
+  set: (v) => { try { localStorage.setItem(AUTH_KEY, JSON.stringify(v)); } catch { /* no storage */ } },
 };
 
 async function post(url, body, token, form = false) {
@@ -27,10 +27,16 @@ async function post(url, body, token, form = false) {
   return data;
 }
 
-// ---------- Identidad anónima (persistente en este navegador) ----------
+// ---------- Anonymous identity (persisted in this browser) ----------
 let auth = store.get();
-async function ensureAuth() {
-  if (auth && auth.exp > Date.now() + 60_000) return auth;
+let pendingAuth = null;
+function ensureAuth() {
+  if (auth && auth.exp > Date.now() + 60_000) return Promise.resolve(auth);
+  // Overlapping calls share one request so they don't create two anonymous users.
+  pendingAuth ??= refreshOrSignUp().finally(() => { pendingAuth = null; });
+  return pendingAuth;
+}
+async function refreshOrSignUp() {
   if (auth?.refresh) {
     try {
       const d = await post(`https://securetoken.googleapis.com/v1/token?key=${API_KEY}`,
@@ -38,7 +44,7 @@ async function ensureAuth() {
       auth = { uid: d.user_id, token: d.id_token, refresh: d.refresh_token, exp: Date.now() + Number(d.expires_in) * 1000 };
       store.set(auth);
       return auth;
-    } catch { /* token caducado o revocado: nueva identidad */ }
+    } catch { /* expired or revoked token: new identity */ }
   }
   const d = await post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, { returnSecureToken: true });
   auth = { uid: d.localId, token: d.idToken, refresh: d.refreshToken, exp: Date.now() + Number(d.expiresIn) * 1000 };
@@ -46,7 +52,7 @@ async function ensureAuth() {
   return auth;
 }
 
-// ---------- Partida: el servidor sella la hora de inicio ----------
+// ---------- Run: the server stamps the start time ----------
 let runStartedAt = null;
 export async function startRun() {
   runStartedAt = null;
@@ -63,7 +69,7 @@ export async function startRun() {
 export const hasRun = () => runStartedAt !== null;
 export const myUid = () => auth?.uid || null;
 
-// ---------- Enviar puntuación (se valida en las reglas) ----------
+// ---------- Submit score (validated by the rules) ----------
 export async function submitScore(name, score) {
   if (!runStartedAt) throw new Error('NO_RUN');
   const a = await ensureAuth();
@@ -80,10 +86,10 @@ export async function submitScore(name, score) {
       updateTransforms: [{ fieldPath: 'createdAt', setToServerValue: 'REQUEST_TIME' }],
     }],
   }, a.token);
-  runStartedAt = null; // cada partida se envía una sola vez
+  runStartedAt = null; // each run is submitted only once
 }
 
-// ---------- Top 10 (lectura pública) ----------
+// ---------- Top 10 (public read) ----------
 export async function top10() {
   const rows = await post(`${FS}:runQuery?key=${API_KEY}`, {
     structuredQuery: {

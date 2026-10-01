@@ -1,4 +1,4 @@
-// Aplica tema e idioma guardados antes del primer pintado (sin parpadeo).
+// Applies the saved theme and language before first paint (no flash).
 (function () {
   var d = document.documentElement, t, l;
   try { t = localStorage.getItem('theme'); l = localStorage.getItem('lang'); } catch (e) {}
@@ -7,7 +7,7 @@
   d.dataset.lang = l;
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     d.classList.add('js-anim');
-    // Red de seguridad: si las animaciones no arrancan, mostrar todo.
+    // Safety net: if the animations never start, show everything.
     setTimeout(function () { if (!window.__animReady) d.classList.remove('js-anim'); }, 2500);
   }
 })();

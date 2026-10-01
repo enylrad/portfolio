@@ -1,4 +1,4 @@
-// Droid Runner — easter egg. Se carga con import() solo al activarse.
+// Droid Runner — easter egg. Loaded with import() only when triggered.
 import { drawSprite, spriteSize } from './sprites.js';
 
 const W = 256, H = 144, GROUND = 120;
@@ -9,7 +9,7 @@ const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 const store = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
-  set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* no storage */ } },
 };
 const rand = (a, b) => a + Math.random() * (b - a);
 const hash = (i) => { const s = Math.sin(i * 127.1) * 43758.5453; return s - Math.floor(s); };
@@ -23,7 +23,7 @@ let dialog, canvas, ctx, stage, ui, opts, s;
 let raf = 0, last = 0, hi = Number(store.get(HI_KEY)) || 0;
 const input = { jumpHeld: false, duck: false, pointerY: null };
 
-// Ranking online (js/leaderboard.js): se carga solo al abrir el juego.
+// Online leaderboard (js/leaderboard.js): loaded only when the game opens.
 let lb = null;
 const board = { top: null, error: false, token: 0 };
 const entry = { chars: ['A', 'A', 'A'], slot: 0, busy: false, score: 0 };
@@ -60,7 +60,7 @@ function setup() {
   dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
   dialog.querySelector('.game-close').addEventListener('click', () => dialog.close());
 
-  // Esc durante la entrada de iniciales: cancela la entrada, no cierra el juego.
+  // Esc during initials entry cancels the entry instead of closing the game.
   dialog.addEventListener('cancel', (e) => {
     if (s.mode === 'entry') { e.preventDefault(); showBoard(true); }
   });
@@ -85,7 +85,7 @@ function setup() {
     if (k === 'ArrowDown' || k === 's' || k === 'S') input.duck = false;
   });
 
-  // Táctil: tocar = saltar; deslizar hacia abajo = agacharse.
+  // Touch: tap = jump; swipe down = duck.
   stage.addEventListener('pointerdown', (e) => {
     if (e.button > 0) return;
     if (e.target.closest('.game-board button') || s.mode === 'entry') return;
@@ -121,7 +121,7 @@ function setup() {
 }
 
 function reset() {
-  board.token++; // invalida cualquier ranking pendiente de la partida anterior
+  board.token++; // invalidates any pending leaderboard check from the previous run
   s = {
     mode: 'ready', t: 0, speed: 90, dist: 0, bg: 0, bonus: 0, score: 0, level: 21, flash: 0,
     nextSpawn: 90, nextCoin: 160, obstacles: [], coins: [],
@@ -132,7 +132,7 @@ function reset() {
   updateHud(true);
 }
 
-// Única vía para empezar partida: nivel API, velocidad y marcador vuelven a cero.
+// The only way to start a run: API level, speed and score reset.
 function startRunning() {
   reset();
   s.mode = 'running';
@@ -180,8 +180,8 @@ function update(dt) {
 
   const d = s.droid;
   d.vy += GRAVITY * dt;
-  if (input.duck && !d.onGround) d.vy += 1400 * dt; // caída rápida
-  if (!input.jumpHeld && d.vy < -SHORT_HOP_V) d.vy = -SHORT_HOP_V; // salto variable
+  if (input.duck && !d.onGround) d.vy += 1400 * dt; // fast fall
+  if (!input.jumpHeld && d.vy < -SHORT_HOP_V) d.vy = -SHORT_HOP_V; // variable jump height
   d.bottom += d.vy * dt;
   if (d.bottom >= GROUND) { d.bottom = GROUND; d.vy = 0; d.onGround = true; }
   d.duck = input.duck && d.onGround;
@@ -224,7 +224,7 @@ function gameOver() {
   checkRanking(board.token, s.score, s.t);
 }
 
-// ---------- Ranking ----------
+// ---------- Leaderboard ----------
 async function loadTop() {
   try {
     board.top = await lb.top10();
@@ -237,7 +237,7 @@ async function loadTop() {
 async function checkRanking(token, score, seconds) {
   if (!lb) return;
   await Promise.all([loadTop(), new Promise((r) => setTimeout(r, 900))]);
-  if (token !== board.token || s.mode !== 'over') return; // ya ha vuelto a jugar
+  if (token !== board.token || s.mode !== 'over') return; // already playing again
   const top = board.top || [];
   const mine = top.find((r) => r.uid === lb.myUid());
   const qualifies = !board.error && score > 0 && seconds >= 3.5 && lb.hasRun()
@@ -330,7 +330,7 @@ function renderBoard() {
     return;
   }
   const rows = board.top || [];
-  // Los nombres ya vienen validados por las reglas (^[A-Z0-9]{3}$), pero se escapan igualmente.
+  // Names are already validated by the rules (^[A-Z0-9]{3}$), but they are sanitised anyway.
   const safe = (v) => String(v).replace(/[^A-Z0-9]/g, '');
   ui.list.innerHTML = rows.length
     ? rows.map((r, i) => `<li${r.uid === me ? ' class="is-me"' : ''}><span>${String(i + 1).padStart(2, '0')}</span><b>${safe(r.name)}</b><span>${String(Math.floor(r.score)).padStart(5, '0')}</span></li>`).join('')
@@ -364,14 +364,14 @@ function render() {
   ctx.fillStyle = c.sky;
   ctx.fillRect(0, 0, W, H);
 
-  // Capa lejana: rejilla de puntos.
+  // Far layer: dot grid.
   ctx.fillStyle = c.far;
   const farOff = Math.floor(s.bg * 0.1) % 16;
   for (let x = -farOff; x < W; x += 16) {
     for (let y = 8; y < GROUND - 8; y += 16) ctx.fillRect(x, y, 1, 1);
   }
 
-  // Capa media: chips con patas.
+  // Middle layer: chips with pins.
   const mid = s.bg * 0.35, spacing = 72;
   for (let i = Math.floor(mid / spacing) - 1; i < mid / spacing + W / spacing + 1; i++) {
     const cw = 18 + Math.floor(hash(i) * 20), ch = 10 + Math.floor(hash(i + 7) * 14);
@@ -385,7 +385,7 @@ function render() {
     ctx.fillRect(x + 2, y + 2, 2, 2);
   }
 
-  // Suelo: placa base con pistas y vías.
+  // Ground: circuit board with traces and vias.
   ctx.fillStyle = c.board;
   ctx.fillRect(0, GROUND, W, H - GROUND);
   ctx.fillStyle = c.line;

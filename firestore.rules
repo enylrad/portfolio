@@ -1,8 +1,8 @@
 rules_version = '2';
 
-// Ranking de Droid Runner (js/leaderboard.js).
-// Todo está cerrado salvo lo imprescindible, y cada puntuación debe ser coherente
-// con el tiempo real (hora del servidor) transcurrido desde el inicio de su partida.
+// Droid Runner leaderboard (js/leaderboard.js).
+// Everything is locked down except the bare minimum, and every score must be consistent
+// with the real time (server time) elapsed since its run started.
 service cloud.firestore {
   match /databases/{db}/documents {
 
@@ -10,7 +10,7 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == uid;
     }
 
-    // Inicio de partida: solo el propio jugador, y la hora la pone el servidor.
+    // Run start: only the player themselves, and the server sets the timestamp.
     match /runs/{uid} {
       allow get: if signedIn(uid);
       allow list: if false;
@@ -20,7 +20,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Una entrada por jugador (su mejor puntuación). Lectura pública del top 10.
+    // One entry per player (their best score). The top 10 is publicly readable.
     match /scores/{uid} {
       allow get: if true;
       allow list: if request.query.limit <= 10;
@@ -53,7 +53,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    // Cualquier otra ruta: cerrada.
+    // Any other path: closed.
     match /{document=**} {
       allow read, write: if false;
     }

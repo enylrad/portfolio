@@ -1,5 +1,5 @@
-// Textos en inglés. El español vive en index.html (fuente única) y se captura al iniciar.
-// Para añadir un texto traducible: pon data-i18n="clave" en el HTML y añade la clave aquí.
+// English strings. Spanish lives in index.html (single source) and is captured at startup.
+// To add a translatable string: put data-i18n="key" in the HTML and add the key here.
 
 export const meta = {
   es: {
@@ -16,7 +16,8 @@ export const en = {
   skip: 'Skip to content',
   navLabel: 'Main',
   langLabel: 'Cambiar a español',
-  themeLabel: 'Toggle colour theme',
+  'theme.toLight': 'Switch to light theme',
+  'theme.toDark': 'Switch to dark theme',
   'mascot.label': 'Say hi to the droid',
   scrollHint: 'Scroll down',
 
@@ -32,11 +33,11 @@ export const en = {
   'hero.tag1': 'Native Android',
   'hero.tag2': 'Kotlin first',
   'hero.tag3': 'Automotive software',
-  'hero.ctaExp': 'View career',
+  'hero.ctaExp': 'View experience',
   'hero.ctaContact': 'Get in touch',
 
   'stats.android': 'Years in Android',
-  'stats.senior': 'Years as Senior',
+  'stats.senior': 'Years as senior',
   'stats.auto': 'Years in automotive',
 
   'about.photoAlt': 'Pixel art portrait of David Pérez Salort holding a sword in a castle hall',
@@ -152,7 +153,6 @@ export const en = {
   'contact.copied': 'Email copied to clipboard',
   'contact.cv': 'Download CV',
   'contact.cvHref': 'cv/David-Perez-Salort-CV-EN.pdf',
-  'contact.cvSoon': 'CV available soon',
 
   'footer.top': 'Back to top ↑',
 
@@ -167,22 +167,21 @@ export const en = {
   'game.start': 'Press Space or tap to start',
   'game.retry': 'Press Space or tap to retry',
   'game.record': 'New record!',
-  'game.viewRanking': 'R for ranking',
+  'game.viewRanking': 'Press R for leaderboard',
   'game.enterName': 'Enter your initials',
   'game.next': 'Next letter',
   'game.prev': 'Previous letter',
   'game.playAgain': '▶ Play',
   'game.saving': 'Saving…',
-  'game.saved': 'Saved to the ranking!',
+  'game.saved': 'Added to the leaderboard!',
   'game.blocked': 'Try other initials',
-  'game.rankError': 'Ranking unavailable',
+  'game.rankError': 'Leaderboard unavailable',
   'game.noScores': 'No scores yet. Be the first!',
 };
 
-// Textos que solo usa JS (no están en el HTML).
+// Strings used only by JS (not present in the HTML).
 export const esExtra = {
   'contact.copied': 'Email copiado al portapapeles',
-  'contact.cvSoon': 'CV disponible próximamente',
   'game.start': 'Pulsa Espacio o toca para empezar',
   'game.retry': 'Pulsa Espacio o toca para reintentar',
   'game.record': '¡Nuevo récord!',
@@ -192,6 +191,6 @@ export const esExtra = {
   'game.blocked': 'Prueba con otras iniciales',
   'game.rankError': 'Ranking no disponible',
   'game.noScores': 'Aún no hay puntuaciones. ¡Sé el primero!',
-  langLabel: 'Switch to English',
-  themeLabel: 'Cambiar tema de color',
+  'theme.toLight': 'Cambiar a tema claro',
+  'theme.toDark': 'Cambiar a tema oscuro',
 };

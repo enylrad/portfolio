@@ -1,9 +1,9 @@
-// Sprites pixel art definidos como matrices de caracteres.
-// Cada letra es un color de PALETTE; '.' es transparente.
-// Se usan tanto en la página (SVG) como en el minijuego (canvas).
+// Pixel art sprites defined as character matrices.
+// Each letter is a PALETTE colour; '.' is transparent.
+// Used both on the page (SVG) and in the mini-game (canvas).
 
 export const PALETTE = {
-  G: '#3ddc84', // verde Android
+  G: '#3ddc84', // Android green
   W: '#ffffff',
   K: '#10131a',
   R: '#ff5c7a',
@@ -25,7 +25,7 @@ export const PALETTE = {
   u: '#93c5fd',
 };
 
-// Iconos de los proyectos (etiqueta de cada cartucho).
+// Project icons (the label on each cartridge).
 const PROJECT_ICONS = {
   'p-mercurio': [
     '................',
@@ -348,7 +348,7 @@ export const SPRITES = {
     '....WW...',
     '....W....',
   ],
-  // Mascota del nav (ver js/mascot.js)
+  // Nav mascot (see js/mascot.js)
   mascotShades: [
     'KKKKKKKKKKKK',
     '.KKKK..KKKK.',
@@ -367,7 +367,7 @@ export const SPRITES = {
     '..Y..',
     '..Y..',
   ],
-  // Portada nocturna para el «Now playing» del head unit.
+  // Night-time cover art for the head unit's "Now playing" card.
   cover: [
     'NNNNNNNNNNNNNNNN',
     'NNYNNNNNNNNMMNNN',
@@ -390,7 +390,7 @@ export const SPRITES = {
 SPRITES.sparkB = [...mirror(SPRITES.sparkA.slice(0, 7)), SPRITES.sparkA[7]];
 Object.assign(SPRITES, PROJECT_ICONS);
 
-// Recorre la matriz agrupando píxeles contiguos del mismo color en tramos horizontales.
+// Walks the matrix, grouping adjacent same-colour pixels into horizontal runs.
 function runs(rows, cb) {
   rows.forEach((row, y) => {
     let x = 0;
@@ -413,7 +413,7 @@ export function spriteSVG(name) {
   return `<svg viewBox="0 0 ${rows[0].length} ${rows.length}" shape-rendering="crispEdges" aria-hidden="true" focusable="false">${rects}</svg>`;
 }
 
-// Dibuja un sprite en un canvas. `swap` permite recolorear (p. ej. { G: '#ff5c7a' }).
+// Draws a sprite on a canvas. `swap` recolours it (e.g. { G: '#ff5c7a' }).
 export function drawSprite(ctx, name, x, y, swap) {
   runs(SPRITES[name], (ch, px, py, len) => {
     ctx.fillStyle = swap?.[ch] ?? PALETTE[ch];
@@ -423,7 +423,7 @@ export function drawSprite(ctx, name, x, y, swap) {
 
 export const spriteSize = (name) => ({ w: SPRITES[name][0].length, h: SPRITES[name].length });
 
-// Rellena los <span data-sprite="nombre"> de la página.
+// Fills the page's <span data-sprite="name"> elements.
 export function mountSprites(scope = document) {
   scope.querySelectorAll('[data-sprite]').forEach((el) => {
     if (!el.firstChild) el.innerHTML = spriteSVG(el.dataset.sprite);

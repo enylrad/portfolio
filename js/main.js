@@ -9,7 +9,7 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(pointer: fine)').matches;
 const store = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
-  set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* no storage */ } },
 };
 
 $('.year').textContent = new Date().getFullYear();
@@ -17,7 +17,7 @@ mountSprites();
 initMascot();
 
 /* =========================================================
-   Reloj del head unit con la hora local del visitante
+   Head unit clock with the visitor's local time
    ========================================================= */
 const huTime = $('.hu-time');
 const clockFmt = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
@@ -40,7 +40,7 @@ function toast(msg) {
 }
 
 /* =========================================================
-   Idioma (ES en el HTML, EN en i18n.js)
+   Language (ES in the HTML, EN in i18n.js)
    ========================================================= */
 const es = { ...esExtra };
 $$('[data-i18n]').forEach((el) => { es[el.dataset.i18n] = el.textContent.trim(); });
@@ -77,20 +77,17 @@ function applyLang(lang) {
 $('.lang-toggle').addEventListener('click', () => {
   const next = root.lang === 'es' ? 'en' : 'es';
   store.set('lang', next);
-  if (document.startViewTransition && !reducedMotion) document.startViewTransition(() => applyLang(next));
+  if (document.startViewTransition && !reducedMotion) document.startViewTransition(() => applyLang(next)).ready.catch(() => {});
   else applyLang(next);
 });
 
 /* =========================================================
-   Tema claro / oscuro (revelado circular con View Transitions)
+   Light / dark theme (pixel reveal with View Transitions)
    ========================================================= */
 const themeMeta = $('meta[name="theme-color"]');
 function updateThemeLabel() {
   const dark = root.dataset.theme !== 'light';
-  const label = root.lang === 'en'
-    ? (dark ? 'Switch to light theme' : 'Switch to dark theme')
-    : (dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
-  $('.theme-toggle').setAttribute('aria-label', label);
+  $('.theme-toggle').setAttribute('aria-label', t(dark ? 'theme.toLight' : 'theme.toDark'));
 }
 function setTheme(theme) {
   root.dataset.theme = theme;
@@ -99,8 +96,8 @@ function setTheme(theme) {
   updateThemeLabel();
   window.dispatchEvent(new Event('themechange'));
 }
-// Transición pixel: la web con el tema nuevo aparece por cuadros sobre la vieja,
-// enmascarando la instantánea nueva de la View Transition con una rejilla SVG.
+// Pixel transition: the page in the new theme appears cell by cell over the old one,
+// masking the View Transition's new snapshot with an SVG grid.
 let themeBusy = false;
 function pixelThemeTransition(next, originX, originY) {
   const CELL = 16, DURATION = 650, STEPS = 14;
@@ -164,7 +161,7 @@ themeMeta.setAttribute('content', root.dataset.theme === 'light' ? '#f6f7f9' : '
 applyLang(root.dataset.lang === 'en' ? 'en' : 'es');
 
 /* =========================================================
-   Copiar email y botón CV
+   Copy email
    ========================================================= */
 $$('[data-copy]').forEach((btn) => btn.addEventListener('click', async () => {
   try {
@@ -174,12 +171,9 @@ $$('[data-copy]').forEach((btn) => btn.addEventListener('click', async () => {
     location.href = `mailto:${btn.dataset.copy}`;
   }
 }));
-$$('[data-cv]').forEach((a) => a.addEventListener('click', (e) => {
-  if (a.getAttribute('href') === '#') { e.preventDefault(); toast(t('contact.cvSoon')); }
-}));
 
 /* =========================================================
-   Nav con fondo al hacer scroll
+   Nav background on scroll
    ========================================================= */
 const nav = $('.nav');
 const onScroll = () => nav.classList.toggle('is-scrolled', scrollY > 20);
@@ -187,7 +181,7 @@ addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
 /* =========================================================
-   Tarjetas tecnológicas: foco + inclinación 3D
+   Tech cards: spotlight + 3D tilt
    ========================================================= */
 $$('.tech-card').forEach((card) => {
   let raf = 0;
@@ -215,7 +209,7 @@ $$('.tech-card').forEach((card) => {
 });
 
 /* =========================================================
-   Canvas del hero: campo de píxeles que se encienden cerca del puntero
+   Hero canvas: pixel field that lights up near the pointer
    ========================================================= */
 function heroPixelField() {
   const canvas = $('.hero-canvas');
@@ -227,7 +221,7 @@ function heroPixelField() {
   let stars = [], phase, speed, heat, isHot, hot = [];
   let base = '180,200,230', lit = '61,220,132', running = false, visible = true, frame = 0, last = 0;
 
-  // Vecindario del puntero precalculado: [dc, dr, nivel] en 4 niveles (sin degradados suaves).
+  // Precomputed pointer neighbourhood: [dc, dr, level] in 4 steps (no smooth gradients).
   const kernel = [];
   for (let dr = -RADIUS; dr <= RADIUS; dr++) {
     for (let dc = -RADIUS; dc <= RADIUS; dc++) {
@@ -275,7 +269,7 @@ function heroPixelField() {
       if (finePointer) { if (pointer.x > -999) warm(pointer.x, pointer.y); }
       else warm(w * (0.5 + 0.38 * Math.sin(t * 0.35)), h * (0.45 + 0.3 * Math.sin(t * 0.57)));
     }
-    // Estrellas de 8 bits parpadeando
+    // Twinkling 8-bit stars
     ctx.fillStyle = `rgb(${base})`;
     for (const i of stars) {
       if (heat[i] > 0.05) continue;
@@ -286,7 +280,7 @@ function heroPixelField() {
       ctx.globalAlpha = a;
       ctx.fillRect((i % cols) * CELL + ((CELL - size) >> 1), ((i / cols) | 0) * CELL + ((CELL - size) >> 1), size, size);
     }
-    // Píxeles encendidos por el puntero (solo se recorren las celdas calientes)
+    // Pixels lit by the pointer (only hot cells are visited)
     const decay = dt * 1.4;
     ctx.fillStyle = `rgb(${lit})`;
     for (let k = hot.length - 1; k >= 0; k--) {
@@ -318,14 +312,14 @@ function heroPixelField() {
     else if (!should && running) { running = false; cancelAnimationFrame(frame); }
   }
 
-  // Arranca tras el primer pintado para no competir con la carga inicial.
+  // Starts after first paint so it doesn't compete with the initial load.
   const boot = () => {
     readColors();
     resize();
     let rt;
     addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
     addEventListener('themechange', () => { readColors(); if (!running) draw(performance.now(), 0); });
-    // Sin getBoundingClientRect en cada movimiento: la posición del hero se calcula en resize.
+    // No getBoundingClientRect on every move: the hero's position is computed on resize.
     hero.addEventListener('pointermove', (e) => { pointer.x = e.clientX; pointer.y = e.pageY - heroTop; });
     hero.addEventListener('pointerleave', () => { pointer.x = pointer.y = -9999; });
     new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); }).observe(hero);
@@ -338,7 +332,7 @@ function heroPixelField() {
 heroPixelField();
 
 /* =========================================================
-   Pausa las animaciones CSS infinitas cuando su bloque no se ve
+   Pause infinite CSS animations while their block is off-screen
    ========================================================= */
 const offscreenIO = new IntersectionObserver((entries) => {
   entries.forEach((e) => e.target.classList.toggle('is-offscreen', !e.isIntersecting));
@@ -346,8 +340,8 @@ const offscreenIO = new IntersectionObserver((entries) => {
 $$('.hero-visual, .marquee, .photo-frame').forEach((el) => offscreenIO.observe(el));
 
 /* =========================================================
-   Música: «It's Time» desde el head unit
-   (el iframe de Spotify solo se crea al pulsar)
+   Music: "It's Time" from the head unit
+   (the Spotify iframe is only created on click)
    ========================================================= */
 const musicBtn = $('[data-music]');
 const musicBox = $('.music');
@@ -375,7 +369,7 @@ $('.music-close', musicBox).addEventListener('click', () => { closeMusic(); musi
 musicBox.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeMusic(); musicBtn.focus({ preventScroll: true }); } });
 
 /* =========================================================
-   Easter egg: Droid Runner (código Konami o el droide del footer)
+   Easter egg: Droid Runner (Konami code or the footer droid)
    ========================================================= */
 let lenis = null;
 let gameModule = null;
@@ -395,7 +389,7 @@ addEventListener('keydown', (e) => {
 });
 
 /* =========================================================
-   Animaciones (GSAP + ScrollTrigger + Lenis)
+   Animations (GSAP + ScrollTrigger + Lenis)
    ========================================================= */
 const { gsap, ScrollTrigger, Lenis } = window;
 
@@ -427,10 +421,10 @@ function splitName() {
   });
   h1.classList.add('is-split');
 
-  // Degradado continuo a lo largo del apellido aunque cada letra sea un elemento.
+  // Continuous gradient across the surname even though each letter is its own element.
   const gradLine = $('.gradient-text', h1);
   const fitGradient = () => {
-    // Primero todas las lecturas y luego todas las escrituras (evita reflows forzados).
+    // All reads first, then all writes (avoids forced reflows).
     const word = gradLine.querySelector('.word');
     const width = word.offsetWidth, wordLeft = word.offsetLeft;
     const chars = $$('.char', gradLine);
@@ -447,7 +441,7 @@ function splitName() {
 }
 
 function animate() {
-  // ---------- Scroll suave ----------
+  // ---------- Smooth scroll ----------
   if (Lenis) {
     lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
     lenis.on('scroll', ScrollTrigger.update);
@@ -458,14 +452,14 @@ function animate() {
     const id = a.getAttribute('href');
     if (id === '#') return;
     const target = id === '#top' ? 0 : $(id);
-    if (target === null || a.hasAttribute('data-cv')) return;
+    if (target === null) return;
     e.preventDefault();
     if (lenis) lenis.scrollTo(target, { offset: target === 0 ? 0 : -76, duration: 1.4 });
     else (target === 0 ? scrollTo({ top: 0, behavior: 'smooth' }) : target.scrollIntoView({ behavior: 'smooth' }));
     if (id === '#main' && target) target.focus?.({ preventScroll: true });
   }));
 
-  // ---------- Intro del hero ----------
+  // ---------- Hero intro ----------
   const chars = splitName();
   const heroBits = $$('[data-hero]');
   const roleEl = $('.role-text');
@@ -495,19 +489,19 @@ function animate() {
     intro.from(el, { textContent: 0, duration: 1.8, ease: 'power2.out', snap: { textContent: 1 } }, 1.4 + i * 0.1);
   });
 
-  // Aurora flotando
+  // Floating aurora
   $$('.hero-aurora span').forEach((s, i) => {
     gsap.to(s, {
       x: gsap.utils.random(-80, 80), y: gsap.utils.random(-60, 60), scale: gsap.utils.random(0.9, 1.2),
       duration: gsap.utils.random(9, 14), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i,
     });
   });
-  // Chips flotando
+  // Floating chips
   $$('.float-chip').forEach((c, i) => {
     gsap.to(c, { y: i % 2 ? 10 : -10, duration: 2.6 + i * 0.4, ease: 'sine.inOut', repeat: -1, yoyo: true });
   });
 
-  // Inclinación del dispositivo siguiendo al puntero
+  // Device tilt following the pointer
   const device = $('.device');
   if (finePointer) {
     const hero = $('.hero');
@@ -519,7 +513,7 @@ function animate() {
     hero.addEventListener('pointerleave', () => gsap.to(device, { '--rx': '8deg', '--ry': '-14deg', duration: 1.2 }));
   }
 
-  // Parallax de salida del hero
+  // Hero exit parallax
   gsap.to('.hero-copy', {
     yPercent: -12, opacity: 0.25, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
@@ -529,10 +523,10 @@ function animate() {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
   });
 
-  // ---------- Barra de progreso ----------
+  // ---------- Progress bar ----------
   gsap.to('.scroll-progress', { '--p': '100%', ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
-  // ---------- Títulos con máscara ----------
+  // ---------- Masked headings ----------
   $$('.mask > span').forEach((span) => {
     gsap.to(span, {
       y: 0, yPercent: 0, duration: 1.2, ease: 'expo.out',
@@ -551,7 +545,7 @@ function animate() {
     }),
   });
 
-  // ---------- Timeline de experiencia ----------
+  // ---------- Experience timeline ----------
   gsap.to('.timeline-progress', {
     scaleY: 1, ease: 'none',
     scrollTrigger: { trigger: '.timeline', start: 'top 65%', end: 'bottom 65%', scrub: 0.6 },
@@ -579,7 +573,7 @@ function animate() {
     });
   });
 
-  // ---------- Nav: enlace activo ----------
+  // ---------- Nav: active link ----------
   $$('.nav-links a').forEach((link) => {
     const section = $(link.getAttribute('href'));
     if (!section) return;
@@ -589,7 +583,7 @@ function animate() {
     });
   });
 
-  // ---------- Botones magnéticos ----------
+  // ---------- Magnetic buttons ----------
   if (finePointer) {
     $$('.magnetic').forEach((el) => {
       const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' });
@@ -604,7 +598,7 @@ function animate() {
       });
     });
 
-    // Halo que sigue al cursor
+    // Halo that follows the cursor
     const halo = $('.cursor-halo');
     const hx = gsap.quickTo(halo, 'x', { duration: 0.8, ease: 'power3.out' });
     const hy = gsap.quickTo(halo, 'y', { duration: 0.8, ease: 'power3.out' });
@@ -614,7 +608,7 @@ function animate() {
     }, { passive: true });
   }
 
-  // Recalcular posiciones cuando carguen fuentes e imágenes
+  // Recalculate positions once fonts and images have loaded
   document.fonts?.ready.then(() => ScrollTrigger.refresh());
   addEventListener('load', () => ScrollTrigger.refresh());
 }

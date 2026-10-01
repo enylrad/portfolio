@@ -12,7 +12,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="David Pérez Salort · Senior Android Software Engineer">
   <meta property="og:description" content="Desarrollo Android nativo con Kotlin, arquitectura móvil e integración de software automotriz.">
-  <meta property="og:image" content="assets/img/avatar.jpeg">
+  <meta property="og:url" content="https://portfolio-8fa1d.web.app/">
+  <meta property="og:image" content="https://portfolio-8fa1d.web.app/assets/img/avatar.jpeg">
   <meta name="twitter:card" content="summary">
 
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
@@ -25,12 +26,12 @@
   <link rel="preload" href="assets/fonts/pixelify-sans.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/vt323.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Aplica tema e idioma guardados antes del primer pintado (sin parpadeo). Bloqueante a propósito. -->
+  <!-- Applies the saved theme and language before first paint (no flash). Render-blocking on purpose. -->
   <script src="js/boot.js"></script>
 
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- Scripts en el head con defer/module: se descubren y descargan en paralelo, y se ejecutan igual que al final del body. -->
+  <!-- Scripts in the head with defer/module: discovered and downloaded in parallel, executed as if at the end of the body. -->
   <script src="vendor/gsap.min.js" defer></script>
   <script src="vendor/ScrollTrigger.min.js" defer></script>
   <script src="vendor/lenis.min.js" defer></script>
@@ -78,7 +79,7 @@
         <button class="icon-btn lang-toggle" type="button" aria-label="Switch to English" data-i18n-attr="aria-label:langLabel">
           <span class="lang-current">ES</span><span class="lang-sep">/</span><span class="lang-other">EN</span>
         </button>
-        <button class="icon-btn theme-toggle" type="button" aria-label="Cambiar a tema claro" data-i18n-attr="aria-label:themeLabel">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Cambiar a tema claro">
           <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"/></svg>
         </button>
@@ -89,7 +90,7 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <!-- ============ HERO ============ -->
     <section class="hero" aria-labelledby="hero-name">
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
@@ -128,7 +129,7 @@
           </dl>
         </div>
 
-        <!-- Visual: head unit de vehículo con app Android -->
+        <!-- Visual: vehicle head unit running an Android app -->
         <div class="hero-visual">
           <div class="device tilt-scene">
             <div class="device-bezel">
@@ -548,7 +549,7 @@
         </div>
 
         <div class="contact-actions reveal">
-          <!-- El PDF cambia con el idioma (clave contact.cvHref en js/i18n.js). Se regenera desde cv/cv.html (ver README). -->
+          <!-- The PDF follows the language (contact.cvHref key in js/i18n.js). Regenerated from cv/cv.html (see README). -->
           <a class="btn btn-cv magnetic" href="cv/David-Perez-Salort-CV-ES.pdf" download data-cv data-i18n-attr="href:contact.cvHref">
             <span class="btn-cv-shine" aria-hidden="true"></span>
             <svg class="cv-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
@@ -589,7 +590,7 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <!-- ============ MÚSICA: IT'S TIME (reproductor de Spotify; se carga solo al pulsar la tarjeta del head unit) ============ -->
+  <!-- ============ MUSIC: IT'S TIME (Spotify player; loaded only when the head unit card is clicked) ============ -->
   <div class="music" hidden role="dialog" aria-label="It’s Time — Imagine Dragons">
     <div class="music-head">
       <span class="music-title">♪ It’s Time — Imagine Dragons</span>
