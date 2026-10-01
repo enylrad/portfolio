@@ -70,7 +70,7 @@ If you change the experience or the stack on the site, update `cv/cv.html` as we
 
 ## Deploying to Firebase Hosting
 
-Project `portfolio-8fa1d` → https://portfolio-8fa1d.web.app. The configuration is already in `firebase.json` and `.firebaserc`: they serve the repo root, ignore `README.md` and hidden files, and set long-lived caching for fonts and images.
+Project `portfolio-8fa1d`. Public domain: **https://dperez.dev** (custom domain connected in Firebase Hosting); https://portfolio-8fa1d.web.app also serves the site. `og:url`, `<link rel="canonical">`, the JSON-LD `url`, `robots.txt` and `sitemap.xml` all point to `dperez.dev`, so search engines treat it as the original and the Firebase domains as copies. The configuration is already in `firebase.json` and `.firebaserc`: they serve the repo root, ignore `README.md` and hidden files, and set long-lived caching for fonts and images.
 
 ```bash
 firebase hosting:channel:deploy preview --expires 7d   # temporary URL for review
