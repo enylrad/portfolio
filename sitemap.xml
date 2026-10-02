@@ -2,17 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dperez.dev/</loc>
-    <lastmod>2026-10-01</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://dperez.dev/cv/David-Perez-Salort-CV-ES.pdf</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://dperez.dev/cv/David-Perez-Salort-CV-EN.pdf</loc>
-    <lastmod>2026-10-01</lastmod>
-    <priority>0.6</priority>
   </url>
 </urlset>
