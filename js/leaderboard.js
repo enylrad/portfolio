@@ -1,9 +1,6 @@
 // Droid Runner online leaderboard on Firestore (REST API, no SDK).
-// Security lives in firestore.rules: this key is public by design in Firebase web apps.
-const API_KEY = 'AIzaSyCYzY5ppBKZR4iMAgmjgbPyz4S-h28MmaU';
-const PROJECT = 'portfolio-8fa1d';
-const DOCS = `projects/${PROJECT}/databases/(default)/documents`;
-const FS = `https://firestore.googleapis.com/v1/${DOCS}`;
+import { API_KEY, DOCS, FS, post } from './firestore.js';
+
 const AUTH_KEY = 'droidRunnerAuth';
 
 export const BLOCKED = ['ASS', 'FCK', 'FUK', 'FUC', 'SEX', 'KKK', 'NAZ', 'NIG', 'CUM', 'DIC', 'COK', 'PUT', 'PNE', 'CAC', 'CUL', 'PIS'];
@@ -12,20 +9,6 @@ const store = {
   get: () => { try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch { return null; } },
   set: (v) => { try { localStorage.setItem(AUTH_KEY, JSON.stringify(v)); } catch { /* no storage */ } },
 };
-
-async function post(url, body, token, form = false) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': form ? 'application/x-www-form-urlencoded' : 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: form ? body : JSON.stringify(body),
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.error?.message || `HTTP ${res.status}`);
-  return data;
-}
 
 // ---------- Anonymous identity (persisted in this browser) ----------
 let auth = store.get();

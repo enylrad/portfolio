@@ -389,6 +389,24 @@ addEventListener('keydown', (e) => {
 });
 
 /* =========================================================
+   Anonymous visit counter (js/stats.js), loaded when idle.
+   Easter egg: five clicks on the mascot reveal the totals.
+   ========================================================= */
+const loadStats = () => import('./stats.js');
+(window.requestIdleCallback || ((cb) => setTimeout(cb, 2000)))(() => {
+  loadStats().then((m) => m.countVisit()).catch(() => {});
+});
+const pad = (n, len) => String(n).padStart(len, '0');
+addEventListener('mascotsecret', async () => {
+  try {
+    const { total, today } = await (await loadStats()).getVisits();
+    toast(`👾 ${t('visits.total')} ${pad(total, 6)} · ${t('visits.today')} ${pad(today, 3)}`);
+  } catch {
+    toast(`👾 ${t('visits.offline')}`);
+  }
+});
+
+/* =========================================================
    Animations (GSAP + ScrollTrigger + Lenis)
    ========================================================= */
 const { gsap, ScrollTrigger, Lenis } = window;

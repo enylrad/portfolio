@@ -53,6 +53,52 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Anonymous visit counter (js/stats.js). Aggregate integers only, no personal data.
+    // Writes may only add exactly +1, and only to today's document (UTC).
+    function before() {
+      return resource == null ? {} : resource.data;
+    }
+    function changed() {
+      return request.resource.data.diff(before()).affectedKeys();
+    }
+    // A key is either untouched or incremented by exactly one (missing counts as 0).
+    function untouchedOrPlusOne(k) {
+      return !(k in changed()) || request.resource.data[k] == before().get(k, 0) + 1;
+    }
+
+    match /visits/{day} {
+      allow get: if true;
+      allow list, delete: if false;
+
+      function isToday() {
+        return day.matches('^[0-9]{8}$') && int(day) ==
+          request.time.year() * 10000 + request.time.month() * 100 + request.time.day();
+      }
+
+      // One page view = total + exactly one key from each dimension (language, device, source).
+      allow create, update: if isToday()
+        && request.resource.data.keys().hasOnly(
+             ['total', 'es', 'en', 'mobile', 'desktop', 'direct', 'search', 'linkedin', 'github', 'other'])
+        && changed().size() == 4
+        && changed().hasAll(['total'])
+        && changed().hasAny(['es', 'en'])
+        && changed().hasAny(['mobile', 'desktop'])
+        && changed().hasAny(['direct', 'search', 'linkedin', 'github', 'other'])
+        && untouchedOrPlusOne('total')
+        && untouchedOrPlusOne('es') && untouchedOrPlusOne('en')
+        && untouchedOrPlusOne('mobile') && untouchedOrPlusOne('desktop')
+        && untouchedOrPlusOne('direct') && untouchedOrPlusOne('search')
+        && untouchedOrPlusOne('linkedin') && untouchedOrPlusOne('github') && untouchedOrPlusOne('other');
+    }
+
+    // All-time total, written in the same commit as the daily document.
+    match /stats/all {
+      allow get: if true;
+      allow create, update: if request.resource.data.keys().hasOnly(['total'])
+        && request.resource.data.total == before().get('total', 0) + 1;
+      allow list, delete: if false;
+    }
+
     // Any other path: closed.
     match /{document=**} {
       allow read, write: if false;

@@ -30,8 +30,14 @@ export function initMascot() {
     if (reducedMotion) return go(isLight() ? 'idleLight' : 'idleDark');
     go(isLight() ? 'toLight' : 'toDark');
   });
+  // Five consecutive clicks (<1.5 s apart) emit 'mascotsecret'; main.js shows the visit counter.
+  let clicks = 0, lastClick = 0;
   btn.addEventListener('click', () => {
     if (!reducedMotion && (state === 'idleDark' || state === 'idleLight')) go('wave');
+    const now = performance.now();
+    clicks = now - lastClick < 1500 ? clicks + 1 : 1;
+    lastClick = now;
+    if (clicks === 5) { clicks = 0; window.dispatchEvent(new CustomEvent('mascotsecret')); }
   });
 
   // ---------- Pose at each instant ----------

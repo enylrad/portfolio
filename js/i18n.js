@@ -177,6 +177,9 @@ export const en = {
   'game.blocked': 'Try other initials',
   'game.rankError': 'Leaderboard unavailable',
   'game.noScores': 'No scores yet. Be the first!',
+  'visits.total': 'VISITS',
+  'visits.today': 'TODAY',
+  'visits.offline': 'COUNTER OFFLINE',
 };
 
 // Strings used only by JS (not present in the HTML).
@@ -191,6 +194,9 @@ export const esExtra = {
   'game.blocked': 'Prueba con otras iniciales',
   'game.rankError': 'Ranking no disponible',
   'game.noScores': 'Aún no hay puntuaciones. ¡Sé el primero!',
+  'visits.total': 'VISITAS',
+  'visits.today': 'HOY',
+  'visits.offline': 'CONTADOR NO DISPONIBLE',
   'theme.toLight': 'Cambiar a tema claro',
   'theme.toDark': 'Cambiar a tema oscuro',
 };
